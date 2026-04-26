@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest import mock
 
 import nbtlib
+from PIL import Image
 
 from mc_world_mcp.anvil import RegionFile, fill_blocks, get_block, region_coords, set_block
 from mc_world_mcp.compat import detect_world_info
@@ -16,9 +17,65 @@ from mc_world_mcp.config import ServerConfig, load_config
 from mc_world_mcp.datapacks import read_datapack_file, search_datapack_files, validate_datapacks
 from mc_world_mcp.nbt_io import get_at_path, parse_path, read_nbt_file, write_nbt_value
 from mc_world_mcp.paths import resolve_under_root
+from mc_world_mcp.preview import render_map_preview, render_slice_preview, render_template_preview
+from mc_world_mcp.source_worlds import compare_world_chunks, import_chunks_from_world, list_local_worlds, worldgen_source_plan
+from mc_world_mcp.world_ops import add_block_entity, add_entity, write_chunk_nbt_value
+from mc_world_mcp.worldgen import validate_worldgen_references
 
 
 class CoreTests(unittest.TestCase):
+    def _basic_world(self, tmp: str) -> tuple[ServerConfig, Path, RegionFile]:
+        config = ServerConfig(Path(tmp).resolve())
+        world = Path(tmp) / "world"
+        (world / "region").mkdir(parents=True)
+        nbtlib.File({"Data": nbtlib.Compound({"DataVersion": nbtlib.Int(3465)})}).save(world / "level.dat")
+        region = RegionFile(world / "region" / "r.0.0.mca")
+        raw = io.BytesIO()
+        nbtlib.File({
+            "xPos": nbtlib.Int(0),
+            "zPos": nbtlib.Int(0),
+            "sections": nbtlib.List[nbtlib.Compound]([
+                nbtlib.Compound({
+                    "Y": nbtlib.Byte(0),
+                    "block_states": nbtlib.Compound({
+                        "palette": nbtlib.List[nbtlib.Compound]([
+                            nbtlib.Compound({"Name": nbtlib.String("minecraft:air")})
+                        ])
+                    }),
+                })
+            ]),
+            "block_entities": nbtlib.List[nbtlib.Compound](),
+            "Status": nbtlib.String("minecraft:full"),
+        }).write(raw)
+        region.set_raw(0, raw.getvalue())
+        region.write()
+        return config, world, region
+
+    def _write_single_palette_chunk(self, world: Path, block: str, cx: int = 0, cz: int = 0) -> None:
+        (world / "region").mkdir(parents=True, exist_ok=True)
+        nbtlib.File({"Data": nbtlib.Compound({"DataVersion": nbtlib.Int(3465)})}).save(world / "level.dat")
+        rx, rz, index = region_coords(cx, cz)
+        region = RegionFile(world / "region" / f"r.{rx}.{rz}.mca")
+        raw = io.BytesIO()
+        nbtlib.File({
+            "xPos": nbtlib.Int(cx),
+            "zPos": nbtlib.Int(cz),
+            "sections": nbtlib.List[nbtlib.Compound]([
+                nbtlib.Compound({
+                    "Y": nbtlib.Byte(0),
+                    "block_states": nbtlib.Compound({
+                        "palette": nbtlib.List[nbtlib.Compound]([
+                            nbtlib.Compound({"Name": nbtlib.String(block)})
+                        ])
+                    }),
+                })
+            ]),
+            "block_entities": nbtlib.List[nbtlib.Compound](),
+            "Status": nbtlib.String("minecraft:full"),
+        }).write(raw)
+        region.set_raw(index, raw.getvalue())
+        region.write()
+
     def test_path_escape_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             config = ServerConfig(Path(tmp).resolve())
@@ -72,6 +129,34 @@ class CoreTests(unittest.TestCase):
             config = ServerConfig(root)
             self.assertEqual(config.world_name, "world_regen_source")
             self.assertEqual(config.world, root / "world_regen_source")
+
+    def test_source_world_plan_and_chunk_import(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            (root / "server.properties").write_text("level-name=world\n", encoding="utf-8")
+            config = ServerConfig(root)
+            self._write_single_palette_chunk(root / "world", "minecraft:air")
+            self._write_single_palette_chunk(root / "world_regen_source", "minecraft:stone")
+
+            worlds = list_local_worlds(config)
+            self.assertEqual([item["name"] for item in worlds], ["world", "world_regen_source"])
+            plan = worldgen_source_plan(config, "world_regen_source")
+            self.assertFalse(plan["can_execute_worldgen"])
+            comparison = compare_world_chunks(config, "world_regen_source", 0, 0, 0, 0)
+            self.assertEqual(comparison["source_present"], 1)
+            self.assertEqual(comparison["target_present"], 1)
+
+            with mock.patch("mc_world_mcp.safety.java_processes", return_value=[]):
+                result = import_chunks_from_world(
+                    config,
+                    "world_regen_source",
+                    [{"cx": 0, "cz": 0}],
+                    include_entities=False,
+                    include_poi=False,
+                    confirm=True,
+                )
+            self.assertTrue(result["ok"])
+            self.assertEqual(get_block(config, 0, 0, 0), "minecraft:stone")
 
     def test_env_world_name_override(self) -> None:
         with tempfile.TemporaryDirectory() as tmp, mock.patch.dict("os.environ", {"MC_SERVER_ROOT": tmp, "MC_WORLD_NAME": "custom"}, clear=False):
@@ -146,6 +231,72 @@ class CoreTests(unittest.TestCase):
             self.assertEqual(validate_datapacks(config)["json_errors"], [])
             self.assertEqual(search_datapack_files(config, "test", "demo")[0]["pack"], "sample.zip")
             self.assertEqual(read_datapack_file(config, "sample.zip", "data/demo/functions/test.mcfunction"), "say hi\n")
+
+    def test_chunk_block_entity_and_entity_writes(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config, world, _ = self._basic_world(tmp)
+            (world / "entities").mkdir()
+            entity_region = RegionFile(world / "entities" / "r.0.0.mca")
+            raw = io.BytesIO()
+            nbtlib.File({"Entities": nbtlib.List[nbtlib.Compound](), "Position": nbtlib.IntArray([0, 0])}).write(raw)
+            entity_region.set_raw(0, raw.getvalue())
+            entity_region.write()
+            with mock.patch("mc_world_mcp.safety.java_processes", return_value=[]):
+                chunk_result = write_chunk_nbt_value(config, 0, 0, "Status", '"minecraft:full"')
+                block_entity_result = add_block_entity(
+                    config,
+                    1,
+                    0,
+                    1,
+                    "minecraft:chest[facing=north,type=single,waterlogged=false]",
+                    '{id:"minecraft:chest",Items:[]}',
+                )
+                entity_result = add_entity(config, '{id:"minecraft:pig",Pos:[0.5d,0.0d,0.5d]}')
+            self.assertTrue(chunk_result["ok"])
+            self.assertEqual(block_entity_result["after"], "minecraft:chest[facing=north,type=single,waterlogged=false]")
+            self.assertEqual(entity_result["entity_count"], 1)
+
+    def test_worldgen_reference_validation_finds_missing_same_namespace_resource(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = ServerConfig(Path(tmp).resolve())
+            dp = Path(tmp) / "world" / "datapacks" / "Demo"
+            (dp / "data" / "demo" / "worldgen" / "structure_set").mkdir(parents=True)
+            (dp / "pack.mcmeta").write_text('{"pack":{"pack_format":15,"description":"demo"}}', encoding="utf-8")
+            (dp / "data" / "demo" / "worldgen" / "structure_set" / "bad.json").write_text(
+                '{"structures":[{"structure":"demo:missing","weight":1}],"placement":{"type":"minecraft:random_spread","salt":1,"spacing":32,"separation":8}}',
+                encoding="utf-8",
+            )
+            result = validate_worldgen_references(config)
+            self.assertEqual(result["json_errors"], [])
+            self.assertEqual(result["missing_references"][0]["reference"], "demo:missing")
+
+    def test_preview_renderers_create_nonblank_pngs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config, world, _ = self._basic_world(tmp)
+            with mock.patch("mc_world_mcp.safety.java_processes", return_value=[]):
+                set_block(config, 0, 0, 0, "minecraft:stone")
+            map_result = render_map_preview(config, 0, 0, 1, 1, "0")
+            slice_result = render_slice_preview(config, "x", 0, 0, 1, 0, 1)
+            template_path = world / "generated" / "demo" / "structures" / "tiny.nbt"
+            template_path.parent.mkdir(parents=True)
+            nbtlib.File({
+                "DataVersion": nbtlib.Int(3465),
+                "size": nbtlib.List[nbtlib.Int]([nbtlib.Int(1), nbtlib.Int(1), nbtlib.Int(1)]),
+                "palette": nbtlib.List[nbtlib.Compound]([nbtlib.Compound({"Name": nbtlib.String("minecraft:stone")})]),
+                "blocks": nbtlib.List[nbtlib.Compound]([
+                    nbtlib.Compound({
+                        "pos": nbtlib.List[nbtlib.Int]([nbtlib.Int(0), nbtlib.Int(0), nbtlib.Int(0)]),
+                        "state": nbtlib.Int(0),
+                    })
+                ]),
+                "entities": nbtlib.List[nbtlib.Compound](),
+            }).save(template_path, gzipped=True)
+            template_result = render_template_preview(config, "world/generated/demo/structures/tiny.nbt")
+            for result in (map_result, slice_result, template_result):
+                path = Path(result["path"])
+                self.assertTrue(path.exists())
+                image = Image.open(path)
+                self.assertIsNotNone(image.getbbox())
 
 
 if __name__ == "__main__":

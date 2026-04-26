@@ -155,7 +155,10 @@ def place_template_to_region(config: ServerConfig, template_path: str, x: int, y
     entity_regions: dict[Path, RegionFile] = {}
     entity_chunks: dict[tuple[Path, int], Any] = {}
     entity_targets: list[tuple[Path, int, Any]] = []
+    entity_failures: list[dict[str, Any]] = []
     changed = 0
+    placed_block_entities = 0
+    affected_chunks: set[tuple[int, int]] = set()
     for block in blocks:
         state = int(block["state"])
         block_id = _palette_entry_to_string(palette[state])
@@ -179,12 +182,14 @@ def place_template_to_region(config: ServerConfig, template_path: str, x: int, y
         rx, rz, eindex = region_coords(cx, cz)
         epath = eroot / f"r.{rx}.{rz}.mca"
         if not epath.exists():
+            entity_failures.append({"id": str(entity_nbt.get("id", "")), "reason": f"entity region does not exist: {epath}"})
             continue
         eregion = entity_regions.setdefault(epath, RegionFile(epath))
         key = (epath, eindex)
         if key not in entity_chunks:
             raw = eregion.get_raw(eindex)
             if raw is None:
+                entity_failures.append({"id": str(entity_nbt.get("id", "")), "reason": f"entity chunk {cx},{cz} does not exist"})
                 continue
             entity_chunks[key] = parse_chunk_nbt(raw)
         entity_targets.append((epath, eindex, entity_nbt))
@@ -195,6 +200,7 @@ def place_template_to_region(config: ServerConfig, template_path: str, x: int, y
         before = set_block_in_chunk(chunk, wx, wy, wz, block_id)
         if before != block_id:
             changed += 1
+            affected_chunks.add((wx >> 4, wz >> 4))
         if block_nbt is not None:
             block_entities = chunk.setdefault("block_entities", nbtlib.List[nbtlib.Compound]())
             kept = nbtlib.List[nbtlib.Compound]([
@@ -207,6 +213,7 @@ def place_template_to_region(config: ServerConfig, template_path: str, x: int, y
             be_copy["z"] = nbtlib.Int(wz)
             kept.append(be_copy)
             chunk["block_entities"] = kept
+            placed_block_entities += 1
     for _, region, index, chunk in chunks.values():
         region.set_raw(index, write_chunk_nbt(chunk))
     for region in regions.values():
@@ -222,7 +229,16 @@ def place_template_to_region(config: ServerConfig, template_path: str, x: int, y
         placed_entities += 1
     for eregion in entity_regions.values():
         eregion.write()
-    return json.dumps({"ok": True, "placed_blocks": changed, "placed_entities": placed_entities, "backup": str(backup.root)}, ensure_ascii=False)
+    backup.write_manifest()
+    return json.dumps({
+        "ok": True,
+        "placed_blocks": changed,
+        "placed_block_entities": placed_block_entities,
+        "placed_entities": placed_entities,
+        "entity_failures": entity_failures,
+        "affected_chunks": sorted([{"cx": cx, "cz": cz} for cx, cz in affected_chunks], key=lambda item: (item["cz"], item["cx"])),
+        "backup": str(backup.root),
+    }, ensure_ascii=False)
 
 
 def _palette_entry_to_string(entry) -> str:

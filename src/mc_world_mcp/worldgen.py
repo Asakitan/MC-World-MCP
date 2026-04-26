@@ -1,0 +1,237 @@
+from __future__ import annotations
+
+import json
+import re
+import zipfile
+from collections import Counter, defaultdict
+from pathlib import Path
+from typing import Any
+
+from .config import ServerConfig
+from .datapacks import iter_datapack_files, list_datapacks
+from .world_ops import analyze_latest_log
+
+RESOURCE_ID_RE = re.compile(r"^[a-z0-9_.-]+:[a-z0-9_./-]+$")
+LOG_RESOURCE_RE = re.compile(
+    r"(?:loot_tables?|recipe|advancement|custom advancement|element)\s*:?\s*([a-z0-9_.-]+:[a-z0-9_./-]+)",
+    re.IGNORECASE,
+)
+
+WORLDGEN_TYPES = {
+    "biome",
+    "configured_carver",
+    "configured_feature",
+    "density_function",
+    "flat_level_generator_preset",
+    "multi_noise_biome_source_parameter_list",
+    "noise",
+    "noise_settings",
+    "placed_feature",
+    "processor_list",
+    "structure",
+    "structure_set",
+    "template_pool",
+    "world_preset",
+}
+
+REFERENCE_KEYS = {
+    "biomes": "worldgen/biome",
+    "config": "",
+    "feature": "worldgen/configured_feature",
+    "features": "worldgen/placed_feature",
+    "fallback": "worldgen/template_pool",
+    "location": "structures",
+    "processors": "worldgen/processor_list",
+    "starts": "worldgen/template_pool",
+    "start_pool": "worldgen/template_pool",
+    "structure": "worldgen/structure",
+    "structures": "worldgen/structure",
+    "template_pool": "worldgen/template_pool",
+}
+
+
+def list_worldgen_resources(config: ServerConfig, namespace: str = "", type: str = "") -> list[dict[str, Any]]:
+    resources: list[dict[str, Any]] = []
+    namespace = namespace.lower()
+    type = type.lower().strip("/")
+    for pack, rel, source in iter_datapack_files(config):
+        parsed = _parse_resource(pack, rel, source, config)
+        if parsed is None:
+            continue
+        if namespace and parsed["namespace"] != namespace:
+            continue
+        if type and parsed["type"] != type:
+            continue
+        resources.append(parsed)
+    return sorted(resources, key=lambda item: (item["type"], item["id"], item["pack"]))
+
+
+def validate_worldgen_references(config: ServerConfig) -> dict[str, Any]:
+    resources = list_worldgen_resources(config)
+    resource_ids = {(item["type"], item["id"]) for item in resources}
+    namespaces = {item["namespace"] for item in resources}
+    json_errors: list[dict[str, str]] = []
+    missing: list[dict[str, str]] = []
+    unknown_namespaces: list[dict[str, str]] = []
+
+    for pack, rel, source in iter_datapack_files(config):
+        if not rel.endswith(".json"):
+            continue
+        if not _is_worldgen_like(rel):
+            continue
+        try:
+            data = _read_json(source, rel)
+        except Exception as exc:
+            json_errors.append({"pack": pack, "file": rel, "error": str(exc)})
+            continue
+        current = _parse_resource(pack, rel, source, config)
+        current_id = current["id"] if current else rel
+        for ref_type, ref_id, key_path in _walk_references(data):
+            if ref_id.startswith("minecraft:"):
+                continue
+            ns = ref_id.split(":", 1)[0]
+            if ns not in namespaces:
+                unknown_namespaces.append({
+                    "pack": pack,
+                    "file": rel,
+                    "resource": current_id,
+                    "path": key_path,
+                    "reference": ref_id,
+                })
+                continue
+            if ref_type and (ref_type, ref_id) not in resource_ids:
+                missing.append({
+                    "pack": pack,
+                    "file": rel,
+                    "resource": current_id,
+                    "path": key_path,
+                    "expected_type": ref_type,
+                    "reference": ref_id,
+                })
+
+    return {
+        "json_errors": json_errors,
+        "missing_references": missing,
+        "unknown_namespaces": unknown_namespaces,
+        "log_resource_issues": _log_resource_issues(config),
+    }
+
+
+def worldgen_report(config: ServerConfig) -> dict[str, Any]:
+    resources = list_worldgen_resources(config)
+    validation = validate_worldgen_references(config)
+    counts = Counter(item["type"] for item in resources)
+    namespaces = Counter(item["namespace"] for item in resources)
+    log = analyze_latest_log(config, 50)
+    recommendations: list[str] = []
+    if validation["json_errors"]:
+        recommendations.append("Fix malformed worldgen/datapack JSON first.")
+    if validation["missing_references"]:
+        recommendations.append("Resolve missing same-namespace worldgen or structure references.")
+    if validation["unknown_namespaces"]:
+        recommendations.append("Review non-minecraft references whose namespace is not provided by datapacks.")
+    resource_issues = log.get("resource_issues", {})
+    if resource_issues:
+        recommendations.append("Use log_resource_issues to trace runtime parse failures to datapack resources.")
+    return {
+        "world": config.world_name,
+        "world_path": str(config.world),
+        "datapacks": len(list_datapacks(config)),
+        "resource_count": len(resources),
+        "resource_types": dict(sorted(counts.items())),
+        "namespaces": dict(sorted(namespaces.items())),
+        "validation": validation,
+        "log_error_count": sum(len(v) for v in log.get("issues", {}).values() if isinstance(v, list)),
+        "resource_issues": resource_issues,
+        "recommendations": recommendations,
+    }
+
+
+def _parse_resource(pack: str, rel: str, source: Path, config: ServerConfig) -> dict[str, Any] | None:
+    parts = rel.replace("\\", "/").split("/")
+    if len(parts) < 4 or parts[0] != "data":
+        return None
+    namespace = parts[1]
+    if parts[2] == "worldgen" and len(parts) >= 5 and parts[-1].endswith(".json"):
+        resource_type = f"worldgen/{parts[3]}"
+        path = "/".join(parts[4:])[:-5]
+    elif parts[2] == "structures" and parts[-1].endswith(".nbt"):
+        resource_type = "structures"
+        path = "/".join(parts[3:])[:-4]
+    elif parts[2] == "tags" and len(parts) >= 5 and parts[-1].endswith(".json"):
+        resource_type = "tags/" + "/".join(parts[3:-1])
+        path = parts[-1][:-5]
+    elif parts[2] == "forge" and len(parts) >= 5 and parts[3] == "biome_modifier" and parts[-1].endswith(".json"):
+        resource_type = "forge/biome_modifier"
+        path = "/".join(parts[4:])[:-5]
+    else:
+        return None
+    return {
+        "pack": pack,
+        "type": resource_type,
+        "namespace": namespace,
+        "id": f"{namespace}:{path}",
+        "path": rel,
+        "source": str(source.relative_to(config.root) if source.is_relative_to(config.root) else source),
+    }
+
+
+def _read_json(source: Path, rel: str) -> Any:
+    if source.is_dir():
+        raise FileNotFoundError(rel)
+    if source.suffix.lower() == ".zip":
+        with zipfile.ZipFile(source) as zf:
+            return json.loads(zf.read(rel).decode("utf-8-sig"))
+    text_path = source
+    if source.name != Path(rel).name:
+        text_path = source
+    return json.loads(text_path.read_text(encoding="utf-8-sig"))
+
+
+def _is_worldgen_like(rel: str) -> bool:
+    rel = rel.replace("\\", "/")
+    return (
+        "/worldgen/" in rel
+        or "/tags/worldgen/" in rel
+        or "/forge/biome_modifier/" in rel
+        or rel.endswith("/pack.mcmeta")
+    )
+
+
+def _walk_references(value: Any, key_path: str = ""):
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_path = f"{key_path}.{key}" if key_path else str(key)
+            expected = REFERENCE_KEYS.get(str(key))
+            if expected:
+                yield from _emit_reference(expected, child, child_path)
+            yield from _walk_references(child, child_path)
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from _walk_references(child, f"{key_path}[{index}]")
+
+
+def _emit_reference(expected: str, value: Any, key_path: str):
+    if isinstance(value, str) and RESOURCE_ID_RE.match(value):
+        yield expected, value, key_path
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            yield from _emit_reference(expected, child, f"{key_path}[{index}]")
+    elif isinstance(value, dict):
+        if isinstance(value.get("location"), str) and expected == "worldgen/structure":
+            yield expected, value["location"], f"{key_path}.location"
+        elif isinstance(value.get("structure"), str):
+            yield expected, value["structure"], f"{key_path}.structure"
+
+
+def _log_resource_issues(config: ServerConfig) -> dict[str, list[str]]:
+    log = config.root / "logs" / "latest.log"
+    if not log.exists():
+        return {}
+    grouped: dict[str, list[str]] = defaultdict(list)
+    for line in log.read_text(encoding="utf-8", errors="replace").splitlines():
+        if not re.search(r"ERROR|WARN|Couldn't parse|Parsing error|Unknown", line, re.IGNORECASE):
+            continue
+        for match in LOG_RESOURCE_RE.finditer(line):
+            grouped[match.group(1)].append(line)
+    return {key: value[-20:] for key, value in sorted(grouped.items())}

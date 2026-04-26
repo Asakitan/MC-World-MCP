@@ -8,7 +8,7 @@ from typing import Any
 import nbtlib
 
 from .anvil import RegionFile, region_coords, region_path, scan_regions
-from .anvil import load_chunk_with_cache
+from .anvil import load_chunk_with_cache, set_block_in_chunk
 from .compat import detect_world_info
 from .config import ServerConfig
 from .nbt_io import parse_chunk_nbt, set_at_path, write_chunk_nbt
@@ -61,6 +61,46 @@ def edit_block_entity(config: ServerConfig, x: int, y: int, z: int, nbt_path: st
             backup.write_manifest()
             return {"ok": True, "backup": str(backup.root)}
     raise FileNotFoundError(f"block entity not found at {x},{y},{z}")
+
+
+def write_chunk_nbt_value(config: ServerConfig, cx: int, cz: int, path: str, snbt_value: str, dimension: str = "overworld") -> dict[str, Any]:
+    region_path_value, region, index, chunk = load_chunk_with_cache(config, cx, cz, dimension, {})
+    set_at_path(chunk, path, nbtlib.parse_nbt(snbt_value))
+    backup = begin_write(config, f"write_chunk_nbt_value {dimension} {cx} {cz} {path}", [region_path_value])
+    region.set_raw(index, write_chunk_nbt(chunk))
+    region.write()
+    backup.write_manifest()
+    return {"ok": True, "chunk": {"cx": cx, "cz": cz}, "path": path, "backup": str(backup.root)}
+
+
+def add_block_entity(config: ServerConfig, x: int, y: int, z: int, block_state: str, block_entity_snbt: str, dimension: str = "overworld") -> dict[str, Any]:
+    cx, cz = x >> 4, z >> 4
+    region_path_value, region, index, chunk = load_chunk_with_cache(config, cx, cz, dimension, {})
+    block_entity = nbtlib.parse_nbt(block_entity_snbt)
+    if not isinstance(block_entity, nbtlib.Compound):
+        raise ValueError("block_entity_snbt must be an SNBT compound")
+    block_entity["x"] = nbtlib.Int(x)
+    block_entity["y"] = nbtlib.Int(y)
+    block_entity["z"] = nbtlib.Int(z)
+    block_entities = chunk.setdefault("block_entities", nbtlib.List[nbtlib.Compound]())
+    kept = nbtlib.List[nbtlib.Compound]([
+        item for item in block_entities
+        if not (int(item.get("x", 0)) == x and int(item.get("y", 0)) == y and int(item.get("z", 0)) == z)
+    ])
+    kept.append(block_entity)
+    chunk["block_entities"] = kept
+    backup = begin_write(config, f"add_block_entity {dimension} {x} {y} {z}", [region_path_value])
+    before = set_block_in_chunk(chunk, x, y, z, block_state)
+    region.set_raw(index, write_chunk_nbt(chunk))
+    region.write()
+    backup.write_manifest()
+    return {
+        "ok": True,
+        "before": before,
+        "after": block_state,
+        "block_entity_count": len(kept),
+        "backup": str(backup.root),
+    }
 
 
 def set_biome_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, biome: str, dimension: str = "overworld", confirm: bool = False) -> dict[str, Any]:
@@ -209,6 +249,40 @@ def edit_entity(config: ServerConfig, uuid: str, nbt_path: str, snbt_value: str,
                 backup.write_manifest()
                 return {"ok": True, "uuid": uuid, "backup": str(backup.root)}
     raise FileNotFoundError(f"entity UUID not found: {uuid}")
+
+
+def add_entity(config: ServerConfig, entity_snbt: str, dimension: str = "overworld") -> dict[str, Any]:
+    entity = nbtlib.parse_nbt(entity_snbt)
+    if not isinstance(entity, nbtlib.Compound):
+        raise ValueError("entity_snbt must be an SNBT compound")
+    pos = entity.get("Pos")
+    if pos is None or len(pos) != 3:
+        raise ValueError("entity_snbt must include Pos as a three-value list")
+    x, _, z = float(pos[0]), float(pos[1]), float(pos[2])
+    cx, cz = int(x) >> 4, int(z) >> 4
+    rx, rz, index = region_coords(cx, cz)
+    root = _entity_region_root(config, dimension)
+    path = root / f"r.{rx}.{rz}.mca"
+    if not path.exists():
+        raise FileNotFoundError(f"entity region does not exist: {path}")
+    region = RegionFile(path)
+    raw = region.get_raw(index)
+    if raw is None:
+        raise FileNotFoundError(f"entity chunk {cx},{cz} does not exist in {path}")
+    chunk = parse_chunk_nbt(raw)
+    entities = chunk.setdefault("Entities", nbtlib.List[nbtlib.Compound]())
+    entities.append(entity)
+    backup = begin_write(config, f"add_entity {dimension} {entity.get('id', '')}", [path])
+    region.set_raw(index, write_chunk_nbt(chunk))
+    region.write()
+    backup.write_manifest()
+    return {
+        "ok": True,
+        "id": str(entity.get("id", "")),
+        "chunk": {"cx": cx, "cz": cz},
+        "entity_count": len(entities),
+        "backup": str(backup.root),
+    }
 
 
 def delete_entities(config: ServerConfig, entity_id: str, dimension: str = "overworld", max_delete: int = 50, confirm: bool = False) -> dict[str, Any]:
@@ -372,14 +446,23 @@ def analyze_latest_log(config: ServerConfig, max_lines: int = 200) -> dict[str, 
         "unknown_ids": re.compile(r"unknown (?:string|item|loot table)|Unknown item|Expected name to be an item", re.IGNORECASE),
     }
     buckets = {key: [] for key in patterns}
+    resource_pattern = re.compile(
+        r"(?:loot_tables?|recipe|advancement|custom advancement|element)\s*:?\s*([a-z0-9_.-]+:[a-z0-9_./-]+)",
+        re.IGNORECASE,
+    )
+    resource_issues: dict[str, list[str]] = {}
     for line in log.read_text(encoding="utf-8", errors="replace").splitlines():
         for key, pattern in patterns.items():
             if pattern.search(line):
                 buckets[key].append(line)
+        if re.search(r"ERROR|WARN|Couldn't parse|Parsing error|Unknown", line, re.IGNORECASE):
+            for match in resource_pattern.finditer(line):
+                resource_issues.setdefault(match.group(1), []).append(line)
     return {
         "exists": True,
         "path": log.relative_to(config.root).as_posix(),
         "world": config.world_name,
         "support": detect_world_info(config).as_dict(),
         "issues": {key: value[-max_lines:] for key, value in buckets.items()},
+        "resource_issues": {key: value[-max_lines:] for key, value in sorted(resource_issues.items())},
     }
