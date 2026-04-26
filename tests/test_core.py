@@ -12,7 +12,7 @@ from unittest import mock
 import nbtlib
 from PIL import Image
 
-from mc_world_mcp.anvil import RegionFile, fill_blocks, get_block, load_chunk_with_cache, region_coords, set_block
+from mc_world_mcp.anvil import RegionFile, fill_blocks, get_block, load_chunk_with_cache, region_coords, replace_blocks, set_block
 from mc_world_mcp.assistant_guidance import SERVER_INSTRUCTIONS, assistant_instruction_markdown, assistant_instruction_payload
 from mc_world_mcp.compat import detect_world_info
 from mc_world_mcp.config import ServerConfig, load_config
@@ -329,6 +329,25 @@ class CoreTests(unittest.TestCase):
             self.assertEqual(get_block(config, 0, 0, 0), "minecraft:oak_stairs[facing=north,waterlogged=false]")
             self.assertEqual(get_block(config, 15, 0, 0), "minecraft:stone")
             self.assertEqual(get_block(config, 16, 0, 0), "minecraft:stone")
+
+    def test_replace_blocks_skips_missing_chunks_inside_box(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            config = ServerConfig(root)
+            self._write_single_palette_chunk(root / "world", "minecraft:stone", cx=0)
+            self._write_single_palette_chunk(root / "world", "minecraft:stone", cx=2)
+
+            with mock.patch("mc_world_mcp.safety.java_processes", return_value=[]):
+                result = replace_blocks(config, 0, 0, 0, 47, 0, 0, "minecraft:stone", "minecraft:sand", confirm=True)
+
+            self.assertTrue(result["ok"])
+            self.assertEqual(result["changed"], 32)
+            self.assertEqual(result["skipped_chunks"], [{"cx": 1, "cz": 0}])
+            self.assertEqual(result["affected_chunks"], [{"cx": 0, "cz": 0}, {"cx": 2, "cz": 0}])
+            self.assertEqual(get_block(config, 0, 0, 0), "minecraft:sand")
+            self.assertEqual(get_block(config, 32, 0, 0), "minecraft:sand")
+            with self.assertRaises(FileNotFoundError):
+                get_block(config, 16, 0, 0)
 
     def test_zip_datapack_search_and_validate(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

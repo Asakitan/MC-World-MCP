@@ -383,18 +383,25 @@ def _edit_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int,
     zs = range(min(z1, z2), max(z1, z2) + 1)
     regions: dict[Path, RegionFile] = {}
     chunks: dict[tuple[int, int], tuple[Path, RegionFile, int, Any]] = {}
+    skipped_chunks: set[tuple[int, int]] = set()
     for x in xs:
         for z in zs:
             key = (x >> 4, z >> 4)
-            if key not in chunks:
-                chunks[key] = load_chunk_with_cache(config, key[0], key[1], dimension, regions)
+            if key not in chunks and key not in skipped_chunks:
+                try:
+                    chunks[key] = load_chunk_with_cache(config, key[0], key[1], dimension, regions)
+                except FileNotFoundError:
+                    skipped_chunks.add(key)
     files = sorted({item[0] for item in chunks.values()})
     backup = begin_write(config, f"edit_box {dimension} {replacement}", files)
     changed = 0
     for x in xs:
         for y in ys:
             for z in zs:
-                _, _, _, chunk = chunks[(x >> 4, z >> 4)]
+                chunk_item = chunks.get((x >> 4, z >> 4))
+                if chunk_item is None:
+                    continue
+                _, _, _, chunk = chunk_item
                 if old_block is not None and get_block_from_chunk(chunk, x, y, z) != old_block:
                     continue
                 before = set_block_in_chunk(chunk, x, y, z, replacement)
@@ -411,6 +418,7 @@ def _edit_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int,
         "ok": True,
         "changed": changed,
         "affected_chunks": sorted([{"cx": cx, "cz": cz} for cx, cz in affected_chunks], key=lambda item: (item["cz"], item["cx"])),
+        "skipped_chunks": sorted([{"cx": cx, "cz": cz} for cx, cz in skipped_chunks], key=lambda item: (item["cz"], item["cx"])),
         "backup": str(backup.root),
     }
 
