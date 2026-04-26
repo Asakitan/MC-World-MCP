@@ -11,7 +11,7 @@ from unittest import mock
 import nbtlib
 from PIL import Image
 
-from mc_world_mcp.anvil import RegionFile, fill_blocks, get_block, region_coords, set_block
+from mc_world_mcp.anvil import RegionFile, fill_blocks, get_block, load_chunk_with_cache, region_coords, set_block
 from mc_world_mcp.assistant_guidance import SERVER_INSTRUCTIONS, assistant_instruction_markdown, assistant_instruction_payload
 from mc_world_mcp.compat import detect_world_info
 from mc_world_mcp.config import ServerConfig, load_config
@@ -166,6 +166,26 @@ class CoreTests(unittest.TestCase):
             region.write()
             reread = RegionFile(path)
             self.assertIsNotNone(reread.get_raw(0))
+
+    def test_load_chunk_with_cache_reuses_region_file(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            config = ServerConfig(root)
+            self._write_single_palette_chunk(root / "world", "minecraft:stone", cx=0)
+            self._write_single_palette_chunk(root / "world", "minecraft:sand", cx=1)
+            reads = 0
+            original_read = RegionFile._read
+
+            def counted_read(region: RegionFile) -> None:
+                nonlocal reads
+                reads += 1
+                original_read(region)
+
+            regions: dict[Path, RegionFile] = {}
+            with mock.patch.object(RegionFile, "_read", counted_read):
+                load_chunk_with_cache(config, 0, 0, "overworld", regions)
+                load_chunk_with_cache(config, 1, 0, "overworld", regions)
+            self.assertEqual(reads, 1)
 
     def test_world_name_follows_server_properties(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

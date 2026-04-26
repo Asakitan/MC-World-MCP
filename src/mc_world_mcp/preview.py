@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -8,7 +9,7 @@ from typing import Any
 import nbtlib
 from PIL import Image
 
-from .anvil import load_chunk, decode_indices, palette_index_to_block, local_index
+from .anvil import block_state_to_string, decode_indices, load_chunk_with_cache, local_index, RegionFile
 from .config import ServerConfig
 from .paths import resolve_under_root
 from .templates import _palette_entry_to_string
@@ -69,14 +70,16 @@ def render_map_preview(
     _check_preview_size(width * height)
     image = Image.new("RGB", (width, height), BLOCK_COLORS["minecraft:air"])
     counts: dict[str, int] = {}
-    chunk_cache: dict[tuple[int, int], Any | None] = {}
+    chunk_cache = _ChunkReadCache()
+    pixels: list[tuple[int, int, int]] = []
     for z in range(min_z, max_z + 1):
         for x in range(min_x, max_x + 1):
             block = _surface_block(config, x, z, y_mode, dimension, chunk_cache)
             counts[block] = counts.get(block, 0) + 1
-            image.putpixel((x - min_x, z - min_z), color_for_block(block))
+            pixels.append(color_for_block(block))
+    image.putdata(pixels)
     path = _preview_path(config, "map")
-    image.save(path)
+    _save_preview(image, path)
     return {
         "ok": True,
         "path": str(path),
@@ -107,15 +110,17 @@ def render_slice_preview(
     _check_preview_size(width * height)
     image = Image.new("RGB", (width, height), BLOCK_COLORS["minecraft:air"])
     counts: dict[str, int] = {}
-    chunk_cache: dict[tuple[int, int], Any | None] = {}
-    for a in range(min_a, max_a + 1):
-        for y in range(min_y, max_y + 1):
+    chunk_cache = _ChunkReadCache()
+    pixels: list[tuple[int, int, int]] = []
+    for y in range(max_y, min_y - 1, -1):
+        for a in range(min_a, max_a + 1):
             x, z = (fixed, a) if axis == "x" else (a, fixed)
             block = _get_block_cached(config, x, y, z, dimension, chunk_cache)
             counts[block] = counts.get(block, 0) + 1
-            image.putpixel((a - min_a, max_y - y), color_for_block(block))
+            pixels.append(color_for_block(block))
+    image.putdata(pixels)
     path = _preview_path(config, "slice")
-    image.save(path)
+    _save_preview(image, path)
     return {
         "ok": True,
         "path": str(path),
@@ -165,7 +170,7 @@ def render_template_preview(config: ServerConfig, template_path: str, axis: str 
             counts[block_id] = counts.get(block_id, 0) + 1
             image.putpixel((px, py), color_for_block(block_id))
     path = _preview_path(config, "template")
-    image.save(path)
+    _save_preview(image, path)
     return {
         "ok": True,
         "path": str(path),
@@ -191,35 +196,117 @@ def color_for_block(block: str) -> tuple[int, int, int]:
     return (64 + digest[0] % 160, 64 + digest[1] % 160, 64 + digest[2] % 160)
 
 
-def _surface_block(config: ServerConfig, x: int, z: int, y_mode: str, dimension: str, chunk_cache: dict[tuple[int, int], Any | None]) -> str:
+@dataclass
+class _PreparedSection:
+    y: int
+    block_states: Any
+    palette: list[str]
+    palette_base_names: list[str]
+    _indices: list[int] | None = field(default=None, init=False, repr=False)
+
+    @classmethod
+    def from_section(cls, section: Any) -> "_PreparedSection | None":
+        block_states = section.get("block_states")
+        if not block_states:
+            return None
+        palette = [block_state_to_string(entry) for entry in block_states.get("palette", [])]
+        if not palette:
+            palette = ["minecraft:air"]
+        return cls(
+            y=int(section.get("Y", 0)),
+            block_states=block_states,
+            palette=palette,
+            palette_base_names=[block.split("[", 1)[0] for block in palette],
+        )
+
+    @property
+    def indices(self) -> list[int]:
+        if self._indices is None:
+            self._indices = decode_indices(self.block_states)
+        return self._indices
+
+    def block_at(self, x: int, y: int, z: int) -> str:
+        if len(self.palette) == 1:
+            return self.palette[0]
+        index = self.indices[local_index(x, y, z)]
+        return self.palette[index] if index < len(self.palette) else "minecraft:air"
+
+    def top_block_matching(self, x: int, z: int, skip: set[str]) -> str | None:
+        if len(self.palette) == 1:
+            block = self.palette[0]
+            return None if self.palette_base_names[0] in skip else block
+        if all(block in skip for block in self.palette_base_names):
+            return None
+        lx = x & 15
+        lz = z & 15
+        column_offset = (lz << 4) | lx
+        indices = self.indices
+        for ly in range(15, -1, -1):
+            index = indices[(ly << 8) | column_offset]
+            block = self.palette[index] if index < len(self.palette) else "minecraft:air"
+            if block.split("[", 1)[0] not in skip:
+                return block
+        return None
+
+
+@dataclass
+class _PreparedChunk:
+    sections_desc: list[_PreparedSection]
+    sections_by_y: dict[int, _PreparedSection]
+
+    @classmethod
+    def from_chunk(cls, chunk: Any) -> "_PreparedChunk":
+        sections: list[_PreparedSection] = []
+        for section in chunk.get("sections", []):
+            prepared = _PreparedSection.from_section(section)
+            if prepared is not None:
+                sections.append(prepared)
+        sections.sort(key=lambda section: section.y, reverse=True)
+        return cls(sections, {section.y: section for section in sections})
+
+    def block_at(self, x: int, y: int, z: int) -> str:
+        section = self.sections_by_y.get(y // 16)
+        return section.block_at(x, y, z) if section is not None else "minecraft:air"
+
+    def top_block_matching(self, x: int, z: int, skip: set[str]) -> str:
+        for section in self.sections_desc:
+            block = section.top_block_matching(x, z, skip)
+            if block is not None:
+                return block
+        return "minecraft:air"
+
+
+class _ChunkReadCache:
+    def __init__(self) -> None:
+        self.regions: dict[Path, RegionFile] = {}
+        self.chunks: dict[tuple[int, int], _PreparedChunk | None] = {}
+
+    def get(self, config: ServerConfig, cx: int, cz: int, dimension: str) -> _PreparedChunk | None:
+        key = (cx, cz)
+        if key not in self.chunks:
+            try:
+                chunk = load_chunk_with_cache(config, cx, cz, dimension, self.regions)[3]
+            except FileNotFoundError:
+                self.chunks[key] = None
+            else:
+                self.chunks[key] = _PreparedChunk.from_chunk(chunk)
+        return self.chunks[key]
+
+
+def _surface_block(config: ServerConfig, x: int, z: int, y_mode: str, dimension: str, chunk_cache: _ChunkReadCache) -> str:
     if y_mode.isdecimal() or (y_mode.startswith("-") and y_mode[1:].isdecimal()):
         return _get_block_cached(config, x, int(y_mode), z, dimension, chunk_cache)
     cx, cz = x >> 4, z >> 4
-    chunk = _load_chunk_cached(config, cx, cz, dimension, chunk_cache)
+    chunk = chunk_cache.get(config, cx, cz, dimension)
     if chunk is None:
         return "minecraft:air"
     if y_mode in OCEAN_FLOOR_MODES:
-        return _top_block_matching(chunk, x, z, skip=AIR_BLOCKS | WATER_BLOCKS)
+        return chunk.top_block_matching(x, z, skip=AIR_BLOCKS | WATER_BLOCKS)
     if y_mode not in SURFACE_MODES:
         raise ValueError(
             "y_mode must be 'surface', 'top', 'ocean_floor', 'seafloor', or an integer Y level"
         )
-    return _top_block_matching(chunk, x, z, skip=AIR_BLOCKS)
-
-
-def _top_block_matching(chunk: Any, x: int, z: int, skip: set[str]) -> str:
-    for section in sorted(chunk.get("sections", []), key=lambda item: int(item.get("Y", -999)), reverse=True):
-        block_states = section.get("block_states")
-        if not block_states:
-            continue
-        sy = int(section.get("Y", 0))
-        indices = decode_indices(block_states)
-        for y in range(sy * 16 + 15, sy * 16 - 1, -1):
-            idx = ((y & 15) << 8) | ((z & 15) << 4) | (x & 15)
-            block = palette_index_to_block(section, indices[idx])
-            if block.split("[", 1)[0] not in skip:
-                return block
-    return "minecraft:air"
+    return chunk.top_block_matching(x, z, skip=AIR_BLOCKS)
 
 
 def _normalize_y_mode(y_mode: str) -> str:
@@ -229,29 +316,11 @@ def _normalize_y_mode(y_mode: str) -> str:
     return mode
 
 
-def _get_block_cached(config: ServerConfig, x: int, y: int, z: int, dimension: str, chunk_cache: dict[tuple[int, int], Any | None]) -> str:
-    chunk = _load_chunk_cached(config, x >> 4, z >> 4, dimension, chunk_cache)
+def _get_block_cached(config: ServerConfig, x: int, y: int, z: int, dimension: str, chunk_cache: _ChunkReadCache) -> str:
+    chunk = chunk_cache.get(config, x >> 4, z >> 4, dimension)
     if chunk is None:
         return "minecraft:air"
-    sy = y // 16
-    for section in chunk.get("sections", []):
-        if int(section.get("Y", 999999)) == sy:
-            block_states = section.get("block_states")
-            if not block_states:
-                return "minecraft:air"
-            indices = decode_indices(block_states)
-            return palette_index_to_block(section, indices[local_index(x, y, z)])
-    return "minecraft:air"
-
-
-def _load_chunk_cached(config: ServerConfig, cx: int, cz: int, dimension: str, chunk_cache: dict[tuple[int, int], Any | None]):
-    key = (cx, cz)
-    if key not in chunk_cache:
-        try:
-            chunk_cache[key] = load_chunk(config, cx, cz, dimension)[3]
-        except FileNotFoundError:
-            chunk_cache[key] = None
-    return chunk_cache[key]
+    return chunk.block_at(x, y, z)
 
 
 def _preview_path(config: ServerConfig, prefix: str) -> Path:
@@ -259,6 +328,10 @@ def _preview_path(config: ServerConfig, prefix: str) -> Path:
     root.mkdir(parents=True, exist_ok=True)
     index = len(list(root.glob(f"{prefix}_*.png"))) + 1
     return root / f"{prefix}_{index:03d}.png"
+
+
+def _save_preview(image: Image.Image, path: Path) -> None:
+    image.save(path, compress_level=1)
 
 
 def _check_preview_size(pixels: int) -> None:

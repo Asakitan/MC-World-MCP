@@ -137,7 +137,10 @@ def load_chunk(config: ServerConfig, cx: int, cz: int, dimension: str = "overwor
 def load_chunk_with_cache(config: ServerConfig, cx: int, cz: int, dimension: str, regions: dict[Path, RegionFile]):
     path = region_path(config, dimension, cx, cz)
     _, _, index = region_coords(cx, cz)
-    region = regions.setdefault(path, RegionFile(path))
+    region = regions.get(path)
+    if region is None:
+        region = RegionFile(path)
+        regions[path] = region
     raw = region.get_raw(index)
     if raw is None:
         raise FileNotFoundError(f"chunk {cx},{cz} not found in {path}")
