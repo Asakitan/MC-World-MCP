@@ -7,7 +7,7 @@ import struct
 import time
 import zlib
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 import nbtlib
 
@@ -18,6 +18,7 @@ from .safety import begin_write
 
 REGION_SIZE = 32
 SECTION_SIZE = 16
+BLOCK_STATE_RE = re.compile(r"^(?P<name>[a-z0-9_.:-]+)(?:\[(?P<props>.*)\])?$")
 
 
 class RegionFile:
@@ -64,6 +65,12 @@ class RegionFile:
     def set_raw(self, index: int, raw: bytes) -> None:
         self.chunks[index] = (2, raw)
         self.timestamps[index] = int(time.time())
+
+    def delete_raw(self, index: int) -> bool:
+        existed = index in self.chunks
+        self.chunks.pop(index, None)
+        self.timestamps[index] = 0
+        return existed
 
     def write(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -127,6 +134,16 @@ def load_chunk(config: ServerConfig, cx: int, cz: int, dimension: str = "overwor
     return path, region, index, parse_chunk_nbt(raw)
 
 
+def load_chunk_with_cache(config: ServerConfig, cx: int, cz: int, dimension: str, regions: dict[Path, RegionFile]):
+    path = region_path(config, dimension, cx, cz)
+    _, _, index = region_coords(cx, cz)
+    region = regions.setdefault(path, RegionFile(path))
+    raw = region.get_raw(index)
+    if raw is None:
+        raise FileNotFoundError(f"chunk {cx},{cz} not found in {path}")
+    return path, region, index, parse_chunk_nbt(raw)
+
+
 def inspect_chunk(config: ServerConfig, cx: int, cz: int, dimension: str = "overworld") -> dict[str, Any]:
     path, _, _, chunk = load_chunk(config, cx, cz, dimension)
     sections = chunk.get("sections", [])
@@ -157,12 +174,37 @@ def section_for_y(chunk, y: int):
     return section
 
 
+def block_state_to_string(entry) -> str:
+    name = str(entry.get("Name", "minecraft:air"))
+    props = entry.get("Properties")
+    if not props:
+        return name
+    pairs = [f"{key}={props[key]}" for key in sorted(props)]
+    return f"{name}[{','.join(pairs)}]"
+
+
+def parse_block_state(block_state: str) -> nbtlib.Compound:
+    match = BLOCK_STATE_RE.fullmatch(block_state.strip())
+    if not match:
+        raise ValueError(f"invalid block state: {block_state}")
+    entry = nbtlib.Compound({"Name": nbtlib.String(match.group("name"))})
+    props = match.group("props")
+    if props:
+        prop_compound = nbtlib.Compound()
+        for item in props.split(","):
+            if "=" not in item:
+                raise ValueError(f"invalid block state property: {item}")
+            key, value = item.split("=", 1)
+            prop_compound[key.strip()] = nbtlib.String(value.strip())
+        entry["Properties"] = prop_compound
+    return entry
+
+
 def palette_index_to_block(section, index: int) -> str:
     palette = section["block_states"]["palette"]
     if index >= len(palette):
         return "minecraft:air"
-    entry = palette[index]
-    return str(entry.get("Name", "minecraft:air"))
+    return block_state_to_string(palette[index])
 
 
 def bits_for_palette(size: int) -> int:
@@ -233,7 +275,7 @@ def set_block_in_chunk(chunk, x: int, y: int, z: int, block_id: str) -> str:
     palette = block_states["palette"]
     indices = decode_indices(block_states)
     before = palette_index_to_block(section, indices[local_index(x, y, z)])
-    target = nbtlib.Compound({"Name": nbtlib.String(block_id)})
+    target = parse_block_state(block_id)
     target_snbt = target.snbt()
     palette_index = None
     for i, item in enumerate(palette):
@@ -260,6 +302,39 @@ def set_block(config: ServerConfig, x: int, y: int, z: int, block_id: str, dimen
     return {"ok": True, "before": before, "after": block_id, "backup": str(backup.root)}
 
 
+def set_blocks(config: ServerConfig, blocks: Iterable[tuple[int, int, int, str]], dimension: str = "overworld", reason: str = "set_blocks", confirm: bool = False) -> dict[str, Any]:
+    items = list(blocks)
+    if len(items) > 4096 and not confirm:
+        raise ValueError("large block placement requires confirm=true")
+    regions: dict[Path, RegionFile] = {}
+    chunks: dict[tuple[int, int], tuple[Path, RegionFile, int, Any]] = {}
+    for x, _, z, _ in items:
+        key = (x >> 4, z >> 4)
+        if key not in chunks:
+            chunks[key] = load_chunk_with_cache(config, key[0], key[1], dimension, regions)
+    files = sorted({item[0] for item in chunks.values()})
+    backup = begin_write(config, reason, files)
+    changed = 0
+    affected_chunks: set[tuple[int, int]] = set()
+    for x, y, z, block_state in items:
+        _, _, _, chunk = chunks[(x >> 4, z >> 4)]
+        before = set_block_in_chunk(chunk, x, y, z, block_state)
+        if before != block_state:
+            changed += 1
+            affected_chunks.add((x >> 4, z >> 4))
+    for _, region, index, chunk in chunks.values():
+        region.set_raw(index, write_chunk_nbt(chunk))
+    for region in regions.values():
+        region.write()
+    backup.write_manifest()
+    return {
+        "ok": True,
+        "changed": changed,
+        "affected_chunks": sorted([{"cx": cx, "cz": cz} for cx, cz in affected_chunks], key=lambda item: (item["cz"], item["cx"])),
+        "backup": str(backup.root),
+    }
+
+
 def fill_blocks(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, block_id: str, dimension: str = "overworld", confirm: bool = False) -> dict[str, Any]:
     count = (abs(x2 - x1) + 1) * (abs(y2 - y1) + 1) * (abs(z2 - z1) + 1)
     if count > 4096 and not confirm:
@@ -278,12 +353,13 @@ def _edit_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int,
     xs = range(min(x1, x2), max(x1, x2) + 1)
     ys = range(min(y1, y2), max(y1, y2) + 1)
     zs = range(min(z1, z2), max(z1, z2) + 1)
+    regions: dict[Path, RegionFile] = {}
     chunks: dict[tuple[int, int], tuple[Path, RegionFile, int, Any]] = {}
     for x in xs:
         for z in zs:
             key = (x >> 4, z >> 4)
             if key not in chunks:
-                chunks[key] = load_chunk(config, key[0], key[1], dimension)
+                chunks[key] = load_chunk_with_cache(config, key[0], key[1], dimension, regions)
     files = sorted({item[0] for item in chunks.values()})
     backup = begin_write(config, f"edit_box {dimension} {replacement}", files)
     changed = 0
@@ -296,11 +372,19 @@ def _edit_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int,
                 before = set_block_in_chunk(chunk, x, y, z, replacement)
                 if before != replacement:
                     changed += 1
-    for path, region, index, chunk in chunks.values():
+    affected_chunks: set[tuple[int, int]] = set()
+    for key, (_, region, index, chunk) in chunks.items():
         region.set_raw(index, write_chunk_nbt(chunk))
+        affected_chunks.add(key)
+    for region in regions.values():
         region.write()
     backup.write_manifest()
-    return {"ok": True, "changed": changed, "backup": str(backup.root)}
+    return {
+        "ok": True,
+        "changed": changed,
+        "affected_chunks": sorted([{"cx": cx, "cz": cz} for cx, cz in affected_chunks], key=lambda item: (item["cz"], item["cx"])),
+        "backup": str(backup.root),
+    }
 
 
 def get_block_from_chunk(chunk, x: int, y: int, z: int) -> str:
@@ -308,3 +392,46 @@ def get_block_from_chunk(chunk, x: int, y: int, z: int) -> str:
     indices = decode_indices(section["block_states"])
     return palette_index_to_block(section, indices[local_index(x, y, z)])
 
+
+def read_block_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, dimension: str = "overworld", include_air: bool = False, confirm: bool = False) -> dict[str, Any]:
+    xs = range(min(x1, x2), max(x1, x2) + 1)
+    ys = range(min(y1, y2), max(y1, y2) + 1)
+    zs = range(min(z1, z2), max(z1, z2) + 1)
+    count = len(xs) * len(ys) * len(zs)
+    if count > 4096 and not confirm:
+        raise ValueError("large block box read requires confirm=true")
+    regions: dict[Path, RegionFile] = {}
+    chunks: dict[tuple[int, int], tuple[Path, RegionFile, int, Any]] = {}
+    blocks: list[dict[str, Any]] = []
+    for x in xs:
+        for z in zs:
+            key = (x >> 4, z >> 4)
+            if key not in chunks:
+                chunks[key] = load_chunk_with_cache(config, key[0], key[1], dimension, regions)
+    for x in xs:
+        for y in ys:
+            for z in zs:
+                block = get_block_from_chunk(chunks[(x >> 4, z >> 4)][3], x, y, z)
+                if include_air or block != "minecraft:air":
+                    blocks.append({"x": x, "y": y, "z": z, "block": block})
+    return {"count": count, "returned": len(blocks), "blocks": blocks}
+
+
+def summarize_chunk_palette(config: ServerConfig, cx: int, cz: int, dimension: str = "overworld") -> dict[str, Any]:
+    path, _, _, chunk = load_chunk(config, cx, cz, dimension)
+    counts: dict[str, int] = {}
+    for section in chunk.get("sections", []):
+        block_states = section.get("block_states")
+        if not block_states:
+            continue
+        palette = block_states.get("palette", [])
+        indices = decode_indices(block_states)
+        for index in indices:
+            block = block_state_to_string(palette[index]) if index < len(palette) else "minecraft:air"
+            counts[block] = counts.get(block, 0) + 1
+    return {
+        "region": path.relative_to(config.root).as_posix(),
+        "cx": cx,
+        "cz": cz,
+        "palette_counts": dict(sorted(counts.items(), key=lambda item: (-item[1], item[0]))),
+    }

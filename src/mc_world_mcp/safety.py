@@ -102,9 +102,18 @@ class BackupSession:
 
 def begin_write(config: ServerConfig, reason: str, files: list[Path]) -> BackupSession:
     assert_offline(config)
+    world_root = config.world.resolve()
+    for file in files:
+        try:
+            file.resolve().relative_to(world_root)
+        except ValueError:
+            continue
+        from .compat import assert_world_write_supported
+
+        assert_world_write_supported(config)
+        break
     session = BackupSession(config, reason)
     for file in files:
         session.backup_file(file)
     session.write_manifest()
     return session
-

@@ -34,7 +34,9 @@ def rel_string(path: str | Path) -> str:
 
 def resolve_under_root(config: ServerConfig, relative_path: str | Path, *, write: bool = False) -> Path:
     rel = rel_string(relative_path)
-    allowed = WRITE_PREFIXES if write else READ_PREFIXES
+    allowed = list(WRITE_PREFIXES if write else READ_PREFIXES)
+    if config.world_name not in allowed:
+        allowed.append(config.world_name)
     if not any(rel == p or rel.startswith(p + "/") for p in allowed):
         raise ValueError(f"path is not in the {'write' if write else 'read'} allowlist: {rel}")
     target = (config.root / rel).resolve()
@@ -53,4 +55,3 @@ def world_dimension_path(config: ServerConfig, dimension: str) -> Path:
     if dimension in ("end", "minecraft:the_end", "DIM1"):
         return config.world / "DIM1"
     raise ValueError("dimension must be overworld, nether, or end")
-
