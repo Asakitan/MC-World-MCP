@@ -5,6 +5,7 @@ import json
 import tempfile
 import unittest
 import zipfile
+import zlib
 from pathlib import Path
 from unittest import mock
 
@@ -343,6 +344,7 @@ class CoreTests(unittest.TestCase):
                 set_block(config, 0, 0, 0, "minecraft:stone")
                 set_block(config, 0, 1, 0, "minecraft:water")
             map_result = render_map_preview(config, 0, 0, 1, 1, "0")
+            sampled_result = render_map_preview(config, 0, 0, 3, 3, "0", sample=2)
             top_result = render_map_preview(config, 0, 0, 0, 0, "top")
             floor_result = render_map_preview(config, 0, 0, 0, 0, "ocean_floor")
             slice_result = render_slice_preview(config, "x", 0, 0, 1, 0, 1)
@@ -361,13 +363,63 @@ class CoreTests(unittest.TestCase):
                 "entities": nbtlib.List[nbtlib.Compound](),
             }).save(template_path, gzipped=True)
             template_result = render_template_preview(config, "world/generated/demo/structures/tiny.nbt")
+            self.assertEqual(sampled_result["size"]["width"], 2)
+            self.assertEqual(sampled_result["size"]["height"], 2)
+            self.assertEqual(sampled_result["size"]["sample"], 2)
             self.assertEqual(top_result["top_blocks"][0]["block"], "minecraft:water")
             self.assertEqual(floor_result["top_blocks"][0]["block"], "minecraft:stone")
-            for result in (map_result, top_result, floor_result, slice_result, template_result):
+            for result in (map_result, sampled_result, top_result, floor_result, slice_result, template_result):
                 path = Path(result["path"])
                 self.assertTrue(path.exists())
                 image = Image.open(path)
                 self.assertIsNotNone(image.getbbox())
+
+    def test_template_preview_uses_nearest_projected_block(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config, world, _ = self._basic_world(tmp)
+            template_path = world / "generated" / "demo" / "structures" / "stack.nbt"
+            template_path.parent.mkdir(parents=True)
+            nbtlib.File({
+                "DataVersion": nbtlib.Int(3465),
+                "size": nbtlib.List[nbtlib.Int]([nbtlib.Int(1), nbtlib.Int(2), nbtlib.Int(1)]),
+                "palette": nbtlib.List[nbtlib.Compound]([
+                    nbtlib.Compound({"Name": nbtlib.String("minecraft:sand")}),
+                    nbtlib.Compound({"Name": nbtlib.String("minecraft:stone")}),
+                ]),
+                "blocks": nbtlib.List[nbtlib.Compound]([
+                    nbtlib.Compound({
+                        "pos": nbtlib.List[nbtlib.Int]([nbtlib.Int(0), nbtlib.Int(0), nbtlib.Int(0)]),
+                        "state": nbtlib.Int(0),
+                    }),
+                    nbtlib.Compound({
+                        "pos": nbtlib.List[nbtlib.Int]([nbtlib.Int(0), nbtlib.Int(1), nbtlib.Int(0)]),
+                        "state": nbtlib.Int(1),
+                    }),
+                ]),
+                "entities": nbtlib.List[nbtlib.Compound](),
+            }).save(template_path, gzipped=True)
+            result = render_template_preview(config, "world/generated/demo/structures/stack.nbt")
+            self.assertEqual(result["blocks_projected"], 1)
+            self.assertEqual(result["top_blocks"][0]["block"], "minecraft:stone")
+
+    def test_map_preview_lazily_decompresses_only_needed_chunks(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = ServerConfig(Path(tmp).resolve())
+            world = Path(tmp) / "world"
+            self._write_single_palette_chunk(world, "minecraft:stone", cx=0)
+            self._write_single_palette_chunk(world, "minecraft:sand", cx=1)
+            calls = 0
+            original_decompress = zlib.decompress
+
+            def counted_decompress(*args, **kwargs):
+                nonlocal calls
+                calls += 1
+                return original_decompress(*args, **kwargs)
+
+            with mock.patch("mc_world_mcp.preview.zlib.decompress", counted_decompress):
+                result = render_map_preview(config, 0, 0, 0, 0, "0")
+            self.assertEqual(calls, 1)
+            self.assertEqual(result["top_blocks"][0]["block"], "minecraft:stone")
 
 
 if __name__ == "__main__":

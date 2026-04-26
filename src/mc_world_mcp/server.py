@@ -508,9 +508,9 @@ def place_template_to_region(template_path: str, x: int, y: int, z: int, dimensi
 
 
 @mcp.tool()
-def render_map_preview(x1: int, z1: int, x2: int, z2: int, y_mode: str = "surface", dimension: str = "overworld") -> str:
+def render_map_preview(x1: int, z1: int, x2: int, z2: int, y_mode: str = "surface", dimension: str = "overworld", sample: int = 1) -> str:
     """Render a top-down offline PNG preview from region data."""
-    return dumps(with_support(CONFIG, preview_render_map_preview(CONFIG, x1, z1, x2, z2, y_mode, dimension)))
+    return dumps(with_support(CONFIG, preview_render_map_preview(CONFIG, x1, z1, x2, z2, y_mode, dimension, sample)))
 
 
 @mcp.tool()

@@ -56,6 +56,35 @@ Read tools are allowed while the server is running.
 - Preview: offline PNG map, slice, and structure-template previews under `backup/mc_world_mcp/previews/`
 - Safety: offline checks, backup listing, backup restore
 
+## Optional Preview Acceleration
+
+Preview rendering has a pure-Python fallback and can optionally use a compiled
+Cython module for hot loops such as block-state index decoding, chunk surface
+projection, and structure-template projection.
+
+On Windows, compile the extension in place:
+
+```powershell
+python setup.py build_ext --inplace
+```
+
+The source distribution includes generated C code, so Cython is optional for
+normal builds. Install `mc-world-mcp[preview-accel]` or `python -m pip install
+Cython` only when you want to regenerate the C file from `_preview_accel.pyx`.
+For wheel builds, set `MC_WORLD_MCP_BUILD_ACCEL=1` to opt in to compiling the
+extension.
+
+This creates a platform-specific `mc_world_mcp._preview_accel.pyd` next to the
+Python sources. If the compiled module is present, preview tools load it
+automatically; otherwise they continue using the pure-Python implementation.
+Building the `.pyd` requires the Microsoft C++ Build Tools matching the active
+Python version.
+
+The repository may include a prebuilt
+`src/mc_world_mcp/_preview_accel.cp311-win_amd64.pyd` for Windows x64 CPython
+3.11. Other Python versions, platforms, or architectures should rebuild the
+extension locally.
+
 ## Assistant MCP Instructions
 
 AI assistants working on this Minecraft workspace should use MCP tools in this order:
@@ -139,7 +168,7 @@ Useful checks:
 
 Offline visual checks:
 
-- `render_map_preview(x1, z1, x2, z2, "surface")` renders a top-down PNG. `y_mode` also accepts `top`, `ocean_floor`, `seafloor`, or an integer Y level such as `"26"`.
+- `render_map_preview(x1, z1, x2, z2, "surface")` renders a top-down PNG. `y_mode` also accepts `top`, `ocean_floor`, `seafloor`, or an integer Y level such as `"26"`. Previews can render up to 1,048,576 output pixels; pass `sample=2` or higher for faster downsampled overviews of larger areas.
 - `render_slice_preview("x", fixed, min_z, max_z, min_y, max_y)` renders a vertical slice.
 - `render_template_preview(template_path)` renders a structure `.nbt` projection.
 

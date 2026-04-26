@@ -1,5 +1,7 @@
 __pycache__/
 *.py[cod]
+*.pyd
+!src/mc_world_mcp/_preview_accel.cp311-win_amd64.pyd
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/

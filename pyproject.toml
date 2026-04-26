@@ -14,6 +14,9 @@ dependencies = [
   "Pillow>=10.0.0",
 ]
 
+[project.optional-dependencies]
+preview-accel = ["Cython>=3.0"]
+
 [project.scripts]
 mc-world-mcp = "mc_world_mcp.server:main"
 

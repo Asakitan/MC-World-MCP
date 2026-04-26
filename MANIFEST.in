@@ -1,0 +1,2 @@
+include src/mc_world_mcp/*.pyx
+include src/mc_world_mcp/*.c
