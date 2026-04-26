@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mc-world-mcp"
+version = "0.1.0"
+description = "Offline-only MCP tools for Minecraft server worlds, NBT, datapacks, templates, and Anvil regions."
+requires-python = ">=3.11"
+dependencies = [
+  "fastmcp>=2.12.0",
+  "nbtlib>=2.0.0",
+  "amulet-nbt>=2.1.0",
+]
+
+[project.scripts]
+mc-world-mcp = "mc_world_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
