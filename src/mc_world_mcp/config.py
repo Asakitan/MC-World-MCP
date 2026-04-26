@@ -23,6 +23,9 @@ def load_config() -> ServerConfig:
     if env_root:
         root = Path(env_root)
     else:
-        root = Path(__file__).resolve().parents[3]
+        cwd = Path.cwd()
+        if (cwd / "server.properties").exists() and (cwd / "world").exists():
+            root = cwd
+        else:
+            root = Path(__file__).resolve().parents[3]
     return ServerConfig(root=root.resolve())
-
