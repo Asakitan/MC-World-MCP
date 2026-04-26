@@ -41,6 +41,8 @@ def list_datapacks(config: ServerConfig) -> list[dict[str, Any]]:
 
 def iter_datapack_files(config: ServerConfig):
     root = datapacks_dir(config)
+    if not root.exists():
+        return
     for dp in sorted(root.iterdir(), key=lambda p: p.name.lower()):
         if dp.is_dir():
             for file in dp.rglob("*"):
@@ -60,6 +62,8 @@ def validate_datapacks(config: ServerConfig) -> dict[str, Any]:
     errors: list[dict[str, str]] = []
     resource_keys: dict[str, list[str]] = {}
     root = datapacks_dir(config)
+    if not root.exists():
+        return {"json_errors": errors, "unexpected_duplicate_resources": {}}
     for dp in sorted(root.iterdir(), key=lambda p: p.name.lower()):
         if dp.is_dir():
             for file in dp.rglob("*"):

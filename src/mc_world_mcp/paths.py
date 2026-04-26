@@ -9,6 +9,7 @@ READ_PREFIXES = (
     "server.properties",
     "logs",
     "config",
+    "mods",
     "plugins",
     "world",
     "whitelist.json",

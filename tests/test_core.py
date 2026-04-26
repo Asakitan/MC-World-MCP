@@ -21,9 +21,9 @@ from mc_world_mcp.nbt_io import get_at_path, parse_path, read_nbt_file, write_nb
 from mc_world_mcp.paths import resolve_under_root
 from mc_world_mcp.preview import render_map_preview, render_slice_preview, render_template_preview
 from mc_world_mcp.safety import assert_offline, java_processes
-from mc_world_mcp.source_worlds import compare_world_chunks, import_chunks_from_world, list_local_worlds, worldgen_source_plan
+from mc_world_mcp.source_worlds import compare_world_chunks, import_chunks_from_world, list_local_worlds, simulate_worldgen_generation, worldgen_source_plan
 from mc_world_mcp.world_ops import add_block_entity, add_entity, write_chunk_nbt_value
-from mc_world_mcp.worldgen import validate_worldgen_references
+from mc_world_mcp.worldgen import list_generation_interfaces, validate_worldgen_references
 
 
 class CoreTests(unittest.TestCase):
@@ -224,6 +224,51 @@ class CoreTests(unittest.TestCase):
                 )
             self.assertTrue(result["ok"])
             self.assertEqual(get_block(config, 0, 0, 0), "minecraft:stone")
+
+    def test_worldgen_simulation_reports_source_world_shape(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            (root / "server.properties").write_text("level-name=world\n", encoding="utf-8")
+            config = ServerConfig(root)
+            self._write_single_palette_chunk(root / "world", "minecraft:air")
+            self._write_single_palette_chunk(root / "world_regen_source", "minecraft:tube_coral_block")
+
+            result = simulate_worldgen_generation(config, "world_regen_source", 0, 0, 0, 0, sample=8)
+
+            self.assertTrue(result["ok"])
+            self.assertTrue(result["success"])
+            self.assertTrue(result["complete_requested_area"])
+            self.assertEqual(result["generated_chunks"], 1)
+            self.assertEqual(result["generation_signal"]["strength"], "medium")
+            self.assertEqual(result["appearance"]["notable_blocks"][0]["block"], "minecraft:tube_coral_block")
+            self.assertEqual(result["appearance"]["ocean_floor_y"]["max"], 15)
+            self.assertTrue(Path(result["previews"]["ocean_floor"]["path"]).exists())
+            self.assertIn("datapacks", result["generation_interfaces"])
+
+    def test_generation_interfaces_include_datapacks_mods_and_plugins(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            config = ServerConfig(root)
+            dp = root / "world" / "datapacks" / "Demo"
+            (dp / "data" / "demo" / "worldgen" / "structure").mkdir(parents=True)
+            (dp / "pack.mcmeta").write_text('{"pack":{"pack_format":15,"description":"demo"}}', encoding="utf-8")
+            (dp / "data" / "demo" / "worldgen" / "structure" / "reef.json").write_text('{"type":"minecraft:jigsaw"}', encoding="utf-8")
+            (root / "mods").mkdir()
+            with zipfile.ZipFile(root / "mods" / "demo-mod.jar", "w") as zf:
+                zf.writestr("META-INF/mods.toml", "modLoader=\"javafml\"\n")
+                zf.writestr("data/demomod/forge/biome_modifier/add_reef.json", "{}")
+            (root / "plugins").mkdir()
+            with zipfile.ZipFile(root / "plugins" / "demo-plugin.jar", "w") as zf:
+                zf.writestr("plugin.yml", "name: Demo\n")
+                zf.writestr("data/demoplugin/worldgen/placed_feature/kelp.json", "{}")
+
+            result = list_generation_interfaces(config)
+
+            self.assertEqual(result["datapacks"]["worldgen_resource_count"], 1)
+            self.assertEqual(result["mods"]["worldgen_resource_count"], 1)
+            self.assertEqual(result["plugins"]["worldgen_resource_count"], 1)
+            self.assertEqual(result["mods"]["archives"][0]["metadata"], ["META-INF/mods.toml"])
+            self.assertEqual(result["plugins"]["archives"][0]["metadata"], ["plugin.yml"])
 
     def test_env_world_name_override(self) -> None:
         with tempfile.TemporaryDirectory() as tmp, mock.patch.dict("os.environ", {"MC_SERVER_ROOT": tmp, "MC_WORLD_NAME": "custom"}, clear=False):

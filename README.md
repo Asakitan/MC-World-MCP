@@ -48,7 +48,7 @@ Read tools are allowed while the server is running.
 - Source worlds: local world inventory, server-generation workflow guidance, source/target chunk comparison, and offline chunk import
 - NBT: `level.dat`, player data, world data, structure NBT
 - Datapacks: folder and zip datapack listing, validation, search, read, write
-- Worldgen: resource listing, common reference checks, and report summaries for datapack world generation
+- Worldgen: datapack/mod/plugin interface listing, resource checks, source-world simulation, and report summaries
 - Regions: scan, inspect chunks, get/read/set/fill/replace blocks, block state strings
 - World diagnostics: dimensions, world coverage, chunk palettes, log issue grouping
 - World data: block entities, external entity regions, POI regions, biome boxes, heightmap clearing, chunk pruning
@@ -58,8 +58,9 @@ Read tools are allowed while the server is running.
 
 ## Optional Preview Acceleration
 
-Preview rendering has a pure-Python fallback and can optionally use a compiled
-Cython module for hot loops such as block-state index decoding, chunk surface
+Preview rendering and source-world generation simulation have pure-Python
+fallbacks and can optionally use a compiled Cython module for hot loops such as
+block-state index decoding, chunk surface projection, source-world floor
 projection, and structure-template projection.
 
 On Windows, compile the extension in place:
@@ -75,8 +76,9 @@ For wheel builds, set `MC_WORLD_MCP_BUILD_ACCEL=1` to opt in to compiling the
 extension.
 
 This creates a platform-specific `mc_world_mcp._preview_accel.pyd` next to the
-Python sources. If the compiled module is present, preview tools load it
-automatically; otherwise they continue using the pure-Python implementation.
+Python sources. If the compiled module is present, preview and simulation tools
+load it automatically; otherwise they continue using the pure-Python
+implementation.
 Building the `.pyd` requires the Microsoft C++ Build Tools matching the active
 Python version.
 
@@ -108,7 +110,7 @@ AI assistants working on this Minecraft workspace should use MCP tools in this o
 3. Use `mc-world` for local server and world operations.
    - Start with `server_summary()`, `detect_world_version()`, `world_summary()`, and `check_offline_safety()`.
    - For datapacks, use `list_datapacks()`, `validate_datapacks()`, `search_datapack_files()`, `read_datapack_file()`, and `write_datapack_file()`.
-   - For worldgen diagnosis, use `worldgen_report()`, `list_worldgen_resources()`, and `validate_worldgen_references()`.
+   - For worldgen diagnosis, use `list_generation_interfaces()`, `worldgen_report()`, `list_worldgen_resources()`, and `validate_worldgen_references()`.
    - For logs, use `analyze_latest_log()`, `read_server_log()`, and `grep_server_log()`.
    - For Anvil data, use `scan_regions()`, `scan_world_coverage()`, `inspect_chunk()`, `summarize_chunk_palette()`, `get_block()`, `read_block_box()`, `set_block()`, `fill_blocks()`, and `replace_blocks()`.
    - For NBT edits, use `read_level_dat()`, `write_level_dat_value()`, `read_nbt_file()`, `write_nbt_value()`, and `write_chunk_nbt_value()`.
@@ -124,16 +126,17 @@ AI assistants working on this Minecraft workspace should use MCP tools in this o
    - World writes are supported only for Java Anvil `DataVersion` 3465.
    - Every write creates a backup under `backup/mc_world_mcp/<timestamp>/` with `manifest.json`.
 
-5. Use source worlds for real datapack or mod worldgen.
-   - `mc-world` does not execute biome modifiers, jigsaw placement, datapack worldgen, or mod worldgen.
+5. Use source worlds for real datapack, mod, or plugin worldgen.
+   - `mc-world` does not execute biome modifiers, jigsaw placement, datapack worldgen, mod worldgen, or plugin worldgen.
+   - `list_generation_interfaces()` exposes the open datapack, mod jar, and plugin jar generation inputs visible to the server.
    - Generate chunks in Minecraft/Arclight first, then stop the server.
    - Select the target world with `MC_WORLD_NAME`, for example `MC_WORLD_NAME=world`.
-   - Use `worldgen_source_plan("world_regen_source")`, `list_local_worlds()`, and `compare_world_chunks(...)` before importing.
+   - Use `worldgen_source_plan("world_regen_source")`, `list_local_worlds()`, `simulate_worldgen_generation(...)`, and `compare_world_chunks(...)` before importing.
    - Use `import_chunks_from_world("world_regen_source", chunks, confirm=true)` only after confirming the source and target are different worlds.
 
 6. Recommended diagnosis workflows.
    - Datapack load issue: `validate_datapacks()` -> `worldgen_report()` -> `analyze_latest_log()` -> `search_datapack_files()` -> `read_datapack_file()`.
-   - Structure generation issue: `worldgen_report()` -> `list_worldgen_resources(type="worldgen/structure")` -> `validate_worldgen_references()` -> `read_level_dat("Data.WorldGenSettings")` -> `grep_server_log("structure")`.
+   - Structure generation issue: `list_generation_interfaces()` -> `worldgen_report()` -> `list_worldgen_resources(type="worldgen/structure")` -> `validate_worldgen_references()` -> `simulate_worldgen_generation(...)` -> `read_level_dat("Data.WorldGenSettings")` -> `grep_server_log("structure")`.
    - Map visual check: `scan_world_coverage()` -> `render_map_preview(..., "top")` -> `render_map_preview(..., "ocean_floor")` -> `inspect_chunk()` or `summarize_chunk_palette()`.
    - Offline edit: `check_offline_safety()` -> create or rely on automatic backup -> perform one focused write -> render or inspect the affected area.
 
@@ -144,10 +147,11 @@ For the current Arclight 1.20.1 server workspace, `server.properties` uses
 tools automatically target that active world instead of the default `world/`.
 
 This MCP still does not execute Minecraft worldgen. Datapack biome modifiers,
-jigsaw structures, mod structures, coral placement, and sand dunes must be
-generated by Minecraft/Arclight in a source world first. The MCP can then inspect
-that generated source world offline and copy selected generated chunks into the
-active target world.
+jigsaw structures, mod structures, plugin-provided generation, coral placement,
+and sand dunes must be generated by Minecraft/Arclight in a source world first.
+The MCP can then inspect that generated source world offline, simulate the result
+from the generated files, and copy selected generated chunks into the active
+target world.
 
 For import work, launch the MCP with the target world selected, for example
 `MC_WORLD_NAME=world`, and pass the generated source world as
@@ -157,9 +161,11 @@ different local directories.
 Useful checks:
 
 - `worldgen_report()` summarizes datapacks, worldgen resources, validation findings, and log-derived resource issues.
+- `list_generation_interfaces()` summarizes datapack resources plus mod/plugin jar generation interfaces and metadata.
 - `validate_worldgen_references()` finds common missing same-namespace worldgen and structure references.
 - `list_local_worlds()` lists source and target world directories under the server root.
 - `worldgen_source_plan("world_regen_source")` explains the safe source-world generation/import workflow.
+- `simulate_worldgen_generation("world_regen_source", min_cx, min_cz, max_cx, max_cz)` treats server-generated source chunks as a simulation sample, returns success/completeness signals, Cython acceleration status, block/height summaries, and preview PNG paths.
 - `compare_world_chunks("world_regen_source", min_cx, min_cz, max_cx, max_cz)` shows which generated source chunks exist and which target chunks would be overwritten.
 - `import_chunks_from_world("world_regen_source", [{"cx": 0, "cz": 0}], confirm=true)` copies terrain, entity, and POI chunk records from an already-generated source world into the active world.
 - `write_chunk_nbt_value(cx, cz, path, snbt_value)` edits one chunk NBT path while offline.

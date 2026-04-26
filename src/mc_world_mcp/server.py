@@ -36,7 +36,9 @@ from .safety import assert_offline, begin_write, java_processes
 from .source_worlds import compare_world_chunks as source_compare_world_chunks
 from .source_worlds import import_chunks_from_world as source_import_chunks_from_world
 from .source_worlds import list_local_worlds as source_list_local_worlds
+from .source_worlds import simulate_worldgen_generation as source_simulate_worldgen_generation
 from .source_worlds import worldgen_source_plan as source_worldgen_source_plan
+from .worldgen import list_generation_interfaces as wg_list_generation_interfaces
 from .templates import export_region_to_template as tmpl_export_region_to_template
 from .templates import list_structure_templates as tmpl_list_structure_templates
 from .templates import place_template_to_region as tmpl_place_template_to_region
@@ -190,6 +192,12 @@ def worldgen_source_plan(source_world_name: str = "") -> str:
 
 
 @mcp.tool()
+def simulate_worldgen_generation(source_world_name: str = "", min_cx: int = -1, min_cz: int = -1, max_cx: int = 1, max_cz: int = 1, dimension: str = "overworld", sample: int = 1, include_previews: bool = True, confirm: bool = False) -> str:
+    """Inspect a server-generated source world as a worldgen simulation sample with previews and generation signals."""
+    return dumps(source_simulate_worldgen_generation(CONFIG, source_world_name, min_cx, min_cz, max_cx, max_cz, dimension, sample, include_previews, confirm))
+
+
+@mcp.tool()
 def compare_world_chunks(source_world_name: str, min_cx: int, min_cz: int, max_cx: int, max_cz: int, dimension: str = "overworld") -> str:
     """Compare generated chunk coverage between a source world and the active target world."""
     return dumps(source_compare_world_chunks(CONFIG, source_world_name, min_cx, min_cz, max_cx, max_cz, dimension))
@@ -331,6 +339,12 @@ def validate_worldgen_references() -> str:
 def worldgen_report() -> str:
     """Summarize worldgen resources, validation findings, and log-derived issues."""
     return dumps(with_support(CONFIG, wg_worldgen_report(CONFIG)))
+
+
+@mcp.tool()
+def list_generation_interfaces(include_archive_resources: bool = True, max_archives: int = 200, max_resource_samples: int = 80) -> str:
+    """List open datapack, mod, and plugin worldgen interfaces visible to the server."""
+    return dumps(with_support(CONFIG, wg_list_generation_interfaces(CONFIG, include_archive_resources, max_archives, max_resource_samples)))
 
 
 @mcp.tool()

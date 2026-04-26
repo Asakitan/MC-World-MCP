@@ -85,6 +85,60 @@ cpdef list fill_top_projection(
     return remaining
 
 
+cpdef list fill_floor_projection(
+    list indices,
+    list palette,
+    list palette_base_names,
+    object skip,
+    list unresolved,
+    list blocks,
+    list heights,
+    int section_y,
+    int min_y,
+    int max_y,
+):
+    cdef list remaining = unresolved
+    cdef list next_remaining
+    cdef Py_ssize_t palette_len = len(palette)
+    cdef Py_ssize_t count
+    cdef Py_ssize_t i
+    cdef int ly
+    cdef int y
+    cdef int y_offset
+    cdef int column
+    cdef int palette_index
+    cdef object block
+    cdef object base_name
+
+    for ly in range(15, -1, -1):
+        count = len(remaining)
+        if count == 0:
+            break
+        next_remaining = []
+        y = section_y * 16 + ly
+        if y > max_y:
+            continue
+        if y < min_y:
+            break
+        y_offset = ly << 8
+        for i in range(count):
+            column = <int>remaining[i]
+            palette_index = <int>indices[y_offset | column]
+            if 0 <= palette_index < palette_len:
+                block = palette[palette_index]
+                base_name = palette_base_names[palette_index]
+            else:
+                block = "minecraft:air"
+                base_name = "minecraft:air"
+            if base_name in skip:
+                next_remaining.append(column)
+            else:
+                blocks[column] = block
+                heights[column] = y
+        remaining = next_remaining
+    return remaining
+
+
 cpdef list project_template_states(object template_blocks, int width, int height, int size_y, int axis_code):
     cdef Py_ssize_t pixel_count = width * height
     cdef list depths = [-1] * pixel_count

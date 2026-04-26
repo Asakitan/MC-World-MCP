@@ -17,11 +17,13 @@ Safety boundary:
 - Every write creates backup/mc_world_mcp/<timestamp>/manifest.json.
 
 Worldgen boundary:
-- This MCP does not execute datapack, jigsaw, biome modifier, or mod worldgen.
-- Generate chunks in Minecraft/Arclight first, stop the server, then inspect or import.
+- This MCP does not execute datapack, jigsaw, biome modifier, mod, or plugin worldgen.
+- Datapack interfaces remain editable through datapack tools; mod and plugin interfaces
+  are exposed by scanning local jars/configs and by server-generated source worlds.
+- Generate chunks in Minecraft/Arclight first, stop the server, then inspect, simulate, or import.
 - For source-world imports, select the target world with MC_WORLD_NAME and pass
-  the generated source world to worldgen_source_plan(), compare_world_chunks(),
-  and import_chunks_from_world(..., confirm=true).
+  the generated source world to worldgen_source_plan(), simulate_worldgen_generation(),
+  compare_world_chunks(), and import_chunks_from_world(..., confirm=true).
 """.strip()
 
 
@@ -46,7 +48,11 @@ def assistant_instruction_payload() -> dict[str, Any]:
             },
             {
                 "goal": "Datapack diagnosis",
-                "tools": ["list_datapacks", "validate_datapacks", "worldgen_report", "validate_worldgen_references", "search_datapack_files", "read_datapack_file"],
+                "tools": ["list_datapacks", "validate_datapacks", "list_generation_interfaces", "worldgen_report", "validate_worldgen_references", "search_datapack_files", "read_datapack_file"],
+            },
+            {
+                "goal": "Server-generated worldgen simulation",
+                "tools": ["list_generation_interfaces", "worldgen_source_plan", "simulate_worldgen_generation", "compare_world_chunks", "render_map_preview"],
             },
             {
                 "goal": "Logs",
@@ -75,10 +81,11 @@ def assistant_instruction_payload() -> dict[str, Any]:
         ],
         "source_world_workflow": [
             "mc-world cannot execute Minecraft worldgen logic.",
-            "Generate coral, dunes, Abyssal structures, jigsaw structures, datapack content, and mod content in Minecraft/Arclight first.",
+            "Generate coral, dunes, Abyssal structures, jigsaw structures, datapack content, mod content, and plugin content in Minecraft/Arclight first.",
             "Stop the server completely.",
             "Launch/select the target world with MC_WORLD_NAME, for example MC_WORLD_NAME=world.",
-            "Call list_local_worlds() and worldgen_source_plan('world_regen_source').",
+            "Call list_local_worlds(), list_generation_interfaces(), and worldgen_source_plan('world_regen_source').",
+            "Call simulate_worldgen_generation('world_regen_source', min_cx, min_cz, max_cx, max_cz) to inspect success signals and preview what generated.",
             "Call compare_world_chunks('world_regen_source', min_cx, min_cz, max_cx, max_cz).",
             "Only then call import_chunks_from_world('world_regen_source', chunks, confirm=true).",
         ],
@@ -94,7 +101,7 @@ def assistant_instruction_payload() -> dict[str, Any]:
             },
             {
                 "name": "Structure generation issue",
-                "steps": ["worldgen_report", "list_worldgen_resources(type='worldgen/structure')", "validate_worldgen_references", "read_level_dat('Data.WorldGenSettings')", "grep_server_log('structure')"],
+                "steps": ["list_generation_interfaces", "worldgen_report", "list_worldgen_resources(type='worldgen/structure')", "validate_worldgen_references", "simulate_worldgen_generation", "read_level_dat('Data.WorldGenSettings')", "grep_server_log('structure')"],
             },
             {
                 "name": "Map visual check",
@@ -121,6 +128,10 @@ def assistant_instruction_markdown() -> str:
         "",
         "## Source World Workflow",
         *[f"- {item}" for item in payload["source_world_workflow"]],
+        "",
+        "## Generation Interfaces",
+        "- list_generation_interfaces: summarize datapack, mod jar, and plugin jar worldgen inputs.",
+        "- simulate_worldgen_generation: inspect server-generated source chunks, Cython-accelerated when available, and return preview PNG paths.",
         "",
         "## Preview Modes",
         "- top/surface: top non-air blocks; water surfaces remain visible.",
