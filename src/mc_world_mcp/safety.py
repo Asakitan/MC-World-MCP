@@ -10,8 +10,46 @@ from pathlib import Path
 
 from .config import ServerConfig
 
+CLIENT_JAVA_MARKERS = (
+    "net.minecraft.client.main.main",
+    "com.mojang.authlib",
+    "minecraftlauncher",
+    "minecraft.launcher",
+    "launcher_profiles.json",
+    ".minecraft",
+    "--username",
+    "--uuid",
+    "--accessToken".lower(),
+    "--assetsDir".lower(),
+    "--assetIndex".lower(),
+)
 
-def java_processes() -> list[dict[str, str]]:
+SERVER_JAVA_MARKERS = (
+    "nogui",
+    "minecraft_server",
+    "server.jar",
+    "arclight",
+    "forge",
+    "neoforge",
+    "fabric-server",
+    "paper",
+    "spigot",
+    "bukkit",
+    "server.properties",
+)
+
+
+def java_processes(config: ServerConfig | None = None, include_clients: bool = False) -> list[dict[str, str]]:
+    processes = []
+    for proc in _raw_java_processes():
+        classification = _classify_java_process(proc, config)
+        proc["classification"] = classification
+        if include_clients or classification != "minecraft_client":
+            processes.append(proc)
+    return processes
+
+
+def _raw_java_processes() -> list[dict[str, str]]:
     if os.name != "nt":
         try:
             out = subprocess.run(
@@ -21,7 +59,13 @@ def java_processes() -> list[dict[str, str]]:
                 timeout=5,
                 check=False,
             )
-            return [{"process": line.strip()} for line in out.stdout.splitlines() if line.strip()]
+            results = []
+            for line in out.stdout.splitlines():
+                if not line.strip():
+                    continue
+                pid, _, command = line.strip().partition(" ")
+                results.append({"ProcessId": pid, "Name": "java", "CommandLine": command or line.strip()})
+            return results
         except Exception:
             return []
     try:
@@ -30,7 +74,7 @@ def java_processes() -> list[dict[str, str]]:
                 "powershell",
                 "-NoProfile",
                 "-Command",
-                "Get-Process java,javaw -ErrorAction SilentlyContinue | Select-Object ProcessName,Id,Path | ConvertTo-Json -Compress",
+                "Get-CimInstance Win32_Process -Filter \"Name = 'java.exe' OR Name = 'javaw.exe'\" | Select-Object Name,ProcessId,ExecutablePath,CommandLine | ConvertTo-Json -Compress",
             ],
             text=True,
             capture_output=True,
@@ -47,10 +91,33 @@ def java_processes() -> list[dict[str, str]]:
         return []
 
 
+def _classify_java_process(proc: dict[str, str], config: ServerConfig | None = None) -> str:
+    command = _process_text(proc)
+    if config is not None:
+        root = str(config.root.resolve()).lower()
+        world = str(config.world.resolve()).lower()
+        if root in command or world in command:
+            return "minecraft_server"
+    if any(marker in command for marker in CLIENT_JAVA_MARKERS):
+        return "minecraft_client"
+    if any(marker in command for marker in SERVER_JAVA_MARKERS):
+        return "minecraft_server"
+    return "unknown_java"
+
+
+def _process_text(proc: dict[str, str]) -> str:
+    parts = []
+    for key in ("process", "Name", "ProcessName", "ExecutablePath", "Path", "CommandLine"):
+        value = proc.get(key)
+        if value is not None:
+            parts.append(str(value))
+    return " ".join(parts).replace("\\", "/").lower()
+
+
 def assert_offline(config: ServerConfig) -> None:
-    procs = java_processes()
+    procs = java_processes(config)
     if procs:
-        raise RuntimeError(f"refusing write while Java process is running: {procs}")
+        raise RuntimeError(f"refusing write while server or unknown Java process is running: {procs}")
     lock = config.world / "session.lock"
     if lock.exists():
         try:

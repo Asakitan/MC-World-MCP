@@ -35,7 +35,7 @@ hardcoded `world/`. Set `MC_WORLD_NAME` to override this explicitly.
 All write tools:
 
 - reject paths outside `MC_SERVER_ROOT`
-- reject writes when a `java` or `javaw` process is running
+- reject writes when a server or unknown `java`/`javaw` process is running; recognized Minecraft client Java processes are ignored
 - reject Java world writes unless the selected world is DataVersion 3465
 - back up every modified file under `backup/mc_world_mcp/<timestamp>/`
 - write a `manifest.json` describing the changed files
@@ -55,6 +55,58 @@ Read tools are allowed while the server is running.
 - Templates: list/read/write `.nbt` structure templates, export/place blocks with block entities and best-effort entities
 - Preview: offline PNG map, slice, and structure-template previews under `backup/mc_world_mcp/previews/`
 - Safety: offline checks, backup listing, backup restore
+
+## Assistant MCP Instructions
+
+AI assistants working on this Minecraft workspace should use MCP tools in this order:
+
+0. Read MCP-provided instructions.
+   - The `mc-world` server exposes this guidance in its server instructions.
+   - Call `assistant_instructions()` first when tool choice or workflow is unclear.
+   - MCP clients that support resources can read `mc-world://assistant-instructions`.
+   - MCP clients that support prompts can use `mc_world_assistant_instructions`.
+
+1. Read project context first.
+   - Read Copilot repo memory when available, especially project overview, datapacks, tool reference, gotchas, change history, and MCP server notes.
+   - Then read local files such as `README.md`, `.github/copilot-instructions.md`, `server.properties`, datapack files, and logs as needed.
+
+2. Use `minecode` for Minecraft reference lookups.
+   - Command syntax: call `get_wiki_command_info`, then `spyglass_get_commands` when exact 1.20.1 syntax matters.
+   - IDs and registries: call `spyglass_get_registries` for blocks, items, entities, biomes, enchantments, and other registries.
+   - Vanilla JSON: call Misode tools such as `misode_get_preset_data`, `misode_get_presets`, `misode_get_loot_tables`, and `misode_get_recipes`.
+   - Wiki background: call `search_wiki`, then `get_wiki_page_content`.
+
+3. Use `mc-world` for local server and world operations.
+   - Start with `server_summary()`, `detect_world_version()`, `world_summary()`, and `check_offline_safety()`.
+   - For datapacks, use `list_datapacks()`, `validate_datapacks()`, `search_datapack_files()`, `read_datapack_file()`, and `write_datapack_file()`.
+   - For worldgen diagnosis, use `worldgen_report()`, `list_worldgen_resources()`, and `validate_worldgen_references()`.
+   - For logs, use `analyze_latest_log()`, `read_server_log()`, and `grep_server_log()`.
+   - For Anvil data, use `scan_regions()`, `scan_world_coverage()`, `inspect_chunk()`, `summarize_chunk_palette()`, `get_block()`, `read_block_box()`, `set_block()`, `fill_blocks()`, and `replace_blocks()`.
+   - For NBT edits, use `read_level_dat()`, `write_level_dat_value()`, `read_nbt_file()`, `write_nbt_value()`, and `write_chunk_nbt_value()`.
+   - For entities, block entities, POI, biomes, and heightmaps, use `list_entities()`, `add_entity()`, `edit_entity()`, `delete_entities()`, `add_block_entity()`, `edit_block_entity()`, `list_poi()`, `delete_poi()`, `set_biome_box()`, and `refresh_heightmaps()`.
+   - For structures, use `list_structure_templates()`, `read_structure_template()`, `write_structure_template()`, `write_structure_template_value()`, `export_region_to_template()`, and `place_template_to_region()`.
+   - For previews, use `render_map_preview()`, `render_slice_preview()`, and `render_template_preview()`.
+   - For backups, use `create_backup()`, `list_backups()`, and `restore_backup_manifest()`.
+
+4. Respect the `mc-world` safety boundary.
+   - Do not use RCON, sockets, online player queries, or server start/stop controls.
+   - Read tools may run while the server is online.
+   - Write tools require the server to be offline and will reject writes while server or unknown `java`/`javaw` processes are running. Recognized Minecraft client Java processes are ignored.
+   - World writes are supported only for Java Anvil `DataVersion` 3465.
+   - Every write creates a backup under `backup/mc_world_mcp/<timestamp>/` with `manifest.json`.
+
+5. Use source worlds for real datapack or mod worldgen.
+   - `mc-world` does not execute biome modifiers, jigsaw placement, datapack worldgen, or mod worldgen.
+   - Generate chunks in Minecraft/Arclight first, then stop the server.
+   - Select the target world with `MC_WORLD_NAME`, for example `MC_WORLD_NAME=world`.
+   - Use `worldgen_source_plan("world_regen_source")`, `list_local_worlds()`, and `compare_world_chunks(...)` before importing.
+   - Use `import_chunks_from_world("world_regen_source", chunks, confirm=true)` only after confirming the source and target are different worlds.
+
+6. Recommended diagnosis workflows.
+   - Datapack load issue: `validate_datapacks()` -> `worldgen_report()` -> `analyze_latest_log()` -> `search_datapack_files()` -> `read_datapack_file()`.
+   - Structure generation issue: `worldgen_report()` -> `list_worldgen_resources(type="worldgen/structure")` -> `validate_worldgen_references()` -> `read_level_dat("Data.WorldGenSettings")` -> `grep_server_log("structure")`.
+   - Map visual check: `scan_world_coverage()` -> `render_map_preview(..., "top")` -> `render_map_preview(..., "ocean_floor")` -> `inspect_chunk()` or `summarize_chunk_palette()`.
+   - Offline edit: `check_offline_safety()` -> create or rely on automatic backup -> perform one focused write -> render or inspect the affected area.
 
 ## Current Server Workflow
 
@@ -87,7 +139,7 @@ Useful checks:
 
 Offline visual checks:
 
-- `render_map_preview(x1, z1, x2, z2, "surface")` renders a top-down PNG.
+- `render_map_preview(x1, z1, x2, z2, "surface")` renders a top-down PNG. `y_mode` also accepts `top`, `ocean_floor`, `seafloor`, or an integer Y level such as `"26"`.
 - `render_slice_preview("x", fixed, min_z, max_z, min_y, max_y)` renders a vertical slice.
 - `render_template_preview(template_path)` renders a structure `.nbt` projection.
 

@@ -12,18 +12,64 @@ import nbtlib
 from PIL import Image
 
 from mc_world_mcp.anvil import RegionFile, fill_blocks, get_block, region_coords, set_block
+from mc_world_mcp.assistant_guidance import SERVER_INSTRUCTIONS, assistant_instruction_markdown, assistant_instruction_payload
 from mc_world_mcp.compat import detect_world_info
 from mc_world_mcp.config import ServerConfig, load_config
 from mc_world_mcp.datapacks import read_datapack_file, search_datapack_files, validate_datapacks
 from mc_world_mcp.nbt_io import get_at_path, parse_path, read_nbt_file, write_nbt_value
 from mc_world_mcp.paths import resolve_under_root
 from mc_world_mcp.preview import render_map_preview, render_slice_preview, render_template_preview
+from mc_world_mcp.safety import assert_offline, java_processes
 from mc_world_mcp.source_worlds import compare_world_chunks, import_chunks_from_world, list_local_worlds, worldgen_source_plan
 from mc_world_mcp.world_ops import add_block_entity, add_entity, write_chunk_nbt_value
 from mc_world_mcp.worldgen import validate_worldgen_references
 
 
 class CoreTests(unittest.TestCase):
+    def test_assistant_guidance_is_mcp_visible_content(self) -> None:
+        payload = assistant_instruction_payload()
+        self.assertIn("assistant_instructions", SERVER_INSTRUCTIONS)
+        self.assertEqual(payload["tool_order"][0]["tools"][0], "server_summary")
+        self.assertIn("Source World Workflow", assistant_instruction_markdown())
+
+    def test_java_process_filter_ignores_minecraft_client(self) -> None:
+        raw = [
+            {
+                "Name": "javaw.exe",
+                "ProcessId": 11,
+                "CommandLine": r"C:\Java\bin\javaw.exe -Dminecraft.launcher.brand=minecraft-launcher net.minecraft.client.main.Main --username Player",
+            },
+            {
+                "Name": "java.exe",
+                "ProcessId": 12,
+                "CommandLine": r"C:\Java\bin\java.exe -jar arclight-forge-1.20.1.jar nogui",
+            },
+            {
+                "Name": "java.exe",
+                "ProcessId": 13,
+                "CommandLine": r"C:\Java\bin\java.exe -jar custom-tool.jar",
+            },
+        ]
+        with mock.patch("mc_world_mcp.safety._raw_java_processes", return_value=raw):
+            blocking = java_processes()
+            all_processes = java_processes(include_clients=True)
+        self.assertEqual([item["ProcessId"] for item in blocking], [12, 13])
+        self.assertEqual(all_processes[0]["classification"], "minecraft_client")
+        self.assertEqual(blocking[0]["classification"], "minecraft_server")
+        self.assertEqual(blocking[1]["classification"], "unknown_java")
+
+    def test_assert_offline_allows_minecraft_client_java(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = ServerConfig(Path(tmp).resolve())
+            config.world.mkdir()
+            raw = [{
+                "Name": "javaw.exe",
+                "ProcessId": 11,
+                "CommandLine": r"C:\Java\bin\javaw.exe net.minecraft.client.main.Main --username Player --assetsDir C:\Users\me\AppData\Roaming\.minecraft\assets",
+            }]
+            with mock.patch("mc_world_mcp.safety._raw_java_processes", return_value=raw):
+                assert_offline(config)
+
     def _basic_world(self, tmp: str) -> tuple[ServerConfig, Path, RegionFile]:
         config = ServerConfig(Path(tmp).resolve())
         world = Path(tmp) / "world"
@@ -275,7 +321,10 @@ class CoreTests(unittest.TestCase):
             config, world, _ = self._basic_world(tmp)
             with mock.patch("mc_world_mcp.safety.java_processes", return_value=[]):
                 set_block(config, 0, 0, 0, "minecraft:stone")
+                set_block(config, 0, 1, 0, "minecraft:water")
             map_result = render_map_preview(config, 0, 0, 1, 1, "0")
+            top_result = render_map_preview(config, 0, 0, 0, 0, "top")
+            floor_result = render_map_preview(config, 0, 0, 0, 0, "ocean_floor")
             slice_result = render_slice_preview(config, "x", 0, 0, 1, 0, 1)
             template_path = world / "generated" / "demo" / "structures" / "tiny.nbt"
             template_path.parent.mkdir(parents=True)
@@ -292,7 +341,9 @@ class CoreTests(unittest.TestCase):
                 "entities": nbtlib.List[nbtlib.Compound](),
             }).save(template_path, gzipped=True)
             template_result = render_template_preview(config, "world/generated/demo/structures/tiny.nbt")
-            for result in (map_result, slice_result, template_result):
+            self.assertEqual(top_result["top_blocks"][0]["block"], "minecraft:water")
+            self.assertEqual(floor_result["top_blocks"][0]["block"], "minecraft:stone")
+            for result in (map_result, top_result, floor_result, slice_result, template_result):
                 path = Path(result["path"])
                 self.assertTrue(path.exists())
                 image = Image.open(path)

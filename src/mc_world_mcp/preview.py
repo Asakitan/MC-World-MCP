@@ -14,6 +14,9 @@ from .paths import resolve_under_root
 from .templates import _palette_entry_to_string
 
 AIR_BLOCKS = {"minecraft:air", "minecraft:cave_air", "minecraft:void_air"}
+WATER_BLOCKS = {"minecraft:water"}
+SURFACE_MODES = {"surface", "top", "heightmap"}
+OCEAN_FLOOR_MODES = {"ocean_floor", "oceanfloor", "seafloor", "sea_floor", "floor"}
 
 BLOCK_COLORS = {
     "minecraft:air": (0, 0, 0),
@@ -58,6 +61,7 @@ def render_map_preview(
     y_mode: str = "surface",
     dimension: str = "overworld",
 ) -> dict[str, Any]:
+    y_mode = _normalize_y_mode(y_mode)
     min_x, max_x = sorted((x1, x2))
     min_z, max_z = sorted((z1, z2))
     width = max_x - min_x + 1
@@ -188,12 +192,22 @@ def color_for_block(block: str) -> tuple[int, int, int]:
 
 
 def _surface_block(config: ServerConfig, x: int, z: int, y_mode: str, dimension: str, chunk_cache: dict[tuple[int, int], Any | None]) -> str:
-    if y_mode != "surface":
+    if y_mode.isdecimal() or (y_mode.startswith("-") and y_mode[1:].isdecimal()):
         return _get_block_cached(config, x, int(y_mode), z, dimension, chunk_cache)
     cx, cz = x >> 4, z >> 4
     chunk = _load_chunk_cached(config, cx, cz, dimension, chunk_cache)
     if chunk is None:
         return "minecraft:air"
+    if y_mode in OCEAN_FLOOR_MODES:
+        return _top_block_matching(chunk, x, z, skip=AIR_BLOCKS | WATER_BLOCKS)
+    if y_mode not in SURFACE_MODES:
+        raise ValueError(
+            "y_mode must be 'surface', 'top', 'ocean_floor', 'seafloor', or an integer Y level"
+        )
+    return _top_block_matching(chunk, x, z, skip=AIR_BLOCKS)
+
+
+def _top_block_matching(chunk: Any, x: int, z: int, skip: set[str]) -> str:
     for section in sorted(chunk.get("sections", []), key=lambda item: int(item.get("Y", -999)), reverse=True):
         block_states = section.get("block_states")
         if not block_states:
@@ -203,9 +217,16 @@ def _surface_block(config: ServerConfig, x: int, z: int, y_mode: str, dimension:
         for y in range(sy * 16 + 15, sy * 16 - 1, -1):
             idx = ((y & 15) << 8) | ((z & 15) << 4) | (x & 15)
             block = palette_index_to_block(section, indices[idx])
-            if block.split("[", 1)[0] not in AIR_BLOCKS:
+            if block.split("[", 1)[0] not in skip:
                 return block
     return "minecraft:air"
+
+
+def _normalize_y_mode(y_mode: str) -> str:
+    mode = str(y_mode).strip().lower().replace("-", "_")
+    if mode == "":
+        return "surface"
+    return mode
 
 
 def _get_block_cached(config: ServerConfig, x: int, y: int, z: int, dimension: str, chunk_cache: dict[tuple[int, int], Any | None]) -> str:

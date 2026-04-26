@@ -17,6 +17,7 @@ from .anvil import read_block_box as anvil_read_block_box
 from .anvil import scan_regions as anvil_scan_regions
 from .anvil import set_block as anvil_set_block
 from .anvil import summarize_chunk_palette as anvil_summarize_chunk_palette
+from .assistant_guidance import SERVER_INSTRUCTIONS, assistant_instruction_markdown, assistant_instruction_payload
 from .compat import detect_world_info, with_support
 from .config import load_config
 from .datapacks import list_datapacks as dp_list_datapacks
@@ -66,11 +67,7 @@ CONFIG = load_config()
 
 mcp = FastMCP(
     "mc-world",
-    instructions=(
-        "Offline-only Minecraft server/world MCP. No RCON, no sockets, no online player commands. "
-        "Use it for local server files, NBT, datapacks, structure templates, logs, backups, and Anvil region edits. "
-        "All write tools require the server to be offline and create backups."
-    ),
+    instructions=SERVER_INSTRUCTIONS,
 )
 
 
@@ -82,12 +79,47 @@ def server_properties() -> dict[str, str]:
     return CONFIG.server_properties
 
 
+def java_safety_summary() -> dict[str, Any]:
+    all_processes = java_processes(CONFIG, include_clients=True)
+    blocking = [proc for proc in all_processes if proc.get("classification") != "minecraft_client"]
+    ignored_clients = [proc for proc in all_processes if proc.get("classification") == "minecraft_client"]
+    return {
+        "blocking_java_processes": blocking,
+        "ignored_client_java_processes": ignored_clients,
+    }
+
+
+@mcp.tool()
+def assistant_instructions() -> str:
+    """Read this first: return mc-world MCP tool order, safety rules, and source-world workflow guidance."""
+    return dumps(assistant_instruction_payload())
+
+
+@mcp.resource(
+    "mc-world://assistant-instructions",
+    name="mc-world assistant instructions",
+    description="Read this first for mc-world MCP tool order, safety rules, preview modes, and source-world workflow.",
+    mime_type="text/markdown",
+)
+def assistant_instructions_resource() -> str:
+    return assistant_instruction_markdown()
+
+
+@mcp.prompt(
+    name="mc_world_assistant_instructions",
+    description="Prompt instructions for assistants using the mc-world MCP server.",
+)
+def assistant_instructions_prompt() -> str:
+    return assistant_instruction_markdown()
+
+
 @mcp.tool()
 def server_summary() -> str:
     """Return a local summary of the configured Minecraft server root."""
     props = server_properties()
     world = CONFIG.root / props.get("level-name", "world")
     info = detect_world_info(CONFIG).as_dict()
+    java_summary = java_safety_summary()
     return dumps({
         "version": __version__,
         **info,
@@ -101,7 +133,8 @@ def server_summary() -> str:
         "server_properties_world_exists": world.exists(),
         "datapacks": len(list((CONFIG.world / "datapacks").iterdir())) if (CONFIG.world / "datapacks").exists() else 0,
         "logs_latest_exists": (CONFIG.root / "logs" / "latest.log").exists(),
-        "java_processes": java_processes(),
+        **java_summary,
+        "java_processes": java_summary["blocking_java_processes"],
     })
 
 
@@ -115,7 +148,14 @@ def check_offline_safety() -> str:
     except Exception as exc:
         ok = False
         error = str(exc)
-    return dumps(with_support(CONFIG, {"ok": ok, "error": error, "java_processes": java_processes(), "world": str(CONFIG.world)}))
+    java_summary = java_safety_summary()
+    return dumps(with_support(CONFIG, {
+        "ok": ok,
+        "error": error,
+        "world": str(CONFIG.world),
+        **java_summary,
+        "java_processes": java_summary["blocking_java_processes"],
+    }))
 
 
 @mcp.tool()
