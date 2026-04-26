@@ -16,6 +16,11 @@ from .nbt_io import parse_chunk_nbt, write_chunk_nbt
 from .paths import world_dimension_path
 from .safety import begin_write
 
+try:
+    from . import _preview_accel as _PREVIEW_ACCEL
+except Exception:
+    _PREVIEW_ACCEL = None
+
 REGION_SIZE = 32
 SECTION_SIZE = 16
 BLOCK_STATE_RE = re.compile(r"^(?P<name>[a-z0-9_.:-]+)(?:\[(?P<props>.*)\])?$")
@@ -223,6 +228,8 @@ def unsigned_to_signed(value: int) -> int:
 
 
 def decode_indices(block_states) -> list[int]:
+    if _PREVIEW_ACCEL is not None and hasattr(_PREVIEW_ACCEL, "decode_indices"):
+        return _PREVIEW_ACCEL.decode_indices(block_states.get("data"), len(block_states["palette"]))
     palette = block_states["palette"]
     data = block_states.get("data")
     if data is None:
@@ -237,6 +244,24 @@ def decode_indices(block_states) -> list[int]:
         start = (i % values_per_long) * bits
         values.append((longs[long_index] >> start) & mask if long_index < len(longs) else 0)
     return values
+
+
+def count_palette_indices(block_states) -> list[int]:
+    palette = block_states.get("palette", [])
+    if _PREVIEW_ACCEL is not None and hasattr(_PREVIEW_ACCEL, "count_palette_indices"):
+        return _PREVIEW_ACCEL.count_palette_indices(block_states.get("data"), len(palette))
+    data = block_states.get("data")
+    if not palette:
+        return []
+    if data is None:
+        counts = [0] * len(palette)
+        counts[0] = 4096
+        return counts
+    counts = [0] * len(palette)
+    for index in decode_indices(block_states):
+        if index < len(counts):
+            counts[index] += 1
+    return counts
 
 
 def encode_indices(block_states, indices: list[int]) -> None:
@@ -428,10 +453,11 @@ def summarize_chunk_palette(config: ServerConfig, cx: int, cz: int, dimension: s
         if not block_states:
             continue
         palette = block_states.get("palette", [])
-        indices = decode_indices(block_states)
-        for index in indices:
+        for index, count in enumerate(count_palette_indices(block_states)):
+            if not count:
+                continue
             block = block_state_to_string(palette[index]) if index < len(palette) else "minecraft:air"
-            counts[block] = counts.get(block, 0) + 1
+            counts[block] = counts.get(block, 0) + count
     return {
         "region": path.relative_to(config.root).as_posix(),
         "cx": cx,

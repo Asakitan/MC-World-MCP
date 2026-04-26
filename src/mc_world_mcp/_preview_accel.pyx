@@ -42,6 +42,38 @@ cpdef list decode_indices(object data, Py_ssize_t palette_size):
     return values
 
 
+cpdef list count_palette_indices(object data, Py_ssize_t palette_size):
+    cdef list counts = [0] * palette_size
+    if palette_size <= 0:
+        return counts
+    if data is None:
+        counts[0] = 4096
+        return counts
+
+    cdef int bits = _bits_for_palette(palette_size)
+    cdef int values_per_long = 64 // bits
+    cdef uint64_t mask = (<uint64_t>1 << bits) - 1
+    cdef Py_ssize_t long_count = len(data)
+    cdef Py_ssize_t i
+    cdef Py_ssize_t long_index
+    cdef int start
+    cdef int64_t signed_value
+    cdef uint64_t raw
+    cdef int palette_index
+
+    for i in range(4096):
+        long_index = i // values_per_long
+        palette_index = 0
+        if long_index < long_count:
+            start = (i % values_per_long) * bits
+            signed_value = <int64_t>int(data[long_index])
+            raw = <uint64_t>signed_value
+            palette_index = <int>((raw >> start) & mask)
+        if 0 <= palette_index < palette_size:
+            counts[palette_index] += 1
+    return counts
+
+
 cpdef list fill_top_projection(
     list indices,
     list palette,
