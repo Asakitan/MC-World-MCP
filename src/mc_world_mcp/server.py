@@ -28,7 +28,9 @@ from .datapacks import write_datapack_file as dp_write_datapack_file
 from .nbt_io import list_nbt_files as nbt_list_nbt_files
 from .nbt_io import read_nbt_file as nbt_read_nbt_file
 from .nbt_io import write_nbt_value as nbt_write_nbt_value
+from .item_preview import render_item_nbt_preview as preview_render_item_nbt_preview
 from .paths import resolve_under_root
+from .preview import render_closeup_map_preview as preview_render_closeup_map_preview
 from .preview import render_map_preview as preview_render_map_preview
 from .preview import render_slice_preview as preview_render_slice_preview
 from .preview import render_template_preview as preview_render_template_preview
@@ -528,6 +530,12 @@ def render_map_preview(x1: int, z1: int, x2: int, z2: int, y_mode: str = "surfac
 
 
 @mcp.tool()
+def render_closeup_map_preview(x1: int, z1: int, x2: int, z2: int, y_mode: str = "surface", dimension: str = "overworld", view: str = "oblique", scale: int = 8, vertical_scale: int = 3, background: str = "transparent") -> str:
+    """Render a close-up pseudo-3D offline map preview from region data."""
+    return dumps(with_support(CONFIG, preview_render_closeup_map_preview(CONFIG, x1, z1, x2, z2, y_mode, dimension, view, scale, vertical_scale, background)))
+
+
+@mcp.tool()
 def render_slice_preview(axis: str, fixed: int, min_a: int, max_a: int, min_y: int, max_y: int, dimension: str = "overworld") -> str:
     """Render a vertical offline PNG slice from region data."""
     return dumps(with_support(CONFIG, preview_render_slice_preview(CONFIG, axis, fixed, min_a, max_a, min_y, max_y, dimension)))
@@ -537,6 +545,12 @@ def render_slice_preview(axis: str, fixed: int, min_a: int, max_a: int, min_y: i
 def render_template_preview(template_path: str, axis: str = "y") -> str:
     """Render an offline PNG projection for a structure template."""
     return dumps(preview_render_template_preview(CONFIG, template_path, axis))
+
+
+@mcp.tool()
+def render_item_nbt_preview(item_snbt: str, views: list[str] | None = None, size: int = 128, resource_path: str = "", background: str = "transparent") -> str:
+    """Render an item stack SNBT/NBT preview from local assets in multiple directions."""
+    return dumps(preview_render_item_nbt_preview(CONFIG, item_snbt, views, size, resource_path, background))
 
 
 @mcp.tool()

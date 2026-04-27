@@ -61,7 +61,7 @@ Read tools are allowed while the server is running.
 Preview rendering and source-world generation simulation have pure-Python
 fallbacks and can optionally use a compiled Cython module for hot loops such as
 block-state index decoding, chunk surface projection, source-world floor
-projection, and structure-template projection.
+projection, structure-template projection, and item-NBT multi-view recomputation.
 
 On Windows, compile the extension in place:
 
@@ -116,7 +116,7 @@ AI assistants working on this Minecraft workspace should use MCP tools in this o
    - For NBT edits, use `read_level_dat()`, `write_level_dat_value()`, `read_nbt_file()`, `write_nbt_value()`, and `write_chunk_nbt_value()`.
    - For entities, block entities, POI, biomes, and heightmaps, use `list_entities()`, `add_entity()`, `edit_entity()`, `delete_entities()`, `add_block_entity()`, `edit_block_entity()`, `list_poi()`, `delete_poi()`, `set_biome_box()`, and `refresh_heightmaps()`.
    - For structures, use `list_structure_templates()`, `read_structure_template()`, `write_structure_template()`, `write_structure_template_value()`, `export_region_to_template()`, and `place_template_to_region()`.
-   - For previews, use `render_map_preview()`, `render_slice_preview()`, and `render_template_preview()`.
+   - For previews, use `render_map_preview()`, `render_closeup_map_preview()`, `render_slice_preview()`, `render_template_preview()`, and `render_item_nbt_preview()`.
    - For backups, use `create_backup()`, `list_backups()`, and `restore_backup_manifest()`.
 
 4. Respect the `mc-world` safety boundary.
@@ -175,8 +175,10 @@ Useful checks:
 Offline visual checks:
 
 - `render_map_preview(x1, z1, x2, z2, "surface")` renders a top-down PNG. `y_mode` also accepts `top`, `ocean_floor`, `seafloor`, or an integer Y level such as `"26"`. Previews can render up to 1,048,576 output pixels; pass `sample=2` or higher for faster downsampled overviews of larger areas.
+- `render_closeup_map_preview(x1, z1, x2, z2, "surface", view="oblique")` renders a close-up pseudo-3D terrain PNG from real Anvil columns, including visible top faces, height differences, and side faces. Views include `oblique`, `south_east`, `south_west`, `north_west`, and `north_east`; the result reports whether Cython accelerated the close-up recomputation.
 - `render_slice_preview("x", fixed, min_z, max_z, min_y, max_y)` renders a vertical slice.
 - `render_template_preview(template_path)` renders a structure `.nbt` projection.
+- `render_item_nbt_preview(item_snbt, views=["front", "oblique"])` renders an item stack SNBT/NBT preview from local resource-pack, mod, plugin, or datapack assets. Views include `front`, `back`, `left`, `right`, `top`, `bottom`, `isometric`, and `oblique`; the result reports whether Cython accelerated the view recomputation.
 
 Preview tools are read-only against the world data and write PNG files under
 `backup/mc_world_mcp/previews/<timestamp>/`.

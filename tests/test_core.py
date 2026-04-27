@@ -17,9 +17,10 @@ from mc_world_mcp.assistant_guidance import SERVER_INSTRUCTIONS, assistant_instr
 from mc_world_mcp.compat import detect_world_info
 from mc_world_mcp.config import ServerConfig, load_config
 from mc_world_mcp.datapacks import read_datapack_file, search_datapack_files, validate_datapacks
+from mc_world_mcp.item_preview import render_item_nbt_preview
 from mc_world_mcp.nbt_io import get_at_path, parse_path, read_nbt_file, write_nbt_value
 from mc_world_mcp.paths import resolve_under_root
-from mc_world_mcp.preview import render_map_preview, render_slice_preview, render_template_preview
+from mc_world_mcp.preview import render_closeup_map_preview, render_map_preview, render_slice_preview, render_template_preview
 from mc_world_mcp.safety import assert_offline, java_processes
 from mc_world_mcp.source_worlds import compare_world_chunks, import_chunks_from_world, list_local_worlds, simulate_worldgen_generation, worldgen_source_plan
 from mc_world_mcp.world_ops import add_block_entity, add_entity, write_chunk_nbt_value
@@ -411,6 +412,7 @@ class CoreTests(unittest.TestCase):
             sampled_result = render_map_preview(config, 0, 0, 3, 3, "0", sample=2)
             top_result = render_map_preview(config, 0, 0, 0, 0, "top")
             floor_result = render_map_preview(config, 0, 0, 0, 0, "ocean_floor")
+            closeup_result = render_closeup_map_preview(config, 0, 0, 1, 1, "surface", view="oblique", scale=6)
             slice_result = render_slice_preview(config, "x", 0, 0, 1, 0, 1)
             template_path = world / "generated" / "demo" / "structures" / "tiny.nbt"
             template_path.parent.mkdir(parents=True)
@@ -432,7 +434,11 @@ class CoreTests(unittest.TestCase):
             self.assertEqual(sampled_result["size"]["sample"], 2)
             self.assertEqual(top_result["top_blocks"][0]["block"], "minecraft:water")
             self.assertEqual(floor_result["top_blocks"][0]["block"], "minecraft:stone")
-            for result in (map_result, sampled_result, top_result, floor_result, slice_result, template_result):
+            self.assertEqual(closeup_result["view"], "oblique")
+            self.assertGreater(closeup_result["size"]["width"], 0)
+            self.assertGreater(closeup_result["blocks_projected"], 0)
+            self.assertIn("accelerated_recomputation", closeup_result["rendering"])
+            for result in (map_result, sampled_result, top_result, floor_result, closeup_result, slice_result, template_result):
                 path = Path(result["path"])
                 self.assertTrue(path.exists())
                 image = Image.open(path)
@@ -465,6 +471,53 @@ class CoreTests(unittest.TestCase):
             result = render_template_preview(config, "world/generated/demo/structures/stack.nbt")
             self.assertEqual(result["blocks_projected"], 1)
             self.assertEqual(result["top_blocks"][0]["block"], "minecraft:stone")
+
+    def test_item_nbt_preview_resolves_custom_model_and_oblique_view(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp).resolve()
+            config = ServerConfig(root)
+            pack = root / "resourcepacks" / "DemoPack"
+            models = pack / "assets" / "demo" / "models" / "item"
+            textures = pack / "assets" / "demo" / "textures" / "item"
+            models.mkdir(parents=True)
+            textures.mkdir(parents=True)
+            (models / "gem.json").write_text(
+                json.dumps({
+                    "parent": "minecraft:item/generated",
+                    "textures": {"layer0": "demo:item/gem"},
+                    "overrides": [
+                        {"predicate": {"custom_model_data": 7}, "model": "demo:item/gem_alt"}
+                    ],
+                }),
+                encoding="utf-8",
+            )
+            (models / "gem_alt.json").write_text(
+                json.dumps({
+                    "parent": "minecraft:item/generated",
+                    "textures": {"layer0": "demo:item/gem_alt"},
+                }),
+                encoding="utf-8",
+            )
+            Image.new("RGBA", (16, 16), (40, 80, 220, 255)).save(textures / "gem.png")
+            Image.new("RGBA", (16, 16), (220, 70, 40, 255)).save(textures / "gem_alt.png")
+
+            result = render_item_nbt_preview(
+                config,
+                '{id:"demo:gem",Count:2b,tag:{CustomModelData:7,Enchantments:[{id:"minecraft:sharpness",lvl:1s}]}}',
+                views=["front", "oblique"],
+                size=32,
+                resource_path="resourcepacks/DemoPack",
+            )
+
+            self.assertEqual(result["item"]["id"], "demo:gem")
+            self.assertEqual(result["item"]["count"], 2)
+            self.assertTrue(result["item"]["enchanted"])
+            self.assertEqual(result["model"]["selected"], "demo:item/gem_alt")
+            self.assertFalse(result["textures"]["fallback"])
+            self.assertEqual(result["views"], ["front", "oblique"])
+            image = Image.open(result["path"])
+            self.assertEqual(image.size, (64, 32))
+            self.assertIsNotNone(image.getbbox())
 
     def test_map_preview_lazily_decompresses_only_needed_chunks(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

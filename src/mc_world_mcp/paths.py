@@ -11,6 +11,7 @@ READ_PREFIXES = (
     "config",
     "mods",
     "plugins",
+    "resourcepacks",
     "world",
     "whitelist.json",
     "banned-players.json",
