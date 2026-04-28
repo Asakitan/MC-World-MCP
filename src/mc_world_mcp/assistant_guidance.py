@@ -4,16 +4,19 @@ from typing import Any
 
 
 SERVER_INSTRUCTIONS = """
-mc-world is an offline-only Minecraft Java / Arclight 1.20.1 world MCP.
+mc-world is an offline-only Minecraft Java / Arclight 1.20.1 and 1.21.1 world MCP.
 Assistants should call assistant_instructions() first when they need workflow
 guidance, then begin with server_summary(), detect_world_version(),
 world_summary(), and check_offline_safety().
+If the configured root is only a workspace or modpack root, use
+discover_server_roots() and select_server_root() to choose the actual server
+root before inspecting or writing world data.
 
 Safety boundary:
 - Do not use RCON, sockets, online player queries, or server start/stop controls.
 - Read tools may run while the server is online.
 - Write tools require the server to be offline and reject writes while server or unknown Java processes are running; recognized Minecraft client Java processes are ignored.
-- World writes are supported only for Java Anvil DataVersion 3465.
+- World writes are supported only for Java Anvil DataVersion 3465 or 3955.
 - Every write creates backup/mc_world_mcp/<timestamp>/manifest.json.
 
 Worldgen boundary:
@@ -31,6 +34,7 @@ def assistant_instruction_payload() -> dict[str, Any]:
     return {
         "read_first": [
             "Call assistant_instructions() when unsure which mc-world tool to use.",
+            "If server_summary() points at the wrong project, call discover_server_roots() and select_server_root() before any world operation.",
             "Use server_summary(), detect_world_version(), world_summary(), and check_offline_safety() before planning writes.",
             "Use minecode MCP for Minecraft reference data; use mc-world MCP for local files and Anvil/NBT operations.",
         ],
@@ -38,13 +42,13 @@ def assistant_instruction_payload() -> dict[str, Any]:
             "No RCON, sockets, online player queries, or server start/stop controls.",
             "Read tools may run while the server is online.",
             "Write tools require the server to be offline; server or unknown Java processes cause writes to be rejected, while recognized Minecraft client Java processes are ignored.",
-            "World writes are supported only for Java Anvil DataVersion 3465.",
+            "World writes are supported only for Java Anvil DataVersion 3465 or 3955.",
             "Every write creates backup/mc_world_mcp/<timestamp>/manifest.json.",
         ],
         "tool_order": [
             {
                 "goal": "Initial orientation",
-                "tools": ["server_summary", "detect_world_version", "world_summary", "check_offline_safety"],
+                "tools": ["server_summary", "discover_server_roots", "select_server_root", "detect_world_version", "world_summary", "check_offline_safety"],
             },
             {
                 "goal": "Datapack diagnosis",

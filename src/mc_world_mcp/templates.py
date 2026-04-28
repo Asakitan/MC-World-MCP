@@ -7,17 +7,32 @@ from typing import Any
 
 import nbtlib
 
-from .anvil import RegionFile, get_block, load_chunk_with_cache, region_coords, set_block_in_chunk
+from .anvil import (
+    RegionFile,
+    SectionBlockEditor,
+    flush_section_block_editors,
+    load_chunk_with_cache,
+    region_coords,
+    section_block_editor,
+)
+from .compat import detect_world_info
 from .config import ServerConfig
 from .nbt_io import parse_chunk_nbt, read_nbt_file, write_chunk_nbt, write_nbt_value
 from .paths import resolve_under_root
 from .safety import begin_write
-from .world_ops import _entity_region_root, _iter_region_chunks
+from .world_ops import _entity_region_root
 
 
 def list_structure_templates(config: ServerConfig) -> list[dict[str, Any]]:
     results: list[dict[str, Any]] = []
-    roots = [config.world / "datapacks", config.world / "generated", config.root / "config"]
+    roots = [
+        config.world / "datapacks",
+        config.world / "generated",
+        config.root / "config",
+        config.root / "datapacks",
+        config.root / "global_packs",
+        config.root / "backup" / "mc_world_mcp" / "templates",
+    ]
     for root in roots:
         if not root.exists():
             continue
@@ -65,6 +80,7 @@ def export_region_to_template(config: ServerConfig, x1: int, y1: int, z1: int, x
     block_entities_by_pos: dict[tuple[int, int, int], Any] = {}
     regions: dict[Path, RegionFile] = {}
     chunks: dict[tuple[int, int], Any] = {}
+    editors: dict[tuple[tuple[int, int], int], SectionBlockEditor] = {}
     for x in range(min_x, max_x + 1):
         for z in range(min_z, max_z + 1):
             key = (x >> 4, z >> 4)
@@ -78,7 +94,8 @@ def export_region_to_template(config: ServerConfig, x1: int, y1: int, z1: int, x
     for y in range(min_y, max_y + 1):
         for z in range(min_z, max_z + 1):
             for x in range(min_x, max_x + 1):
-                block = get_block(config, x, y, z, dimension)
+                chunk_key = (x >> 4, z >> 4)
+                block = section_block_editor(editors, chunk_key, chunks[chunk_key], y).get(x, y, z)
                 if block == "minecraft:air":
                     continue
                 if block not in palette_index:
@@ -100,36 +117,35 @@ def export_region_to_template(config: ServerConfig, x1: int, y1: int, z1: int, x
         nbtlib.Compound({"Name": nbtlib.String(block)}) for block in palette
     ])
     entities = nbtlib.List[nbtlib.Compound]()
-    entity_root = _entity_region_root(config, dimension)
-    if entity_root.exists():
-        for _, _, _, _, _, chunk in _iter_region_chunks(entity_root):
-            for entity in chunk.get("Entities", []):
-                pos = entity.get("Pos", [])
-                if len(pos) != 3:
-                    continue
-                ex, ey, ez = float(pos[0]), float(pos[1]), float(pos[2])
-                if min_x <= ex <= max_x + 1 and min_y <= ey <= max_y + 1 and min_z <= ez <= max_z + 1:
-                    entity_copy = copy.deepcopy(entity)
-                    entity_copy["Pos"] = nbtlib.List[nbtlib.Double]([
+    for chunk in _iter_entity_chunks_in_block_box(config, dimension, min_x, max_x + 1, min_z, max_z + 1):
+        for entity in chunk.get("Entities", []):
+            pos = entity.get("Pos", [])
+            if len(pos) != 3:
+                continue
+            ex, ey, ez = float(pos[0]), float(pos[1]), float(pos[2])
+            if min_x <= ex <= max_x + 1 and min_y <= ey <= max_y + 1 and min_z <= ez <= max_z + 1:
+                entity_copy = copy.deepcopy(entity)
+                entity_copy["Pos"] = nbtlib.List[nbtlib.Double]([
+                    nbtlib.Double(ex - min_x),
+                    nbtlib.Double(ey - min_y),
+                    nbtlib.Double(ez - min_z),
+                ])
+                entities.append(nbtlib.Compound({
+                    "pos": nbtlib.List[nbtlib.Double]([
                         nbtlib.Double(ex - min_x),
                         nbtlib.Double(ey - min_y),
                         nbtlib.Double(ez - min_z),
-                    ])
-                    entities.append(nbtlib.Compound({
-                        "pos": nbtlib.List[nbtlib.Double]([
-                            nbtlib.Double(ex - min_x),
-                            nbtlib.Double(ey - min_y),
-                            nbtlib.Double(ez - min_z),
-                        ]),
-                        "blockPos": nbtlib.List[nbtlib.Int]([
-                            nbtlib.Int(int(ex) - min_x),
-                            nbtlib.Int(int(ey) - min_y),
-                            nbtlib.Int(int(ez) - min_z),
-                        ]),
-                        "nbt": entity_copy,
-                    }))
+                    ]),
+                    "blockPos": nbtlib.List[nbtlib.Int]([
+                        nbtlib.Int(int(ex) - min_x),
+                        nbtlib.Int(int(ey) - min_y),
+                        nbtlib.Int(int(ez) - min_z),
+                    ]),
+                    "nbt": entity_copy,
+                }))
+    data_version = detect_world_info(config).data_version or 3465
     root = nbtlib.File({
-        "DataVersion": nbtlib.Int(3465),
+        "DataVersion": nbtlib.Int(data_version),
         "size": nbtlib.List[nbtlib.Int]([nbtlib.Int(sx), nbtlib.Int(sy), nbtlib.Int(sz)]),
         "palette": nbt_palette,
         "blocks": blocks,
@@ -140,6 +156,30 @@ def export_region_to_template(config: ServerConfig, x1: int, y1: int, z1: int, x
     root.save(target, gzipped=True)
     backup.write_manifest()
     return json.dumps({"ok": True, "blocks": len(blocks), "entities": len(entities), "palette": len(palette), "backup": str(backup.root)}, ensure_ascii=False)
+
+
+def _iter_entity_chunks_in_block_box(config: ServerConfig, dimension: str, min_x: int, max_x: int, min_z: int, max_z: int):
+    root = _entity_region_root(config, dimension)
+    if not root.exists():
+        return
+    min_cx, max_cx = min_x >> 4, max_x >> 4
+    min_cz, max_cz = min_z >> 4, max_z >> 4
+    for rz in range(min_cz >> 5, (max_cz >> 5) + 1):
+        for rx in range(min_cx >> 5, (max_cx >> 5) + 1):
+            path = root / f"r.{rx}.{rz}.mca"
+            if not path.exists():
+                continue
+            region = RegionFile(path)
+            chunk_min_cx = max(min_cx, rx << 5)
+            chunk_max_cx = min(max_cx, (rx << 5) + 31)
+            chunk_min_cz = max(min_cz, rz << 5)
+            chunk_max_cz = min(max_cz, (rz << 5) + 31)
+            for cz in range(chunk_min_cz, chunk_max_cz + 1):
+                for cx in range(chunk_min_cx, chunk_max_cx + 1):
+                    _, _, index = region_coords(cx, cz)
+                    raw_item = region.chunks.get(index)
+                    if raw_item is not None:
+                        yield parse_chunk_nbt(raw_item[1])
 
 
 def place_template_to_region(config: ServerConfig, template_path: str, x: int, y: int, z: int, dimension: str = "overworld", confirm: bool = False) -> str:
@@ -195,12 +235,14 @@ def place_template_to_region(config: ServerConfig, template_path: str, x: int, y
         entity_targets.append((epath, eindex, entity_nbt))
     backup_files = sorted({item[0] for item in chunks.values()} | set(entity_regions))
     backup = begin_write(config, f"place_template_to_region {template_path}", backup_files)
+    editors: dict[tuple[tuple[int, int], int], SectionBlockEditor] = {}
     for wx, wy, wz, block_id, block_nbt in placements:
-        _, _, _, chunk = chunks[(wx >> 4, wz >> 4)]
-        before = set_block_in_chunk(chunk, wx, wy, wz, block_id)
-        if before != block_id:
+        chunk_key = (wx >> 4, wz >> 4)
+        _, _, _, chunk = chunks[chunk_key]
+        _, did_change = section_block_editor(editors, chunk_key, chunk, wy).set(wx, wy, wz, block_id)
+        if did_change:
             changed += 1
-            affected_chunks.add((wx >> 4, wz >> 4))
+            affected_chunks.add(chunk_key)
         if block_nbt is not None:
             block_entities = chunk.setdefault("block_entities", nbtlib.List[nbtlib.Compound]())
             kept = nbtlib.List[nbtlib.Compound]([
@@ -214,9 +256,15 @@ def place_template_to_region(config: ServerConfig, template_path: str, x: int, y
             kept.append(be_copy)
             chunk["block_entities"] = kept
             placed_block_entities += 1
-    for _, region, index, chunk in chunks.values():
+            affected_chunks.add(chunk_key)
+    flush_section_block_editors(editors.values())
+    dirty_regions: set[RegionFile] = set()
+    for key, (_, region, index, chunk) in chunks.items():
+        if key not in affected_chunks:
+            continue
         region.set_raw(index, write_chunk_nbt(chunk))
-    for region in regions.values():
+        dirty_regions.add(region)
+    for region in dirty_regions:
         region.write()
     backup.write_manifest()
     # Entity placement is best effort and only appends to existing entity chunks.

@@ -269,6 +269,9 @@ def encode_indices(block_states, indices: list[int]) -> None:
     if len(palette) <= 1:
         block_states.pop("data", None)
         return
+    if _PREVIEW_ACCEL is not None and hasattr(_PREVIEW_ACCEL, "encode_indices"):
+        block_states["data"] = nbtlib.LongArray(_PREVIEW_ACCEL.encode_indices(indices, len(palette)))
+        return
     bits = bits_for_palette(len(palette))
     values_per_long = 64 // bits
     long_count = math.ceil(4096 / values_per_long)
@@ -288,6 +291,65 @@ def local_index(x: int, y: int, z: int) -> int:
     return (ly << 8) | (lz << 4) | lx
 
 
+class SectionBlockEditor:
+    def __init__(self, section):
+        self.section = section
+        self.block_states = section["block_states"]
+        self.palette = self.block_states["palette"]
+        self.indices = decode_indices(self.block_states)
+        self.palette_indices = {item.snbt(): i for i, item in enumerate(self.palette)}
+        self.target_indices: dict[str, int] = {}
+        self.dirty = False
+
+    def get(self, x: int, y: int, z: int) -> str:
+        return palette_index_to_block(self.section, self.indices[local_index(x, y, z)])
+
+    def set(self, x: int, y: int, z: int, block_id: str) -> tuple[str, bool]:
+        index = local_index(x, y, z)
+        before_index = self.indices[index]
+        before = palette_index_to_block(self.section, before_index)
+        target_index = self._target_index(block_id)
+        if before_index == target_index:
+            return before, False
+        self.indices[index] = target_index
+        self.dirty = True
+        return before, True
+
+    def flush(self) -> None:
+        if self.dirty:
+            encode_indices(self.block_states, self.indices)
+            self.dirty = False
+
+    def _target_index(self, block_id: str) -> int:
+        cached = self.target_indices.get(block_id)
+        if cached is not None:
+            return cached
+        target = parse_block_state(block_id)
+        target_snbt = target.snbt()
+        index = self.palette_indices.get(target_snbt)
+        if index is None:
+            self.palette.append(target)
+            index = len(self.palette) - 1
+            self.palette_indices[target_snbt] = index
+        self.target_indices[block_id] = index
+        return index
+
+
+def section_block_editor(editors: dict[tuple[tuple[int, int], int], SectionBlockEditor], chunk_key: tuple[int, int], chunk, y: int) -> SectionBlockEditor:
+    section_y = y // SECTION_SIZE
+    key = (chunk_key, section_y)
+    editor = editors.get(key)
+    if editor is None:
+        editor = SectionBlockEditor(section_for_y(chunk, y))
+        editors[key] = editor
+    return editor
+
+
+def flush_section_block_editors(editors: Iterable[SectionBlockEditor]) -> None:
+    for editor in editors:
+        editor.flush()
+
+
 def get_block(config: ServerConfig, x: int, y: int, z: int, dimension: str = "overworld") -> str:
     cx = x >> 4
     cz = z >> 4
@@ -298,23 +360,9 @@ def get_block(config: ServerConfig, x: int, y: int, z: int, dimension: str = "ov
 
 
 def set_block_in_chunk(chunk, x: int, y: int, z: int, block_id: str) -> str:
-    section = section_for_y(chunk, y)
-    block_states = section["block_states"]
-    palette = block_states["palette"]
-    indices = decode_indices(block_states)
-    before = palette_index_to_block(section, indices[local_index(x, y, z)])
-    target = parse_block_state(block_id)
-    target_snbt = target.snbt()
-    palette_index = None
-    for i, item in enumerate(palette):
-        if item.snbt() == target_snbt:
-            palette_index = i
-            break
-    if palette_index is None:
-        palette.append(target)
-        palette_index = len(palette) - 1
-    indices[local_index(x, y, z)] = palette_index
-    encode_indices(block_states, indices)
+    editor = SectionBlockEditor(section_for_y(chunk, y))
+    before, _ = editor.set(x, y, z, block_id)
+    editor.flush()
     return before
 
 
@@ -344,15 +392,22 @@ def set_blocks(config: ServerConfig, blocks: Iterable[tuple[int, int, int, str]]
     backup = begin_write(config, reason, files)
     changed = 0
     affected_chunks: set[tuple[int, int]] = set()
+    editors: dict[tuple[tuple[int, int], int], SectionBlockEditor] = {}
     for x, y, z, block_state in items:
-        _, _, _, chunk = chunks[(x >> 4, z >> 4)]
-        before = set_block_in_chunk(chunk, x, y, z, block_state)
-        if before != block_state:
+        chunk_key = (x >> 4, z >> 4)
+        _, _, _, chunk = chunks[chunk_key]
+        _, did_change = section_block_editor(editors, chunk_key, chunk, y).set(x, y, z, block_state)
+        if did_change:
             changed += 1
-            affected_chunks.add((x >> 4, z >> 4))
-    for _, region, index, chunk in chunks.values():
+            affected_chunks.add(chunk_key)
+    flush_section_block_editors(editors.values())
+    dirty_regions: set[RegionFile] = set()
+    for key, (_, region, index, chunk) in chunks.items():
+        if key not in affected_chunks:
+            continue
         region.set_raw(index, write_chunk_nbt(chunk))
-    for region in regions.values():
+        dirty_regions.add(region)
+    for region in dirty_regions:
         region.write()
     backup.write_manifest()
     return {
@@ -395,23 +450,31 @@ def _edit_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: int,
     files = sorted({item[0] for item in chunks.values()})
     backup = begin_write(config, f"edit_box {dimension} {replacement}", files)
     changed = 0
+    affected_chunks: set[tuple[int, int]] = set()
+    editors: dict[tuple[tuple[int, int], int], SectionBlockEditor] = {}
     for x in xs:
         for y in ys:
             for z in zs:
-                chunk_item = chunks.get((x >> 4, z >> 4))
+                chunk_key = (x >> 4, z >> 4)
+                chunk_item = chunks.get(chunk_key)
                 if chunk_item is None:
                     continue
                 _, _, _, chunk = chunk_item
-                if old_block is not None and get_block_from_chunk(chunk, x, y, z) != old_block:
+                editor = section_block_editor(editors, chunk_key, chunk, y)
+                if old_block is not None and editor.get(x, y, z) != old_block:
                     continue
-                before = set_block_in_chunk(chunk, x, y, z, replacement)
-                if before != replacement:
+                _, did_change = editor.set(x, y, z, replacement)
+                if did_change:
                     changed += 1
-    affected_chunks: set[tuple[int, int]] = set()
+                    affected_chunks.add(chunk_key)
+    flush_section_block_editors(editors.values())
+    dirty_regions: set[RegionFile] = set()
     for key, (_, region, index, chunk) in chunks.items():
+        if key not in affected_chunks:
+            continue
         region.set_raw(index, write_chunk_nbt(chunk))
-        affected_chunks.add(key)
-    for region in regions.values():
+        dirty_regions.add(region)
+    for region in dirty_regions:
         region.write()
     backup.write_manifest()
     return {
@@ -438,6 +501,7 @@ def read_block_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2:
         raise ValueError("large block box read requires confirm=true")
     regions: dict[Path, RegionFile] = {}
     chunks: dict[tuple[int, int], tuple[Path, RegionFile, int, Any]] = {}
+    editors: dict[tuple[tuple[int, int], int], SectionBlockEditor] = {}
     blocks: list[dict[str, Any]] = []
     for x in xs:
         for z in zs:
@@ -447,7 +511,8 @@ def read_block_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2:
     for x in xs:
         for y in ys:
             for z in zs:
-                block = get_block_from_chunk(chunks[(x >> 4, z >> 4)][3], x, y, z)
+                chunk_key = (x >> 4, z >> 4)
+                block = section_block_editor(editors, chunk_key, chunks[chunk_key][3], y).get(x, y, z)
                 if include_air or block != "minecraft:air":
                     blocks.append({"x": x, "y": y, "z": z, "block": block})
     return {"count": count, "returned": len(blocks), "blocks": blocks}

@@ -130,10 +130,12 @@ def set_biome_box(config: ServerConfig, x1: int, y1: int, z1: int, x2: int, y2: 
                 section = _section_for_y(chunk, section_y)
                 biomes = section.setdefault("biomes", nbtlib.Compound())
                 palette = biomes.setdefault("palette", nbtlib.List[nbtlib.String]([nbtlib.String("minecraft:plains")]))
-                if str(palette[0]) != biome or len(palette) != 1:
-                    palette.clear()
-                    palette.append(nbtlib.String(biome))
-                    biomes["data"] = nbtlib.LongArray([0])
+                indices = _decode_biome_indices(biomes)
+                palette_index = _biome_palette_index(palette, biome)
+                local_index = _biome_local_index(cell_x, cell_y, cell_z)
+                if indices[local_index] != palette_index:
+                    indices[local_index] = palette_index
+                    _encode_biome_indices(biomes, indices)
                     changed += 1
     for _, region, index, chunk in chunks.values():
         region.set_raw(index, write_chunk_nbt(chunk))
@@ -152,6 +154,56 @@ def _section_for_y(chunk: Any, section_y: int):
     sections.append(section)
     sections.sort(key=lambda item: int(item["Y"]))
     return section
+
+
+def _biome_bits_for_palette(size: int) -> int:
+    return max(1, (size - 1).bit_length())
+
+
+def _biome_local_index(cell_x: int, cell_y: int, cell_z: int) -> int:
+    return ((cell_y & 3) << 4) | ((cell_z & 3) << 2) | (cell_x & 3)
+
+
+def _biome_palette_index(palette: Any, biome: str) -> int:
+    for index, item in enumerate(palette):
+        if str(item) == biome:
+            return index
+    palette.append(nbtlib.String(biome))
+    return len(palette) - 1
+
+
+def _decode_biome_indices(biomes: Any) -> list[int]:
+    palette = biomes.get("palette", [])
+    data = biomes.get("data")
+    if data is None or len(palette) <= 1:
+        return [0] * 64
+    bits = _biome_bits_for_palette(len(palette))
+    values_per_long = 64 // bits
+    mask = (1 << bits) - 1
+    longs = [int(value) & ((1 << 64) - 1) for value in data]
+    result: list[int] = []
+    for index in range(64):
+        long_index = index // values_per_long
+        start = (index % values_per_long) * bits
+        result.append((longs[long_index] >> start) & mask if long_index < len(longs) else 0)
+    return result
+
+
+def _encode_biome_indices(biomes: Any, indices: list[int]) -> None:
+    palette = biomes["palette"]
+    if len(palette) <= 1:
+        biomes.pop("data", None)
+        return
+    bits = _biome_bits_for_palette(len(palette))
+    values_per_long = 64 // bits
+    long_count = (64 + values_per_long - 1) // values_per_long
+    longs = [0] * long_count
+    mask = (1 << bits) - 1
+    for index, value in enumerate(indices):
+        long_index = index // values_per_long
+        start = (index % values_per_long) * bits
+        longs[long_index] |= (value & mask) << start
+    biomes["data"] = nbtlib.LongArray([value - (1 << 64) if value >= (1 << 63) else value for value in longs])
 
 
 def refresh_heightmaps(config: ServerConfig, chunks: list[dict[str, int]], dimension: str = "overworld", confirm: bool = False) -> dict[str, Any]:

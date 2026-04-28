@@ -4,10 +4,11 @@ Offline-only MCP tools for operating on a Minecraft server directory.
 
 This MCP intentionally does not use RCON, sockets, online player queries, or server start/stop controls. It only reads and writes local files such as `level.dat`, datapacks, structure templates, logs, and Anvil region files.
 
-The complete write path targets Java Edition / Arclight 1.20.1 worlds with
-`DataVersion` 3465. Other Java Anvil worlds are detected and exposed for
-best-effort reads, but world writes are rejected unless the version adapter marks
-them as fully supported. Bedrock LevelDB worlds are detected as unsupported.
+The complete write path targets Java Edition / Arclight 1.20.1 and 1.21.1
+worlds with `DataVersion` 3465 or 3955. Other Java Anvil worlds are detected and
+exposed for best-effort reads, but world writes are rejected unless the version
+adapter marks them as fully supported. Bedrock LevelDB worlds are detected as
+unsupported.
 
 ## Run
 
@@ -18,13 +19,16 @@ When this project lives at `E:/VC/mc-world-mcp` and a server workspace lives two
   "command": "python",
   "args": ["-m", "mc_world_mcp.server"],
   "env": {
-    "PYTHONPATH": "${workspaceFolder}/../../mc-world-mcp/src",
+    "PYTHONPATH": "${workspaceFolder}/../mc-world-mcp/src",
     "MC_SERVER_ROOT": "${workspaceFolder}"
   }
 }
 ```
 
-`MC_SERVER_ROOT` should point at the Arclight server root that contains `server.properties` and `world/`. If it is omitted, the server tries the current working directory first.
+`MC_SERVER_ROOT` may point at either the Arclight server root that contains
+`server.properties` and `world/`, or at a workspace/modpack root that contains a
+`server/` subdirectory. Assistants can also call `discover_server_roots()` and
+`select_server_root()` to choose the active server root at runtime.
 
 World selection follows `server.properties` `level-name`, so a server using
 `level-name=world_regen_source` is operated through that directory rather than a
@@ -36,7 +40,7 @@ All write tools:
 
 - reject paths outside `MC_SERVER_ROOT`
 - reject writes when a server or unknown `java`/`javaw` process is running; recognized Minecraft client Java processes are ignored
-- reject Java world writes unless the selected world is DataVersion 3465
+- reject Java world writes unless the selected world is DataVersion 3465 or 3955
 - back up every modified file under `backup/mc_world_mcp/<timestamp>/`
 - write a `manifest.json` describing the changed files
 
@@ -102,13 +106,13 @@ AI assistants working on this Minecraft workspace should use MCP tools in this o
    - Then read local files such as `README.md`, `.github/copilot-instructions.md`, `server.properties`, datapack files, and logs as needed.
 
 2. Use `minecode` for Minecraft reference lookups.
-   - Command syntax: call `get_wiki_command_info`, then `spyglass_get_commands` when exact 1.20.1 syntax matters.
+   - Command syntax: call `get_wiki_command_info`, then `spyglass_get_commands` when exact version syntax matters.
    - IDs and registries: call `spyglass_get_registries` for blocks, items, entities, biomes, enchantments, and other registries.
    - Vanilla JSON: call Misode tools such as `misode_get_preset_data`, `misode_get_presets`, `misode_get_loot_tables`, and `misode_get_recipes`.
    - Wiki background: call `search_wiki`, then `get_wiki_page_content`.
 
 3. Use `mc-world` for local server and world operations.
-   - Start with `server_summary()`, `detect_world_version()`, `world_summary()`, and `check_offline_safety()`.
+   - Start with `server_summary()`, `discover_server_roots()` / `select_server_root()` when the root is wrong, `detect_world_version()`, `world_summary()`, and `check_offline_safety()`.
    - For datapacks, use `list_datapacks()`, `validate_datapacks()`, `search_datapack_files()`, `read_datapack_file()`, and `write_datapack_file()`.
    - For worldgen diagnosis, use `list_generation_interfaces()`, `worldgen_report()`, `list_worldgen_resources()`, and `validate_worldgen_references()`.
    - For logs, use `analyze_latest_log()`, `read_server_log()`, and `grep_server_log()`.
@@ -123,7 +127,7 @@ AI assistants working on this Minecraft workspace should use MCP tools in this o
    - Do not use RCON, sockets, online player queries, or server start/stop controls.
    - Read tools may run while the server is online.
    - Write tools require the server to be offline and will reject writes while server or unknown `java`/`javaw` processes are running. Recognized Minecraft client Java processes are ignored.
-   - World writes are supported only for Java Anvil `DataVersion` 3465.
+   - World writes are supported only for Java Anvil `DataVersion` 3465 or 3955.
    - Every write creates a backup under `backup/mc_world_mcp/<timestamp>/` with `manifest.json`.
 
 5. Use source worlds for real datapack, mod, or plugin worldgen.
@@ -142,9 +146,9 @@ AI assistants working on this Minecraft workspace should use MCP tools in this o
 
 ## Current Server Workflow
 
-For the current Arclight 1.20.1 server workspace, `server.properties` uses
-`level-name=world_regen_source`. With the README MCP config above, all world
-tools automatically target that active world instead of the default `world/`.
+For the current Arclight server workspace, `server.properties` controls the
+active world through `level-name`. With the README MCP config above, all world
+tools automatically target that active world instead of a hardcoded `world/`.
 
 This MCP still does not execute Minecraft worldgen. Datapack biome modifiers,
 jigsaw structures, mod structures, plugin-provided generation, coral placement,

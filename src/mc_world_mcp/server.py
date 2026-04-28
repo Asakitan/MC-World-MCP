@@ -1,10 +1,21 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import sys
+import warnings
 from pathlib import Path
 from typing import Any
+
+os.environ.setdefault("FASTMCP_DEPRECATION_WARNINGS", "false")
+warnings.filterwarnings("ignore", message="authlib.jose module is deprecated.*")
+try:
+    from authlib.deprecate import AuthlibDeprecationWarning
+
+    warnings.filterwarnings("ignore", category=AuthlibDeprecationWarning)
+except Exception:
+    pass
 
 from fastmcp import FastMCP
 
@@ -19,7 +30,8 @@ from .anvil import set_block as anvil_set_block
 from .anvil import summarize_chunk_palette as anvil_summarize_chunk_palette
 from .assistant_guidance import SERVER_INSTRUCTIONS, assistant_instruction_markdown, assistant_instruction_payload
 from .compat import detect_world_info, with_support
-from .config import load_config
+from .config import discover_server_roots as config_discover_server_roots
+from .config import load_config, make_config
 from .datapacks import list_datapacks as dp_list_datapacks
 from .datapacks import read_datapack_file as dp_read_datapack_file
 from .datapacks import search_datapack_files as dp_search_datapack_files
@@ -97,6 +109,32 @@ def java_safety_summary() -> dict[str, Any]:
 def assistant_instructions() -> str:
     """Read this first: return mc-world MCP tool order, safety rules, and source-world workflow guidance."""
     return dumps(assistant_instruction_payload())
+
+
+@mcp.tool()
+def discover_server_roots(search_root: str = "", max_depth: int = 3) -> str:
+    """Find candidate Minecraft server roots below a directory before selecting one."""
+    root = search_root or str(CONFIG.root)
+    return dumps(config_discover_server_roots(root, max_depth))
+
+
+@mcp.tool()
+def select_server_root(server_root: str, world_name: str = "") -> str:
+    """Select the active Minecraft server root and optional world name for later tools."""
+    global CONFIG
+    next_config = make_config(server_root, world_name or None)
+    info = detect_world_info(next_config).as_dict()
+    CONFIG = next_config
+    java_summary = java_safety_summary()
+    return dumps({
+        "ok": True,
+        "server_root": str(CONFIG.root),
+        "world_name": CONFIG.world_name,
+        "world_path": str(CONFIG.world),
+        "world_exists": CONFIG.world.exists(),
+        **info,
+        **java_summary,
+    })
 
 
 @mcp.resource(
@@ -423,7 +461,7 @@ def replace_blocks(x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, old_blo
 
 @mcp.tool()
 def set_biome_box(x1: int, y1: int, z1: int, x2: int, y2: int, z2: int, biome: str, dimension: str = "overworld", confirm: bool = False) -> str:
-    """Set biome palette cells in a box for Java 1.20.1 chunks."""
+    """Set biome palette cells in a box for supported Java Anvil chunks."""
     return dumps(with_support(CONFIG, world_set_biome_box(CONFIG, x1, y1, z1, x2, y2, z2, biome, dimension, confirm)))
 
 
@@ -601,7 +639,7 @@ def main() -> None:
         print("mc-world-mcp: offline-only Minecraft server/world MCP stdio server")
         print("Set MC_SERVER_ROOT to the server root before launching.")
         return
-    mcp.run()
+    mcp.run(show_banner=False, log_level="ERROR")
 
 
 if __name__ == "__main__":

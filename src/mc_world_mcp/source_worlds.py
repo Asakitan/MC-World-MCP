@@ -6,7 +6,7 @@ from typing import Any
 
 from .anvil import RegionFile, decode_indices, inspect_chunk, local_index, palette_index_to_block, region_coords, summarize_chunk_palette
 from .anvil import load_chunk_with_cache
-from .compat import detect_world_info
+from .compat import detect_world_info, is_full_write_supported
 from .config import ServerConfig
 from .paths import world_dimension_path
 from .preview import render_map_preview, render_slice_preview
@@ -689,7 +689,7 @@ def _assert_source_not_target(config: ServerConfig, source_config: ServerConfig)
 
 def _assert_import_supported(source_config: ServerConfig) -> None:
     info = detect_world_info(source_config)
-    if info.support_level != "full_1_20_1":
+    if not is_full_write_supported(info):
         raise RuntimeError(
             "refusing source chunk import: "
             f"source world {source_config.world_name} has platform={info.platform}, "

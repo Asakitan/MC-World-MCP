@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mc-world-mcp"
-version = "0.0.5"
+version = "0.0.7"
 description = "Offline-only MCP tools for Minecraft server worlds, NBT, datapacks, templates, and Anvil regions."
 requires-python = ">=3.11"
 dependencies = [
@@ -22,4 +22,3 @@ mc-world-mcp = "mc_world_mcp.server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-

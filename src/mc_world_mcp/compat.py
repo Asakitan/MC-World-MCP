@@ -8,7 +8,15 @@ import nbtlib
 
 from .config import ServerConfig
 
-JAVA_1_20_1_DATA_VERSION = 3465
+SUPPORTED_JAVA_DATA_VERSIONS = {
+    3465: ("1.20.1", "full_1_20_1"),
+    3955: ("1.21.1", "full_1_21_1"),
+}
+
+SUPPORTED_DATA_VERSION_LIST = ", ".join(
+    f"{version} DataVersion {data_version}"
+    for data_version, (version, _support) in sorted(SUPPORTED_JAVA_DATA_VERSIONS.items())
+)
 
 
 @dataclass(frozen=True)
@@ -64,18 +72,25 @@ def detect_world_info(config: ServerConfig) -> WorldInfo:
     data_root = data.get("Data", data)
     raw_version = data_root.get("DataVersion", data.get("DataVersion"))
     data_version = int(raw_version) if raw_version is not None else None
-    if data_version == JAVA_1_20_1_DATA_VERSION:
-        support = "full_1_20_1"
-        reason = "Java Anvil world with Minecraft 1.20.1 DataVersion 3465."
+    if data_version in SUPPORTED_JAVA_DATA_VERSIONS:
+        version_name, support = SUPPORTED_JAVA_DATA_VERSIONS[data_version]
+        reason = f"Java Anvil world with Minecraft {version_name} DataVersion {data_version}."
     else:
         support = "readonly_best_effort"
-        reason = "Java Anvil world detected, but writes are only fully supported for DataVersion 3465."
+        reason = (
+            "Java Anvil world detected, but writes are only fully supported for "
+            f"{SUPPORTED_DATA_VERSION_LIST}."
+        )
     return WorldInfo("java_anvil", data_version, support, world, reason)
+
+
+def is_full_write_supported(info: WorldInfo) -> bool:
+    return info.platform == "java_anvil" and info.data_version in SUPPORTED_JAVA_DATA_VERSIONS
 
 
 def assert_world_write_supported(config: ServerConfig) -> WorldInfo:
     info = detect_world_info(config)
-    if info.support_level != "full_1_20_1":
+    if not is_full_write_supported(info):
         raise RuntimeError(
             "refusing world write: "
             f"platform={info.platform}, data_version={info.data_version}, "

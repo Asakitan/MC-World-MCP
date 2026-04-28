@@ -9,10 +9,13 @@ READ_PREFIXES = (
     "server.properties",
     "logs",
     "config",
+    "datapacks",
+    "global_packs",
     "mods",
     "plugins",
     "resourcepacks",
     "world",
+    "backup/mc_world_mcp",
     "whitelist.json",
     "banned-players.json",
     "banned-ips.json",
@@ -23,19 +26,28 @@ READ_PREFIXES = (
 WRITE_PREFIXES = (
     "server.properties",
     "config",
+    "datapacks",
+    "global_packs",
     "world",
+    "backup/mc_world_mcp",
     "whitelist.json",
     "banned-players.json",
     "banned-ips.json",
 )
 
 
-def rel_string(path: str | Path) -> str:
-    return Path(path).as_posix().lstrip("/")
+def rel_string(path: str | Path, config: ServerConfig | None = None) -> str:
+    target = Path(path)
+    if config is not None and target.is_absolute():
+        try:
+            return target.resolve().relative_to(config.root.resolve()).as_posix()
+        except ValueError as exc:
+            raise ValueError(f"path escapes MC_SERVER_ROOT: {path}") from exc
+    return target.as_posix().lstrip("/")
 
 
 def resolve_under_root(config: ServerConfig, relative_path: str | Path, *, write: bool = False) -> Path:
-    rel = rel_string(relative_path)
+    rel = rel_string(relative_path, config)
     allowed = list(WRITE_PREFIXES if write else READ_PREFIXES)
     if config.world_name not in allowed:
         allowed.append(config.world_name)
