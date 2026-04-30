@@ -29,6 +29,8 @@ SURFACE_MODES = {"surface", "top", "heightmap"}
 OCEAN_FLOOR_MODES = {"ocean_floor", "oceanfloor", "seafloor", "sea_floor", "floor"}
 MAX_PREVIEW_PIXELS = 1_048_576
 CLOSEUP_MISSING_HEIGHT = -2147483648
+DEFAULT_CLOSEUP_SIDE_DEPTH = 32
+MAX_CLOSEUP_SIDE_DEPTH = 128
 CLOSEUP_VIEW_ALIASES = {
     "oblique": 0,
     "isometric": 0,
@@ -255,11 +257,13 @@ def render_closeup_map_preview(
     scale: int = 8,
     vertical_scale: int = 3,
     background: str = "transparent",
+    side_depth: int = DEFAULT_CLOSEUP_SIDE_DEPTH,
 ) -> dict[str, Any]:
     y_mode = _normalize_y_mode(y_mode)
     view_key, view_code = _normalize_closeup_view(view)
     scale = _normalize_closeup_scale(scale, "scale")
     vertical_scale = _normalize_closeup_scale(vertical_scale, "vertical_scale")
+    side_depth = _normalize_closeup_side_depth(side_depth)
     min_x, max_x = sorted((x1, x2))
     min_z, max_z = sorted((z1, z2))
     width = max_x - min_x + 1
@@ -267,7 +271,7 @@ def render_closeup_map_preview(
     _check_preview_size(width * depth)
     background_rgba = _parse_background_rgba(background)
     chunk_cache = _ChunkReadCache()
-    heights, colors, counts = _closeup_column_data(config, min_x, max_x, min_z, max_z, y_mode, dimension, chunk_cache)
+    heights, colors, side_colors, counts = _closeup_column_data(config, min_x, max_x, min_z, max_z, y_mode, dimension, chunk_cache, side_depth)
     valid_heights = [height for height in heights if height != CLOSEUP_MISSING_HEIGHT]
     min_height = min(valid_heights) if valid_heights else 0
     max_height = max(valid_heights) if valid_heights else 0
@@ -278,6 +282,7 @@ def render_closeup_map_preview(
         raw = _PREVIEW_ACCEL.render_closeup_map_rgba(
             heights,
             colors,
+            side_colors,
             width,
             depth,
             image_width,
@@ -288,12 +293,14 @@ def render_closeup_map_preview(
             min_height,
             max_height,
             background_rgba,
+            side_depth,
         )
         image = Image.frombytes("RGBA", (image_width, image_height), raw)
     else:
         image = _render_closeup_map_python(
             heights,
             colors,
+            side_colors,
             width,
             depth,
             image_width,
@@ -304,6 +311,7 @@ def render_closeup_map_preview(
             min_height,
             max_height,
             background_rgba,
+            side_depth,
         )
     path = _preview_path(config, "closeup_map")
     _save_preview(image, path)
@@ -313,11 +321,18 @@ def render_closeup_map_preview(
         "dimension": dimension,
         "bounds": {"x1": min_x, "z1": min_z, "x2": max_x, "z2": max_z, "y_mode": y_mode},
         "view": view_key,
-        "size": {"width": image.width, "height": image.height, "columns": {"x": width, "z": depth}, "scale": scale, "vertical_scale": vertical_scale},
+        "size": {
+            "width": image.width,
+            "height": image.height,
+            "columns": {"x": width, "z": depth},
+            "scale": scale,
+            "vertical_scale": vertical_scale,
+            "side_depth": side_depth,
+        },
         "height_range": {"min": min_height, "max": max_height},
         "blocks_projected": sum(counts.values()),
         "top_blocks": _top_counts(counts),
-        "rendering": {"accelerated_recomputation": accelerated},
+        "rendering": {"accelerated_recomputation": accelerated, "side_mode": "sampled_blocks", "side_depth": side_depth},
     }
 
 
@@ -341,6 +356,7 @@ class _PreparedSection:
     block_states: Any
     palette: list[str]
     palette_base_names: list[str]
+    palette_colors: list[int]
     _indices: list[int] | None = field(default=None, init=False, repr=False)
 
     @classmethod
@@ -356,6 +372,7 @@ class _PreparedSection:
             block_states=block_states,
             palette=palette,
             palette_base_names=[block.split("[", 1)[0] for block in palette],
+            palette_colors=[_rgb_to_int(color_for_block(block)) for block in palette],
         )
 
     @property
@@ -474,6 +491,66 @@ class _PreparedSection:
                 break
         return remaining
 
+    def fill_closeup_side_samples(
+        self,
+        heights: list[int | None],
+        samples: list[int],
+        side_depth: int,
+        min_y: int,
+        max_y: int,
+        skip: set[str],
+    ) -> None:
+        section_min_y = self.y * 16
+        section_max_y = section_min_y + 15
+        if side_depth <= 0 or section_min_y > max_y or section_max_y < min_y:
+            return
+        if len(self.palette) == 1:
+            if self.palette_base_names[0] in skip:
+                return
+            color = self.palette_colors[0]
+            for column, top in enumerate(heights):
+                if top is None:
+                    continue
+                start_y = min(top, section_max_y, max_y)
+                end_y = max(top - side_depth + 1, section_min_y, min_y)
+                if end_y > start_y:
+                    continue
+                sample_base = column * side_depth
+                for y in range(start_y, end_y - 1, -1):
+                    samples[sample_base + top - y] = color
+            return
+        if all(block in skip for block in self.palette_base_names):
+            return
+        if _PREVIEW_ACCEL is not None and hasattr(_PREVIEW_ACCEL, "fill_closeup_side_samples"):
+            _PREVIEW_ACCEL.fill_closeup_side_samples(
+                self.indices,
+                self.palette_base_names,
+                self.palette_colors,
+                skip,
+                heights,
+                samples,
+                self.y,
+                side_depth,
+                min_y,
+                max_y,
+            )
+            return
+
+        indices = self.indices
+        palette_len = len(self.palette)
+        for column, top in enumerate(heights):
+            if top is None:
+                continue
+            start_y = min(top, section_max_y, max_y)
+            end_y = max(top - side_depth + 1, section_min_y, min_y)
+            if end_y > start_y:
+                continue
+            sample_base = column * side_depth
+            for y in range(start_y, end_y - 1, -1):
+                palette_index = indices[((y & 15) << 8) | column]
+                if 0 <= palette_index < palette_len and self.palette_base_names[palette_index] not in skip:
+                    samples[sample_base + top - y] = self.palette_colors[palette_index]
+
 
 @dataclass
 class _PreparedChunk:
@@ -481,6 +558,7 @@ class _PreparedChunk:
     sections_by_y: dict[int, _PreparedSection]
     _top_blocks_cache: dict[frozenset[str], list[str]] = field(default_factory=dict, init=False, repr=False)
     _surface_cache: dict[tuple[frozenset[str], int, int], tuple[list[str], list[int | None]]] = field(default_factory=dict, init=False, repr=False)
+    _closeup_cache: dict[tuple[frozenset[str], int, int, int], tuple[list[str], list[int | None], list[int]]] = field(default_factory=dict, init=False, repr=False)
 
     @classmethod
     def from_chunk(cls, chunk: Any) -> "_PreparedChunk":
@@ -524,6 +602,19 @@ class _PreparedChunk:
                 break
         cached = (blocks, heights)
         self._surface_cache[key] = cached
+        return cached
+
+    def closeup_columns(self, skip: set[str], side_depth: int, min_y: int = -4096, max_y: int = 4095) -> tuple[list[str], list[int | None], list[int]]:
+        key = (frozenset(skip), side_depth, min_y, max_y)
+        cached = self._closeup_cache.get(key)
+        if cached is not None:
+            return cached
+        blocks, heights = self.surface_blocks(skip, min_y, max_y)
+        side_colors = [-1] * (256 * side_depth)
+        for section in self.sections_desc:
+            section.fill_closeup_side_samples(heights, side_colors, side_depth, min_y, max_y, skip)
+        cached = (blocks, heights, side_colors)
+        self._closeup_cache[key] = cached
         return cached
 
 
@@ -758,10 +849,12 @@ def _closeup_column_data(
     y_mode: str,
     dimension: str,
     chunk_cache: _ChunkReadCache,
-) -> tuple[list[int], list[int], dict[str, int]]:
+    side_depth: int,
+) -> tuple[list[int], list[int], list[int], dict[str, int]]:
     width = max_x - min_x + 1
     heights = [CLOSEUP_MISSING_HEIGHT] * (width * (max_z - min_z + 1))
     colors = [0] * len(heights)
+    side_colors = [-1] * (len(heights) * side_depth)
     counts: dict[str, int] = {}
     color_cache: dict[str, tuple[int, int, int]] = {}
     if _is_integer_y_mode(y_mode):
@@ -774,9 +867,12 @@ def _closeup_column_data(
                     continue
                 index = row_offset + (x - min_x)
                 heights[index] = y
-                colors[index] = _rgb_to_int(_cached_color(block, color_cache))
+                color = _rgb_to_int(_cached_color(block, color_cache))
+                colors[index] = color
+                side_colors[index * side_depth] = color
+                _fill_fixed_y_side_samples(config, x, z, y, dimension, chunk_cache, side_depth, side_colors, index, color_cache)
                 counts[block] = counts.get(block, 0) + 1
-        return heights, colors, counts
+        return heights, colors, side_colors, counts
 
     if y_mode in OCEAN_FLOOR_MODES:
         skip = AIR_BLOCKS | WATER_BLOCKS
@@ -791,7 +887,7 @@ def _closeup_column_data(
             chunk = chunk_cache.get(config, cx, cz, dimension)
             if chunk is None:
                 continue
-            blocks, column_heights = chunk.surface_blocks(skip)
+            blocks, column_heights, chunk_side_colors = chunk.closeup_columns(skip, side_depth)
             chunk_min_x = max(min_x, cx << 4)
             chunk_max_x = min(max_x, (cx << 4) + 15)
             chunk_min_z = max(min_z, cz << 4)
@@ -808,12 +904,40 @@ def _closeup_column_data(
                     index = row_offset + (x - min_x)
                     heights[index] = height
                     colors[index] = _rgb_to_int(_cached_color(block, color_cache))
+                    source_base = source_index * side_depth
+                    target_base = index * side_depth
+                    side_colors[target_base:target_base + side_depth] = chunk_side_colors[source_base:source_base + side_depth]
                     counts[block] = counts.get(block, 0) + 1
-    return heights, colors, counts
+    return heights, colors, side_colors, counts
+
+
+def _fill_fixed_y_side_samples(
+    config: ServerConfig,
+    x: int,
+    z: int,
+    y: int,
+    dimension: str,
+    chunk_cache: _ChunkReadCache,
+    side_depth: int,
+    side_colors: list[int],
+    column_index: int,
+    color_cache: dict[str, tuple[int, int, int]],
+) -> None:
+    sample_base = column_index * side_depth
+    for offset in range(1, side_depth):
+        block = _get_block_cached(config, x, y - offset, z, dimension, chunk_cache)
+        if block.split("[", 1)[0] in AIR_BLOCKS:
+            continue
+        side_colors[sample_base + offset] = _rgb_to_int(_cached_color(block, color_cache))
 
 
 def _closeup_acceleration_available() -> bool:
-    return _PREVIEW_ACCEL is not None and hasattr(_PREVIEW_ACCEL, "render_closeup_map_rgba")
+    return (
+        _PREVIEW_ACCEL is not None
+        and getattr(_PREVIEW_ACCEL, "PREVIEW_ACCEL_API", 0) >= 2
+        and hasattr(_PREVIEW_ACCEL, "render_closeup_map_rgba")
+        and hasattr(_PREVIEW_ACCEL, "fill_closeup_side_samples")
+    )
 
 
 def _normalize_closeup_view(view: str) -> tuple[str, int]:
@@ -839,6 +963,16 @@ def _normalize_closeup_scale(value: int, name: str) -> int:
     return normalized
 
 
+def _normalize_closeup_side_depth(value: int) -> int:
+    try:
+        normalized = int(value)
+    except (TypeError, ValueError):
+        raise ValueError("side_depth must be a positive integer") from None
+    if normalized < 1 or normalized > MAX_CLOSEUP_SIDE_DEPTH:
+        raise ValueError(f"side_depth must be between 1 and {MAX_CLOSEUP_SIDE_DEPTH}")
+    return normalized
+
+
 def _closeup_canvas_size(width: int, depth: int, scale: int, vertical_scale: int, min_y: int, max_y: int) -> tuple[int, int]:
     half = max(2, scale)
     quarter = max(1, scale // 2)
@@ -851,6 +985,7 @@ def _closeup_canvas_size(width: int, depth: int, scale: int, vertical_scale: int
 def _render_closeup_map_python(
     heights: list[int],
     colors: list[int],
+    side_colors: list[int],
     width: int,
     depth: int,
     image_width: int,
@@ -861,6 +996,7 @@ def _render_closeup_map_python(
     min_height: int,
     max_height: int,
     background: tuple[int, int, int, int],
+    side_depth: int,
 ) -> Image.Image:
     image = Image.new("RGBA", (image_width, image_height), background)
     draw = ImageDraw.Draw(image, "RGBA")
@@ -878,21 +1014,47 @@ def _render_closeup_map_python(
                 continue
             points = _closeup_points(rx, rz, y, depth, scale, vertical_scale, max_height)
             color = colors[index]
+            side_base = index * side_depth
             neighbor = _closeup_height(heights, width, depth, view_code, rx + 1, rz)
             if neighbor == CLOSEUP_MISSING_HEIGHT:
-                neighbor = min_height
+                neighbor = y
             if y > neighbor:
-                drop = (y - neighbor) * vertical_scale
-                draw.polygon([points[1], points[2], (points[2][0], points[2][1] + drop), (points[1][0], points[1][1] + drop)], fill=_shade_color(color, 145))
+                _draw_closeup_side_segments(draw, points[1], points[2], side_colors, side_base, min(y - neighbor, side_depth), vertical_scale, 145)
             neighbor = _closeup_height(heights, width, depth, view_code, rx, rz + 1)
             if neighbor == CLOSEUP_MISSING_HEIGHT:
-                neighbor = min_height
+                neighbor = y
             if y > neighbor:
-                drop = (y - neighbor) * vertical_scale
-                draw.polygon([points[2], points[3], (points[3][0], points[3][1] + drop), (points[2][0], points[2][1] + drop)], fill=_shade_color(color, 115))
+                _draw_closeup_side_segments(draw, points[2], points[3], side_colors, side_base, min(y - neighbor, side_depth), vertical_scale, 115)
             shade = 235 + min(20, max(0, (y - min_height) * 20 // max(1, max_height - min_height + 1)))
             draw.polygon(points, fill=_shade_color(color, shade))
     return image
+
+
+def _draw_closeup_side_segments(
+    draw: ImageDraw.ImageDraw,
+    a: tuple[int, int],
+    b: tuple[int, int],
+    side_colors: list[int],
+    side_base: int,
+    drop_blocks: int,
+    vertical_scale: int,
+    shade: int,
+) -> None:
+    for offset in range(drop_blocks):
+        color = side_colors[side_base + offset]
+        if color < 0:
+            continue
+        top = offset * vertical_scale
+        bottom = (offset + 1) * vertical_scale
+        draw.polygon(
+            [
+                (a[0], a[1] + top),
+                (b[0], b[1] + top),
+                (b[0], b[1] + bottom),
+                (a[0], a[1] + bottom),
+            ],
+            fill=_shade_color(color, shade),
+        )
 
 
 def _closeup_points(rx: int, rz: int, y: int, depth: int, scale: int, vertical_scale: int, max_height: int) -> list[tuple[int, int]]:

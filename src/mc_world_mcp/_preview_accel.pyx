@@ -6,6 +6,8 @@
 from libc.math cimport cos, sin
 from libc.stdint cimport int64_t, uint64_t
 
+PREVIEW_ACCEL_API = 2
+
 
 cdef int _bits_for_palette(Py_ssize_t size):
     cdef int bits = 0
@@ -204,6 +206,58 @@ cpdef list fill_floor_projection(
                 heights[column] = y
         remaining = next_remaining
     return remaining
+
+
+cpdef int fill_closeup_side_samples(
+    list indices,
+    list palette_base_names,
+    list palette_colors,
+    object skip,
+    list heights,
+    list samples,
+    int section_y,
+    int side_depth,
+    int min_y,
+    int max_y,
+):
+    cdef int section_min_y = section_y * 16
+    cdef int section_max_y = section_min_y + 15
+    cdef Py_ssize_t palette_len = len(palette_base_names)
+    cdef Py_ssize_t column
+    cdef object top_obj
+    cdef int top
+    cdef int start_y
+    cdef int end_y
+    cdef int y
+    cdef int sample_base
+    cdef int palette_index
+
+    if side_depth <= 0 or section_min_y > max_y or section_max_y < min_y:
+        return 0
+
+    for column in range(256):
+        top_obj = heights[column]
+        if top_obj is None:
+            continue
+        top = <int>top_obj
+        start_y = top
+        if start_y > section_max_y:
+            start_y = section_max_y
+        if start_y > max_y:
+            start_y = max_y
+        end_y = top - side_depth + 1
+        if end_y < section_min_y:
+            end_y = section_min_y
+        if end_y < min_y:
+            end_y = min_y
+        if end_y > start_y:
+            continue
+        sample_base = <int>column * side_depth
+        for y in range(start_y, end_y - 1, -1):
+            palette_index = <int>indices[((y & 15) << 8) | <int>column]
+            if 0 <= palette_index < palette_len and palette_base_names[palette_index] not in skip:
+                samples[sample_base + top - y] = palette_colors[palette_index]
+    return 0
 
 
 cpdef list project_template_states(object template_blocks, int width, int height, int size_y, int axis_code):
@@ -567,6 +621,7 @@ cdef inline int _closeup_height(list heights, int width, int depth, int view_cod
 cpdef bytes render_closeup_map_rgba(
     list heights,
     list colors,
+    list side_colors,
     int width,
     int depth,
     int canvas_w,
@@ -577,6 +632,7 @@ cpdef bytes render_closeup_map_rgba(
     int min_y,
     int max_y,
     tuple background,
+    int side_depth,
 ):
     cdef bytearray out = bytearray(canvas_w * canvas_h * 4)
     cdef unsigned char[::1] dst = out
@@ -606,8 +662,13 @@ cpdef bytes render_closeup_map_rgba(
     cdef int x3
     cdef int y3
     cdef int neighbor
-    cdef int drop
     cdef int shade
+    cdef int side_base
+    cdef int drop_blocks
+    cdef int segment
+    cdef int segment_color
+    cdef int segment_top
+    cdef int segment_bottom
 
     if width <= 0 or depth <= 0 or canvas_w <= 0 or canvas_h <= 0:
         return bytes(out)
@@ -638,19 +699,63 @@ cpdef bytes render_closeup_map_rgba(
 
             neighbor = _closeup_height(heights, width, depth, view_code, rx + 1, rz)
             if neighbor == sentinel:
-                neighbor = min_y
+                neighbor = y
             if y > neighbor:
-                drop = (y - neighbor) * vertical_scale
-                if drop > 0:
-                    _draw_quad(dst, canvas_w, canvas_h, x1, y1, x2, y2, x2, y2 + drop, x1, y1 + drop, color, 145)
+                drop_blocks = y - neighbor
+                if drop_blocks > side_depth:
+                    drop_blocks = side_depth
+                side_base = index * side_depth
+                for segment in range(drop_blocks):
+                    segment_color = <int>side_colors[side_base + segment]
+                    if segment_color < 0:
+                        continue
+                    segment_top = segment * vertical_scale
+                    segment_bottom = (segment + 1) * vertical_scale
+                    _draw_quad(
+                        dst,
+                        canvas_w,
+                        canvas_h,
+                        x1,
+                        y1 + segment_top,
+                        x2,
+                        y2 + segment_top,
+                        x2,
+                        y2 + segment_bottom,
+                        x1,
+                        y1 + segment_bottom,
+                        segment_color,
+                        145,
+                    )
 
             neighbor = _closeup_height(heights, width, depth, view_code, rx, rz + 1)
             if neighbor == sentinel:
-                neighbor = min_y
+                neighbor = y
             if y > neighbor:
-                drop = (y - neighbor) * vertical_scale
-                if drop > 0:
-                    _draw_quad(dst, canvas_w, canvas_h, x2, y2, x3, y3, x3, y3 + drop, x2, y2 + drop, color, 115)
+                drop_blocks = y - neighbor
+                if drop_blocks > side_depth:
+                    drop_blocks = side_depth
+                side_base = index * side_depth
+                for segment in range(drop_blocks):
+                    segment_color = <int>side_colors[side_base + segment]
+                    if segment_color < 0:
+                        continue
+                    segment_top = segment * vertical_scale
+                    segment_bottom = (segment + 1) * vertical_scale
+                    _draw_quad(
+                        dst,
+                        canvas_w,
+                        canvas_h,
+                        x2,
+                        y2 + segment_top,
+                        x3,
+                        y3 + segment_top,
+                        x3,
+                        y3 + segment_bottom,
+                        x2,
+                        y2 + segment_bottom,
+                        segment_color,
+                        115,
+                    )
 
             shade = 235 + _clamp_int((y - min_y) * 20 // _max_int(1, max_y - min_y + 1), 0, 20)
             _draw_quad(dst, canvas_w, canvas_h, x0, y0, x1, y1, x2, y2, x3, y3, color, shade)

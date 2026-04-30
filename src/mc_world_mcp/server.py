@@ -568,9 +568,21 @@ def render_map_preview(x1: int, z1: int, x2: int, z2: int, y_mode: str = "surfac
 
 
 @mcp.tool()
-def render_closeup_map_preview(x1: int, z1: int, x2: int, z2: int, y_mode: str = "surface", dimension: str = "overworld", view: str = "oblique", scale: int = 8, vertical_scale: int = 3, background: str = "transparent") -> str:
+def render_closeup_map_preview(
+    x1: int,
+    z1: int,
+    x2: int,
+    z2: int,
+    y_mode: str = "surface",
+    dimension: str = "overworld",
+    view: str = "oblique",
+    scale: int = 8,
+    vertical_scale: int = 3,
+    background: str = "transparent",
+    side_depth: int = 32,
+) -> str:
     """Render a close-up pseudo-3D offline map preview from region data."""
-    return dumps(with_support(CONFIG, preview_render_closeup_map_preview(CONFIG, x1, z1, x2, z2, y_mode, dimension, view, scale, vertical_scale, background)))
+    return dumps(with_support(CONFIG, preview_render_closeup_map_preview(CONFIG, x1, z1, x2, z2, y_mode, dimension, view, scale, vertical_scale, background, side_depth)))
 
 
 @mcp.tool()

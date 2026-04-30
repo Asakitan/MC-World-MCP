@@ -64,8 +64,9 @@ Read tools are allowed while the server is running.
 
 Preview rendering and source-world generation simulation have pure-Python
 fallbacks and can optionally use a compiled Cython module for hot loops such as
-block-state index decoding, chunk surface projection, source-world floor
-projection, structure-template projection, and item-NBT multi-view recomputation.
+block-state index decoding, chunk surface projection, close-up side sampling,
+source-world floor projection, structure-template projection, and item-NBT
+multi-view recomputation.
 
 On Windows, compile the extension in place:
 
@@ -179,7 +180,7 @@ Useful checks:
 Offline visual checks:
 
 - `render_map_preview(x1, z1, x2, z2, "surface")` renders a top-down PNG. `y_mode` also accepts `top`, `ocean_floor`, `seafloor`, or an integer Y level such as `"26"`. Previews can render up to 1,048,576 output pixels; pass `sample=2` or higher for faster downsampled overviews of larger areas.
-- `render_closeup_map_preview(x1, z1, x2, z2, "surface", view="oblique")` renders a close-up pseudo-3D terrain PNG from real Anvil columns, including visible top faces, height differences, and side faces. Views include `oblique`, `south_east`, `south_west`, `north_west`, and `north_east`; the result reports whether Cython accelerated the close-up recomputation.
+- `render_closeup_map_preview(x1, z1, x2, z2, "surface", view="oblique", side_depth=32)` renders a close-up pseudo-3D terrain PNG from real Anvil columns, including visible top faces, height differences, and side faces. Views include `oblique`, `south_east`, `south_west`, `north_west`, and `north_east`; side faces sample real blocks below each top face up to `side_depth` layers instead of extending the top block through the whole column. The result reports whether Cython accelerated the close-up recomputation.
 - `render_slice_preview("x", fixed, min_z, max_z, min_y, max_y)` renders a vertical slice.
 - `render_template_preview(template_path)` renders a structure `.nbt` projection.
 - `render_item_nbt_preview(item_snbt, views=["front", "oblique"])` renders an item stack SNBT/NBT preview from local resource-pack, mod, plugin, or datapack assets. Views include `front`, `back`, `left`, `right`, `top`, `bottom`, `isometric`, and `oblique`; the result reports whether Cython accelerated the view recomputation.

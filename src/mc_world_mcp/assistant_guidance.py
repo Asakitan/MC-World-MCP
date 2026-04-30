@@ -141,7 +141,7 @@ def assistant_instruction_markdown() -> str:
         "- top/surface: top non-air blocks; water surfaces remain visible.",
         "- ocean_floor/seafloor/sea_floor/floor: top block after skipping air and water.",
         "- integer string: fixed Y level, such as '26' or '-63'.",
-        "- render_closeup_map_preview: close-up pseudo-3D terrain rendering from Anvil columns; views include oblique and four diagonal directions.",
+        "- render_closeup_map_preview: close-up pseudo-3D terrain rendering from Anvil columns; views include oblique and four diagonal directions, with side_depth-limited real side block sampling.",
         "- render_item_nbt_preview: item stack SNBT/NBT rendered from local assets; views include front, back, left, right, top, bottom, isometric, and oblique.",
     ]
     return "\n".join(sections)

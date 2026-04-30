@@ -2921,6 +2921,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject *, Py_ssize_t, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, int, int, int, int __pyx_skip_dispatch); /*proto*/
+static int __pyx_f_12mc_world_mcp_14_preview_accel_fill_closeup_side_samples(PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, PyObject *, int, int, int, int, int __pyx_skip_dispatch); /*proto*/
 static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states(PyObject *, int, int, int, int, int __pyx_skip_dispatch); /*proto*/
 static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__max_int(int, int); /*proto*/
 static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__min_int(int, int); /*proto*/
@@ -2936,7 +2937,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangl
 static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslice, int, int, int, int, int, int, int, int, int, int, int, int); /*proto*/
 static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(int, int, int, int, int); /*proto*/
 static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height(PyObject *, int, int, int, int, int); /*proto*/
-static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba(PyObject *, PyObject *, int, int, int, int, int, int, int, int, int, PyObject *, int __pyx_skip_dispatch); /*proto*/
+static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba(PyObject *, PyObject *, PyObject *, int, int, int, int, int, int, int, int, int, PyObject *, int, int __pyx_skip_dispatch); /*proto*/
 static int __pyx_array_allocate_buffer(struct __pyx_array_obj *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char const *, char *); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo const *); /*proto*/
@@ -3036,9 +3037,10 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_2count_palette_indices
 static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_4encode_indices(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_indices, Py_ssize_t __pyx_v_palette_size); /* proto */
 static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_6fill_top_projection(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_indices, PyObject *__pyx_v_palette, PyObject *__pyx_v_palette_base_names, PyObject *__pyx_v_skip, PyObject *__pyx_v_unresolved, PyObject *__pyx_v_blocks); /* proto */
 static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_8fill_floor_projection(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_indices, PyObject *__pyx_v_palette, PyObject *__pyx_v_palette_base_names, PyObject *__pyx_v_skip, PyObject *__pyx_v_unresolved, PyObject *__pyx_v_blocks, PyObject *__pyx_v_heights, int __pyx_v_section_y, int __pyx_v_min_y, int __pyx_v_max_y); /* proto */
-static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_10project_template_states(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_template_blocks, int __pyx_v_width, int __pyx_v_height, int __pyx_v_size_y, int __pyx_v_axis_code); /* proto */
-static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_12render_item_view_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_source, int __pyx_v_src_w, int __pyx_v_src_h, int __pyx_v_view_code, int __pyx_v_size, PyObject *__pyx_v_background); /* proto */
-static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_14render_closeup_map_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_heights, PyObject *__pyx_v_colors, int __pyx_v_width, int __pyx_v_depth, int __pyx_v_canvas_w, int __pyx_v_canvas_h, int __pyx_v_view_code, int __pyx_v_scale, int __pyx_v_vertical_scale, int __pyx_v_min_y, int __pyx_v_max_y, PyObject *__pyx_v_background); /* proto */
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_10fill_closeup_side_samples(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_indices, PyObject *__pyx_v_palette_base_names, PyObject *__pyx_v_palette_colors, PyObject *__pyx_v_skip, PyObject *__pyx_v_heights, PyObject *__pyx_v_samples, int __pyx_v_section_y, int __pyx_v_side_depth, int __pyx_v_min_y, int __pyx_v_max_y); /* proto */
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_12project_template_states(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_template_blocks, int __pyx_v_width, int __pyx_v_height, int __pyx_v_size_y, int __pyx_v_axis_code); /* proto */
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_14render_item_view_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_source, int __pyx_v_src_w, int __pyx_v_src_h, int __pyx_v_view_code, int __pyx_v_size, PyObject *__pyx_v_background); /* proto */
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_16render_closeup_map_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_heights, PyObject *__pyx_v_colors, PyObject *__pyx_v_side_colors, int __pyx_v_width, int __pyx_v_depth, int __pyx_v_canvas_w, int __pyx_v_canvas_h, int __pyx_v_view_code, int __pyx_v_scale, int __pyx_v_vertical_scale, int __pyx_v_min_y, int __pyx_v_max_y, PyObject *__pyx_v_background, int __pyx_v_side_depth); /* proto */
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -3076,9 +3078,9 @@ typedef struct {
   __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_values;
   PyObject *__pyx_slice[1];
   PyObject *__pyx_tuple[2];
-  PyObject *__pyx_codeobj_tab[8];
-  PyObject *__pyx_string_tab[161];
-  PyObject *__pyx_number_tab[5];
+  PyObject *__pyx_codeobj_tab[9];
+  PyObject *__pyx_string_tab[168];
+  PyObject *__pyx_number_tab[6];
 /* #### Code section: module_state_contents ### */
 /* CommonTypesMetaclass.module_state_decls */
 PyTypeObject *__pyx_CommonTypesMetaclassType;
@@ -3167,124 +3169,132 @@ static __pyx_mstatetype * const __pyx_mstate_global = &__pyx_mstate_global_stati
 #define __pyx_kp_u_unable_to_allocate_shape_and_str __pyx_string_tab[45]
 #define __pyx_n_u_ASCII __pyx_string_tab[46]
 #define __pyx_n_u_Ellipsis __pyx_string_tab[47]
-#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[48]
-#define __pyx_n_u_Sequence __pyx_string_tab[49]
-#define __pyx_n_u_View_MemoryView __pyx_string_tab[50]
-#define __pyx_n_u_abc __pyx_string_tab[51]
-#define __pyx_n_u_allocate_buffer __pyx_string_tab[52]
-#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[53]
-#define __pyx_n_u_axis_code __pyx_string_tab[54]
-#define __pyx_n_u_background __pyx_string_tab[55]
-#define __pyx_n_u_base __pyx_string_tab[56]
-#define __pyx_n_u_blocks __pyx_string_tab[57]
-#define __pyx_n_u_c __pyx_string_tab[58]
-#define __pyx_n_u_canvas_h __pyx_string_tab[59]
-#define __pyx_n_u_canvas_w __pyx_string_tab[60]
-#define __pyx_n_u_class __pyx_string_tab[61]
-#define __pyx_n_u_class_getitem __pyx_string_tab[62]
-#define __pyx_n_u_cline_in_traceback __pyx_string_tab[63]
-#define __pyx_n_u_colors __pyx_string_tab[64]
-#define __pyx_n_u_count __pyx_string_tab[65]
-#define __pyx_n_u_count_palette_indices __pyx_string_tab[66]
-#define __pyx_n_u_data __pyx_string_tab[67]
-#define __pyx_n_u_decode_indices __pyx_string_tab[68]
-#define __pyx_n_u_depth __pyx_string_tab[69]
-#define __pyx_n_u_dict __pyx_string_tab[70]
-#define __pyx_n_u_dtype_is_object __pyx_string_tab[71]
-#define __pyx_n_u_encode __pyx_string_tab[72]
-#define __pyx_n_u_encode_indices __pyx_string_tab[73]
-#define __pyx_n_u_enumerate __pyx_string_tab[74]
-#define __pyx_n_u_error __pyx_string_tab[75]
-#define __pyx_n_u_fill_floor_projection __pyx_string_tab[76]
-#define __pyx_n_u_fill_top_projection __pyx_string_tab[77]
-#define __pyx_n_u_flags __pyx_string_tab[78]
-#define __pyx_n_u_format __pyx_string_tab[79]
-#define __pyx_n_u_fortran __pyx_string_tab[80]
-#define __pyx_n_u_func __pyx_string_tab[81]
-#define __pyx_n_u_get __pyx_string_tab[82]
-#define __pyx_n_u_getstate __pyx_string_tab[83]
-#define __pyx_n_u_height __pyx_string_tab[84]
-#define __pyx_n_u_heights __pyx_string_tab[85]
-#define __pyx_n_u_id __pyx_string_tab[86]
-#define __pyx_n_u_import __pyx_string_tab[87]
-#define __pyx_n_u_index __pyx_string_tab[88]
-#define __pyx_n_u_indices __pyx_string_tab[89]
-#define __pyx_n_u_is_coroutine __pyx_string_tab[90]
-#define __pyx_n_u_items __pyx_string_tab[91]
-#define __pyx_n_u_itemsize __pyx_string_tab[92]
-#define __pyx_n_u_main __pyx_string_tab[93]
-#define __pyx_n_u_max_y __pyx_string_tab[94]
-#define __pyx_n_u_mc_world_mcp__preview_accel __pyx_string_tab[95]
-#define __pyx_n_u_memview __pyx_string_tab[96]
-#define __pyx_n_u_min_y __pyx_string_tab[97]
-#define __pyx_n_u_mode __pyx_string_tab[98]
-#define __pyx_n_u_module __pyx_string_tab[99]
-#define __pyx_n_u_name __pyx_string_tab[100]
-#define __pyx_n_u_name_2 __pyx_string_tab[101]
-#define __pyx_n_u_ndim __pyx_string_tab[102]
-#define __pyx_n_u_new __pyx_string_tab[103]
-#define __pyx_n_u_obj __pyx_string_tab[104]
-#define __pyx_n_u_pack __pyx_string_tab[105]
-#define __pyx_n_u_palette __pyx_string_tab[106]
-#define __pyx_n_u_palette_base_names __pyx_string_tab[107]
-#define __pyx_n_u_palette_size __pyx_string_tab[108]
-#define __pyx_n_u_pop __pyx_string_tab[109]
-#define __pyx_n_u_pos __pyx_string_tab[110]
-#define __pyx_n_u_project_template_states __pyx_string_tab[111]
-#define __pyx_n_u_pyx_checksum __pyx_string_tab[112]
-#define __pyx_n_u_pyx_state __pyx_string_tab[113]
-#define __pyx_n_u_pyx_type __pyx_string_tab[114]
-#define __pyx_n_u_pyx_unpickle_Enum __pyx_string_tab[115]
-#define __pyx_n_u_pyx_vtable __pyx_string_tab[116]
-#define __pyx_n_u_qualname __pyx_string_tab[117]
-#define __pyx_n_u_reduce __pyx_string_tab[118]
-#define __pyx_n_u_reduce_cython __pyx_string_tab[119]
-#define __pyx_n_u_reduce_ex __pyx_string_tab[120]
-#define __pyx_n_u_register __pyx_string_tab[121]
-#define __pyx_n_u_render_closeup_map_rgba __pyx_string_tab[122]
-#define __pyx_n_u_render_item_view_rgba __pyx_string_tab[123]
-#define __pyx_n_u_scale __pyx_string_tab[124]
-#define __pyx_n_u_section_y __pyx_string_tab[125]
-#define __pyx_n_u_set_name __pyx_string_tab[126]
-#define __pyx_n_u_setdefault __pyx_string_tab[127]
-#define __pyx_n_u_setstate __pyx_string_tab[128]
-#define __pyx_n_u_setstate_cython __pyx_string_tab[129]
-#define __pyx_n_u_shape __pyx_string_tab[130]
-#define __pyx_n_u_size __pyx_string_tab[131]
-#define __pyx_n_u_size_y __pyx_string_tab[132]
-#define __pyx_n_u_skip __pyx_string_tab[133]
-#define __pyx_n_u_source __pyx_string_tab[134]
-#define __pyx_n_u_src_h __pyx_string_tab[135]
-#define __pyx_n_u_src_w __pyx_string_tab[136]
-#define __pyx_n_u_start __pyx_string_tab[137]
-#define __pyx_n_u_state __pyx_string_tab[138]
-#define __pyx_n_u_step __pyx_string_tab[139]
-#define __pyx_n_u_stop __pyx_string_tab[140]
-#define __pyx_n_u_struct __pyx_string_tab[141]
-#define __pyx_n_u_template_blocks __pyx_string_tab[142]
-#define __pyx_n_u_test __pyx_string_tab[143]
-#define __pyx_n_u_unpack __pyx_string_tab[144]
-#define __pyx_n_u_unresolved __pyx_string_tab[145]
-#define __pyx_n_u_update __pyx_string_tab[146]
-#define __pyx_n_u_values __pyx_string_tab[147]
-#define __pyx_n_u_vertical_scale __pyx_string_tab[148]
-#define __pyx_n_u_view_code __pyx_string_tab[149]
-#define __pyx_n_u_width __pyx_string_tab[150]
-#define __pyx_n_u_x __pyx_string_tab[151]
-#define __pyx_kp_b_iso88591_5_r_E_1A_E_1A_E_1A_E_1A_vS_V3b __pyx_string_tab[152]
-#define __pyx_kp_b_iso88591_9Bir_E_1A_E_1A_E_1A_E_1A_HAS_xq __pyx_string_tab[153]
-#define __pyx_kp_b_iso88591_Cq_q_Qa_s_Q_s_r_9_3c_Bc_r_Cq_vR __pyx_string_tab[154]
-#define __pyx_kp_b_iso88591_Qa_e1E_Q_1A_6_A_3c_E_aq_U_1A_E __pyx_string_tab[155]
-#define __pyx_kp_b_iso88591_Qa_e1E_Q_1A_6_A_Jb_2Q_2Rq_2Rq_3 __pyx_string_tab[156]
-#define __pyx_kp_b_iso88591_q_Q_Cq_q_uCq_auA_q_Qa_s_Q_Bc_r __pyx_string_tab[157]
-#define __pyx_kp_b_iso88591_q_Q_uCq_q_Qa_s_Q_Bc_r_AQ_U_1_Rs __pyx_string_tab[158]
-#define __pyx_kp_b_iso88591_r_a_r_a_e4q_q_3a_U_Qc_U_Qc_U_Qc __pyx_string_tab[159]
-#define __pyx_n_b_O __pyx_string_tab[160]
+#define __pyx_n_u_PREVIEW_ACCEL_API __pyx_string_tab[48]
+#define __pyx_n_u_Pyx_PyDict_NextRef __pyx_string_tab[49]
+#define __pyx_n_u_Sequence __pyx_string_tab[50]
+#define __pyx_n_u_View_MemoryView __pyx_string_tab[51]
+#define __pyx_n_u_abc __pyx_string_tab[52]
+#define __pyx_n_u_allocate_buffer __pyx_string_tab[53]
+#define __pyx_n_u_asyncio_coroutines __pyx_string_tab[54]
+#define __pyx_n_u_axis_code __pyx_string_tab[55]
+#define __pyx_n_u_background __pyx_string_tab[56]
+#define __pyx_n_u_base __pyx_string_tab[57]
+#define __pyx_n_u_blocks __pyx_string_tab[58]
+#define __pyx_n_u_c __pyx_string_tab[59]
+#define __pyx_n_u_canvas_h __pyx_string_tab[60]
+#define __pyx_n_u_canvas_w __pyx_string_tab[61]
+#define __pyx_n_u_class __pyx_string_tab[62]
+#define __pyx_n_u_class_getitem __pyx_string_tab[63]
+#define __pyx_n_u_cline_in_traceback __pyx_string_tab[64]
+#define __pyx_n_u_colors __pyx_string_tab[65]
+#define __pyx_n_u_count __pyx_string_tab[66]
+#define __pyx_n_u_count_palette_indices __pyx_string_tab[67]
+#define __pyx_n_u_data __pyx_string_tab[68]
+#define __pyx_n_u_decode_indices __pyx_string_tab[69]
+#define __pyx_n_u_depth __pyx_string_tab[70]
+#define __pyx_n_u_dict __pyx_string_tab[71]
+#define __pyx_n_u_dtype_is_object __pyx_string_tab[72]
+#define __pyx_n_u_encode __pyx_string_tab[73]
+#define __pyx_n_u_encode_indices __pyx_string_tab[74]
+#define __pyx_n_u_enumerate __pyx_string_tab[75]
+#define __pyx_n_u_error __pyx_string_tab[76]
+#define __pyx_n_u_fill_closeup_side_samples __pyx_string_tab[77]
+#define __pyx_n_u_fill_floor_projection __pyx_string_tab[78]
+#define __pyx_n_u_fill_top_projection __pyx_string_tab[79]
+#define __pyx_n_u_flags __pyx_string_tab[80]
+#define __pyx_n_u_format __pyx_string_tab[81]
+#define __pyx_n_u_fortran __pyx_string_tab[82]
+#define __pyx_n_u_func __pyx_string_tab[83]
+#define __pyx_n_u_get __pyx_string_tab[84]
+#define __pyx_n_u_getstate __pyx_string_tab[85]
+#define __pyx_n_u_height __pyx_string_tab[86]
+#define __pyx_n_u_heights __pyx_string_tab[87]
+#define __pyx_n_u_id __pyx_string_tab[88]
+#define __pyx_n_u_import __pyx_string_tab[89]
+#define __pyx_n_u_index __pyx_string_tab[90]
+#define __pyx_n_u_indices __pyx_string_tab[91]
+#define __pyx_n_u_is_coroutine __pyx_string_tab[92]
+#define __pyx_n_u_items __pyx_string_tab[93]
+#define __pyx_n_u_itemsize __pyx_string_tab[94]
+#define __pyx_n_u_main __pyx_string_tab[95]
+#define __pyx_n_u_max_y __pyx_string_tab[96]
+#define __pyx_n_u_mc_world_mcp__preview_accel __pyx_string_tab[97]
+#define __pyx_n_u_memview __pyx_string_tab[98]
+#define __pyx_n_u_min_y __pyx_string_tab[99]
+#define __pyx_n_u_mode __pyx_string_tab[100]
+#define __pyx_n_u_module __pyx_string_tab[101]
+#define __pyx_n_u_name __pyx_string_tab[102]
+#define __pyx_n_u_name_2 __pyx_string_tab[103]
+#define __pyx_n_u_ndim __pyx_string_tab[104]
+#define __pyx_n_u_new __pyx_string_tab[105]
+#define __pyx_n_u_obj __pyx_string_tab[106]
+#define __pyx_n_u_pack __pyx_string_tab[107]
+#define __pyx_n_u_palette __pyx_string_tab[108]
+#define __pyx_n_u_palette_base_names __pyx_string_tab[109]
+#define __pyx_n_u_palette_colors __pyx_string_tab[110]
+#define __pyx_n_u_palette_size __pyx_string_tab[111]
+#define __pyx_n_u_pop __pyx_string_tab[112]
+#define __pyx_n_u_pos __pyx_string_tab[113]
+#define __pyx_n_u_project_template_states __pyx_string_tab[114]
+#define __pyx_n_u_pyx_checksum __pyx_string_tab[115]
+#define __pyx_n_u_pyx_state __pyx_string_tab[116]
+#define __pyx_n_u_pyx_type __pyx_string_tab[117]
+#define __pyx_n_u_pyx_unpickle_Enum __pyx_string_tab[118]
+#define __pyx_n_u_pyx_vtable __pyx_string_tab[119]
+#define __pyx_n_u_qualname __pyx_string_tab[120]
+#define __pyx_n_u_reduce __pyx_string_tab[121]
+#define __pyx_n_u_reduce_cython __pyx_string_tab[122]
+#define __pyx_n_u_reduce_ex __pyx_string_tab[123]
+#define __pyx_n_u_register __pyx_string_tab[124]
+#define __pyx_n_u_render_closeup_map_rgba __pyx_string_tab[125]
+#define __pyx_n_u_render_item_view_rgba __pyx_string_tab[126]
+#define __pyx_n_u_samples __pyx_string_tab[127]
+#define __pyx_n_u_scale __pyx_string_tab[128]
+#define __pyx_n_u_section_y __pyx_string_tab[129]
+#define __pyx_n_u_set_name __pyx_string_tab[130]
+#define __pyx_n_u_setdefault __pyx_string_tab[131]
+#define __pyx_n_u_setstate __pyx_string_tab[132]
+#define __pyx_n_u_setstate_cython __pyx_string_tab[133]
+#define __pyx_n_u_shape __pyx_string_tab[134]
+#define __pyx_n_u_side_colors __pyx_string_tab[135]
+#define __pyx_n_u_side_depth __pyx_string_tab[136]
+#define __pyx_n_u_size __pyx_string_tab[137]
+#define __pyx_n_u_size_y __pyx_string_tab[138]
+#define __pyx_n_u_skip __pyx_string_tab[139]
+#define __pyx_n_u_source __pyx_string_tab[140]
+#define __pyx_n_u_src_h __pyx_string_tab[141]
+#define __pyx_n_u_src_w __pyx_string_tab[142]
+#define __pyx_n_u_start __pyx_string_tab[143]
+#define __pyx_n_u_state __pyx_string_tab[144]
+#define __pyx_n_u_step __pyx_string_tab[145]
+#define __pyx_n_u_stop __pyx_string_tab[146]
+#define __pyx_n_u_struct __pyx_string_tab[147]
+#define __pyx_n_u_template_blocks __pyx_string_tab[148]
+#define __pyx_n_u_test __pyx_string_tab[149]
+#define __pyx_n_u_unpack __pyx_string_tab[150]
+#define __pyx_n_u_unresolved __pyx_string_tab[151]
+#define __pyx_n_u_update __pyx_string_tab[152]
+#define __pyx_n_u_values __pyx_string_tab[153]
+#define __pyx_n_u_vertical_scale __pyx_string_tab[154]
+#define __pyx_n_u_view_code __pyx_string_tab[155]
+#define __pyx_n_u_width __pyx_string_tab[156]
+#define __pyx_n_u_x __pyx_string_tab[157]
+#define __pyx_kp_b_iso88591_1_Zr_2Q_Qa_Rs_1_q_q_83a_e1_82Q __pyx_string_tab[158]
+#define __pyx_kp_b_iso88591_5_r_E_1A_E_1A_E_1A_E_1A_vS_V3b __pyx_string_tab[159]
+#define __pyx_kp_b_iso88591_9Bir_E_1A_E_1A_E_1A_E_1A_HAS_xq __pyx_string_tab[160]
+#define __pyx_kp_b_iso88591_Cq_q_Qa_s_Q_s_r_9_3c_Bc_r_Cq_vR __pyx_string_tab[161]
+#define __pyx_kp_b_iso88591_Qa_e1E_Q_1A_6_A_3c_E_aq_U_1A_E __pyx_string_tab[162]
+#define __pyx_kp_b_iso88591_Qa_e1E_Q_1A_6_A_Jb_2Q_2Rq_2Rq_3 __pyx_string_tab[163]
+#define __pyx_kp_b_iso88591_q_Q_Cq_q_uCq_auA_q_Qa_s_Q_Bc_r __pyx_string_tab[164]
+#define __pyx_kp_b_iso88591_q_Q_uCq_q_Qa_s_Q_Bc_r_AQ_U_1_Rs __pyx_string_tab[165]
+#define __pyx_kp_b_iso88591_r_a_r_a_e4q_q_3a_U_Qc_U_Qc_U_Qc __pyx_string_tab[166]
+#define __pyx_n_b_O __pyx_string_tab[167]
 #define __pyx_int_0 __pyx_number_tab[0]
 #define __pyx_int_neg_1 __pyx_number_tab[1]
 #define __pyx_int_1 __pyx_number_tab[2]
-#define __pyx_int_4096 __pyx_number_tab[3]
-#define __pyx_int_136983863 __pyx_number_tab[4]
+#define __pyx_int_2 __pyx_number_tab[3]
+#define __pyx_int_4096 __pyx_number_tab[4]
+#define __pyx_int_136983863 __pyx_number_tab[5]
 /* #### Code section: module_state_clear ### */
 #if CYTHON_USE_MODULE_STATE
 static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
@@ -3309,9 +3319,9 @@ static CYTHON_SMALL_CODE int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_type___pyx_memoryviewslice);
   for (int i=0; i<1; ++i) { Py_CLEAR(clear_module_state->__pyx_slice[i]); }
   for (int i=0; i<2; ++i) { Py_CLEAR(clear_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<8; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<161; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<5; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<9; ++i) { Py_CLEAR(clear_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<168; ++i) { Py_CLEAR(clear_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { Py_CLEAR(clear_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_clear_contents ### */
 /* CommonTypesMetaclass.module_state_clear */
 Py_CLEAR(clear_module_state->__pyx_CommonTypesMetaclassType);
@@ -3344,9 +3354,9 @@ static CYTHON_SMALL_CODE int __pyx_m_traverse(PyObject *m, visitproc visit, void
   Py_VISIT(traverse_module_state->__pyx_type___pyx_memoryviewslice);
   for (int i=0; i<1; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_slice[i]); }
   for (int i=0; i<2; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_tuple[i]); }
-  for (int i=0; i<8; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
-  for (int i=0; i<161; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
-  for (int i=0; i<5; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
+  for (int i=0; i<9; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_codeobj_tab[i]); }
+  for (int i=0; i<168; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_string_tab[i]); }
+  for (int i=0; i<6; ++i) { __Pyx_VISIT_CONST(traverse_module_state->__pyx_number_tab[i]); }
 /* #### Code section: module_state_traverse_contents ### */
 /* CommonTypesMetaclass.module_state_traverse */
 Py_VISIT(traverse_module_state->__pyx_CommonTypesMetaclassType);
@@ -16627,7 +16637,7 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":10
+/* "mc_world_mcp/_preview_accel.pyx":12
  * 
  * 
  * cdef int _bits_for_palette(Py_ssize_t size):             # <<<<<<<<<<<<<<
@@ -16641,7 +16651,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":11
+  /* "mc_world_mcp/_preview_accel.pyx":13
  * 
  * cdef int _bits_for_palette(Py_ssize_t size):
  *     cdef int bits = 0             # <<<<<<<<<<<<<<
@@ -16650,7 +16660,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
 */
   __pyx_v_bits = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":12
+  /* "mc_world_mcp/_preview_accel.pyx":14
  * cdef int _bits_for_palette(Py_ssize_t size):
  *     cdef int bits = 0
  *     cdef Py_ssize_t value = size - 1             # <<<<<<<<<<<<<<
@@ -16659,7 +16669,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
 */
   __pyx_v_value = (__pyx_v_size - 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":13
+  /* "mc_world_mcp/_preview_accel.pyx":15
  *     cdef int bits = 0
  *     cdef Py_ssize_t value = size - 1
  *     while value > 0:             # <<<<<<<<<<<<<<
@@ -16670,7 +16680,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
     __pyx_t_1 = (__pyx_v_value > 0);
     if (!__pyx_t_1) break;
 
-    /* "mc_world_mcp/_preview_accel.pyx":14
+    /* "mc_world_mcp/_preview_accel.pyx":16
  *     cdef Py_ssize_t value = size - 1
  *     while value > 0:
  *         bits += 1             # <<<<<<<<<<<<<<
@@ -16679,7 +16689,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
 */
     __pyx_v_bits = (__pyx_v_bits + 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":15
+    /* "mc_world_mcp/_preview_accel.pyx":17
  *     while value > 0:
  *         bits += 1
  *         value >>= 1             # <<<<<<<<<<<<<<
@@ -16689,7 +16699,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
     __pyx_v_value = (__pyx_v_value >> 1);
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":16
+  /* "mc_world_mcp/_preview_accel.pyx":18
  *         bits += 1
  *         value >>= 1
  *     if bits < 4:             # <<<<<<<<<<<<<<
@@ -16699,7 +16709,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
   __pyx_t_1 = (__pyx_v_bits < 4);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":17
+    /* "mc_world_mcp/_preview_accel.pyx":19
  *         value >>= 1
  *     if bits < 4:
  *         return 4             # <<<<<<<<<<<<<<
@@ -16709,7 +16719,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
     __pyx_r = 4;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":16
+    /* "mc_world_mcp/_preview_accel.pyx":18
  *         bits += 1
  *         value >>= 1
  *     if bits < 4:             # <<<<<<<<<<<<<<
@@ -16718,7 +16728,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":18
+  /* "mc_world_mcp/_preview_accel.pyx":20
  *     if bits < 4:
  *         return 4
  *     return bits             # <<<<<<<<<<<<<<
@@ -16728,7 +16738,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
   __pyx_r = __pyx_v_bits;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":10
+  /* "mc_world_mcp/_preview_accel.pyx":12
  * 
  * 
  * cdef int _bits_for_palette(Py_ssize_t size):             # <<<<<<<<<<<<<<
@@ -16741,7 +16751,7 @@ static int __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(Py_ssize_t 
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":21
+/* "mc_world_mcp/_preview_accel.pyx":23
  * 
  * 
  * cpdef list decode_indices(object data, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
@@ -16780,26 +16790,26 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decode_indices", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":22
+  /* "mc_world_mcp/_preview_accel.pyx":24
  * 
  * cpdef list decode_indices(object data, Py_ssize_t palette_size):
  *     cdef list values = [0] * 4096             # <<<<<<<<<<<<<<
  *     if data is None:
  *         return values
 */
-  __pyx_t_1 = PyList_New(1 * 4096); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1 * 4096); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   { Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < 0x1000; __pyx_temp++) {
       __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
       __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_0);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 22, __pyx_L1_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 24, __pyx_L1_error);
     }
   }
   __pyx_v_values = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":23
+  /* "mc_world_mcp/_preview_accel.pyx":25
  * cpdef list decode_indices(object data, Py_ssize_t palette_size):
  *     cdef list values = [0] * 4096
  *     if data is None:             # <<<<<<<<<<<<<<
@@ -16809,7 +16819,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
   __pyx_t_2 = (__pyx_v_data == Py_None);
   if (__pyx_t_2) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":24
+    /* "mc_world_mcp/_preview_accel.pyx":26
  *     cdef list values = [0] * 4096
  *     if data is None:
  *         return values             # <<<<<<<<<<<<<<
@@ -16821,7 +16831,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
     __pyx_r = __pyx_v_values;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":23
+    /* "mc_world_mcp/_preview_accel.pyx":25
  * cpdef list decode_indices(object data, Py_ssize_t palette_size):
  *     cdef list values = [0] * 4096
  *     if data is None:             # <<<<<<<<<<<<<<
@@ -16830,17 +16840,17 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":26
+  /* "mc_world_mcp/_preview_accel.pyx":28
  *         return values
  * 
  *     cdef int bits = _bits_for_palette(palette_size)             # <<<<<<<<<<<<<<
  *     cdef int values_per_long = 64 // bits
  *     cdef uint64_t mask = (<uint64_t>1 << bits) - 1
 */
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(__pyx_v_palette_size); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(__pyx_v_palette_size); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 28, __pyx_L1_error)
   __pyx_v_bits = __pyx_t_3;
 
-  /* "mc_world_mcp/_preview_accel.pyx":27
+  /* "mc_world_mcp/_preview_accel.pyx":29
  * 
  *     cdef int bits = _bits_for_palette(palette_size)
  *     cdef int values_per_long = 64 // bits             # <<<<<<<<<<<<<<
@@ -16849,15 +16859,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
 */
   if (unlikely(__pyx_v_bits == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-    __PYX_ERR(0, 27, __pyx_L1_error)
+    __PYX_ERR(0, 29, __pyx_L1_error)
   }
   else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_bits == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(64))) {
     PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-    __PYX_ERR(0, 27, __pyx_L1_error)
+    __PYX_ERR(0, 29, __pyx_L1_error)
   }
   __pyx_v_values_per_long = __Pyx_div_long(64, __pyx_v_bits, 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":28
+  /* "mc_world_mcp/_preview_accel.pyx":30
  *     cdef int bits = _bits_for_palette(palette_size)
  *     cdef int values_per_long = 64 // bits
  *     cdef uint64_t mask = (<uint64_t>1 << bits) - 1             # <<<<<<<<<<<<<<
@@ -16866,17 +16876,17 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
 */
   __pyx_v_mask = ((((uint64_t)1) << __pyx_v_bits) - 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":29
+  /* "mc_world_mcp/_preview_accel.pyx":31
  *     cdef int values_per_long = 64 // bits
  *     cdef uint64_t mask = (<uint64_t>1 << bits) - 1
  *     cdef Py_ssize_t long_count = len(data)             # <<<<<<<<<<<<<<
  *     cdef Py_ssize_t i
  *     cdef Py_ssize_t long_index
 */
-  __pyx_t_4 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 31, __pyx_L1_error)
   __pyx_v_long_count = __pyx_t_4;
 
-  /* "mc_world_mcp/_preview_accel.pyx":36
+  /* "mc_world_mcp/_preview_accel.pyx":38
  *     cdef uint64_t raw
  * 
  *     for i in range(4096):             # <<<<<<<<<<<<<<
@@ -16886,7 +16896,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
   for (__pyx_t_4 = 0; __pyx_t_4 < 0x1000; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "mc_world_mcp/_preview_accel.pyx":37
+    /* "mc_world_mcp/_preview_accel.pyx":39
  * 
  *     for i in range(4096):
  *         long_index = i // values_per_long             # <<<<<<<<<<<<<<
@@ -16895,15 +16905,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
 */
     if (unlikely(__pyx_v_values_per_long == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 37, __pyx_L1_error)
+      __PYX_ERR(0, 39, __pyx_L1_error)
     }
     else if (sizeof(Py_ssize_t) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_values_per_long == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_v_i))) {
       PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-      __PYX_ERR(0, 37, __pyx_L1_error)
+      __PYX_ERR(0, 39, __pyx_L1_error)
     }
     __pyx_v_long_index = __Pyx_div_Py_ssize_t(__pyx_v_i, __pyx_v_values_per_long, 0);
 
-    /* "mc_world_mcp/_preview_accel.pyx":38
+    /* "mc_world_mcp/_preview_accel.pyx":40
  *     for i in range(4096):
  *         long_index = i // values_per_long
  *         if long_index < long_count:             # <<<<<<<<<<<<<<
@@ -16913,7 +16923,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
     __pyx_t_2 = (__pyx_v_long_index < __pyx_v_long_count);
     if (__pyx_t_2) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":39
+      /* "mc_world_mcp/_preview_accel.pyx":41
  *         long_index = i // values_per_long
  *         if long_index < long_count:
  *             start = (i % values_per_long) * bits             # <<<<<<<<<<<<<<
@@ -16922,27 +16932,27 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
 */
       if (unlikely(__pyx_v_values_per_long == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-        __PYX_ERR(0, 39, __pyx_L1_error)
+        __PYX_ERR(0, 41, __pyx_L1_error)
       }
       __pyx_v_start = (__Pyx_mod_Py_ssize_t(__pyx_v_i, __pyx_v_values_per_long, 0) * __pyx_v_bits);
 
-      /* "mc_world_mcp/_preview_accel.pyx":40
+      /* "mc_world_mcp/_preview_accel.pyx":42
  *         if long_index < long_count:
  *             start = (i % values_per_long) * bits
  *             signed_value = <int64_t>int(data[long_index])             # <<<<<<<<<<<<<<
  *             raw = <uint64_t>signed_value
  *             values[i] = <int>((raw >> start) & mask)
 */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_data, __pyx_v_long_index, Py_ssize_t, 1, PyLong_FromSsize_t, 0, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_data, __pyx_v_long_index, Py_ssize_t, 1, PyLong_FromSsize_t, 0, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_5 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 40, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_6 = __Pyx_PyLong_As_int64_t(__pyx_t_5); if (unlikely((__pyx_t_6 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyLong_As_int64_t(__pyx_t_5); if (unlikely((__pyx_t_6 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 42, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_v_signed_value = ((int64_t)__pyx_t_6);
 
-      /* "mc_world_mcp/_preview_accel.pyx":41
+      /* "mc_world_mcp/_preview_accel.pyx":43
  *             start = (i % values_per_long) * bits
  *             signed_value = <int64_t>int(data[long_index])
  *             raw = <uint64_t>signed_value             # <<<<<<<<<<<<<<
@@ -16951,19 +16961,19 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
 */
       __pyx_v_raw = ((uint64_t)__pyx_v_signed_value);
 
-      /* "mc_world_mcp/_preview_accel.pyx":42
+      /* "mc_world_mcp/_preview_accel.pyx":44
  *             signed_value = <int64_t>int(data[long_index])
  *             raw = <uint64_t>signed_value
  *             values[i] = <int>((raw >> start) & mask)             # <<<<<<<<<<<<<<
  *     return values
  * 
 */
-      __pyx_t_5 = __Pyx_PyLong_From_int(((int)((__pyx_v_raw >> __pyx_v_start) & __pyx_v_mask))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyLong_From_int(((int)((__pyx_v_raw >> __pyx_v_start) & __pyx_v_mask))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      if (unlikely((__Pyx_SetItemInt(__pyx_v_values, __pyx_v_i, __pyx_t_5, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 42, __pyx_L1_error)
+      if (unlikely((__Pyx_SetItemInt(__pyx_v_values, __pyx_v_i, __pyx_t_5, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 44, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-      /* "mc_world_mcp/_preview_accel.pyx":38
+      /* "mc_world_mcp/_preview_accel.pyx":40
  *     for i in range(4096):
  *         long_index = i // values_per_long
  *         if long_index < long_count:             # <<<<<<<<<<<<<<
@@ -16973,7 +16983,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
     }
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":43
+  /* "mc_world_mcp/_preview_accel.pyx":45
  *             raw = <uint64_t>signed_value
  *             values[i] = <int>((raw >> start) & mask)
  *     return values             # <<<<<<<<<<<<<<
@@ -16985,7 +16995,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(PyObject
   __pyx_r = __pyx_v_values;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":21
+  /* "mc_world_mcp/_preview_accel.pyx":23
  * 
  * 
  * cpdef list decode_indices(object data, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
@@ -17046,39 +17056,39 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_data,&__pyx_mstate_global->__pyx_n_u_palette_size,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 21, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 23, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 21, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 23, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 21, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 23, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "decode_indices", 0) < (0)) __PYX_ERR(0, 21, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "decode_indices", 0) < (0)) __PYX_ERR(0, 23, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("decode_indices", 1, 2, 2, i); __PYX_ERR(0, 21, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("decode_indices", 1, 2, 2, i); __PYX_ERR(0, 23, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 21, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 23, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 21, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 23, __pyx_L3_error)
     }
     __pyx_v_data = values[0];
-    __pyx_v_palette_size = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_palette_size == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 21, __pyx_L3_error)
+    __pyx_v_palette_size = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_palette_size == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("decode_indices", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 21, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("decode_indices", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 23, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -17108,7 +17118,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_decode_indices(CYTHON_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("decode_indices", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(__pyx_v_data, __pyx_v_palette_size, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_decode_indices(__pyx_v_data, __pyx_v_palette_size, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -17125,7 +17135,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_decode_indices(CYTHON_
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":46
+/* "mc_world_mcp/_preview_accel.pyx":48
  * 
  * 
  * cpdef list count_palette_indices(object data, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
@@ -17165,26 +17175,26 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("count_palette_indices", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":47
+  /* "mc_world_mcp/_preview_accel.pyx":49
  * 
  * cpdef list count_palette_indices(object data, Py_ssize_t palette_size):
  *     cdef list counts = [0] * palette_size             # <<<<<<<<<<<<<<
  *     if palette_size <= 0:
  *         return counts
 */
-  __pyx_t_1 = PyList_New(1 * ((__pyx_v_palette_size<0) ? 0:__pyx_v_palette_size)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1 * ((__pyx_v_palette_size<0) ? 0:__pyx_v_palette_size)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   { Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < __pyx_v_palette_size; __pyx_temp++) {
       __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
       __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_0);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 47, __pyx_L1_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 49, __pyx_L1_error);
     }
   }
   __pyx_v_counts = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":48
+  /* "mc_world_mcp/_preview_accel.pyx":50
  * cpdef list count_palette_indices(object data, Py_ssize_t palette_size):
  *     cdef list counts = [0] * palette_size
  *     if palette_size <= 0:             # <<<<<<<<<<<<<<
@@ -17194,7 +17204,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
   __pyx_t_2 = (__pyx_v_palette_size <= 0);
   if (__pyx_t_2) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":49
+    /* "mc_world_mcp/_preview_accel.pyx":51
  *     cdef list counts = [0] * palette_size
  *     if palette_size <= 0:
  *         return counts             # <<<<<<<<<<<<<<
@@ -17206,7 +17216,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
     __pyx_r = __pyx_v_counts;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":48
+    /* "mc_world_mcp/_preview_accel.pyx":50
  * cpdef list count_palette_indices(object data, Py_ssize_t palette_size):
  *     cdef list counts = [0] * palette_size
  *     if palette_size <= 0:             # <<<<<<<<<<<<<<
@@ -17215,7 +17225,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":50
+  /* "mc_world_mcp/_preview_accel.pyx":52
  *     if palette_size <= 0:
  *         return counts
  *     if data is None:             # <<<<<<<<<<<<<<
@@ -17225,16 +17235,16 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
   __pyx_t_2 = (__pyx_v_data == Py_None);
   if (__pyx_t_2) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":51
+    /* "mc_world_mcp/_preview_accel.pyx":53
  *         return counts
  *     if data is None:
  *         counts[0] = 4096             # <<<<<<<<<<<<<<
  *         return counts
  * 
 */
-    if (unlikely((__Pyx_SetItemInt(__pyx_v_counts, 0, __pyx_mstate_global->__pyx_int_4096, long, 1, __Pyx_PyLong_From_long, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 51, __pyx_L1_error)
+    if (unlikely((__Pyx_SetItemInt(__pyx_v_counts, 0, __pyx_mstate_global->__pyx_int_4096, long, 1, __Pyx_PyLong_From_long, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 53, __pyx_L1_error)
 
-    /* "mc_world_mcp/_preview_accel.pyx":52
+    /* "mc_world_mcp/_preview_accel.pyx":54
  *     if data is None:
  *         counts[0] = 4096
  *         return counts             # <<<<<<<<<<<<<<
@@ -17246,7 +17256,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
     __pyx_r = __pyx_v_counts;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":50
+    /* "mc_world_mcp/_preview_accel.pyx":52
  *     if palette_size <= 0:
  *         return counts
  *     if data is None:             # <<<<<<<<<<<<<<
@@ -17255,17 +17265,17 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":54
+  /* "mc_world_mcp/_preview_accel.pyx":56
  *         return counts
  * 
  *     cdef int bits = _bits_for_palette(palette_size)             # <<<<<<<<<<<<<<
  *     cdef int values_per_long = 64 // bits
  *     cdef uint64_t mask = (<uint64_t>1 << bits) - 1
 */
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(__pyx_v_palette_size); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(__pyx_v_palette_size); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 56, __pyx_L1_error)
   __pyx_v_bits = __pyx_t_3;
 
-  /* "mc_world_mcp/_preview_accel.pyx":55
+  /* "mc_world_mcp/_preview_accel.pyx":57
  * 
  *     cdef int bits = _bits_for_palette(palette_size)
  *     cdef int values_per_long = 64 // bits             # <<<<<<<<<<<<<<
@@ -17274,15 +17284,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
   if (unlikely(__pyx_v_bits == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-    __PYX_ERR(0, 55, __pyx_L1_error)
+    __PYX_ERR(0, 57, __pyx_L1_error)
   }
   else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_bits == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(64))) {
     PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-    __PYX_ERR(0, 55, __pyx_L1_error)
+    __PYX_ERR(0, 57, __pyx_L1_error)
   }
   __pyx_v_values_per_long = __Pyx_div_long(64, __pyx_v_bits, 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":56
+  /* "mc_world_mcp/_preview_accel.pyx":58
  *     cdef int bits = _bits_for_palette(palette_size)
  *     cdef int values_per_long = 64 // bits
  *     cdef uint64_t mask = (<uint64_t>1 << bits) - 1             # <<<<<<<<<<<<<<
@@ -17291,17 +17301,17 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
   __pyx_v_mask = ((((uint64_t)1) << __pyx_v_bits) - 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":57
+  /* "mc_world_mcp/_preview_accel.pyx":59
  *     cdef int values_per_long = 64 // bits
  *     cdef uint64_t mask = (<uint64_t>1 << bits) - 1
  *     cdef Py_ssize_t long_count = len(data)             # <<<<<<<<<<<<<<
  *     cdef Py_ssize_t i
  *     cdef Py_ssize_t long_index
 */
-  __pyx_t_4 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_4 = PyObject_Length(__pyx_v_data); if (unlikely(__pyx_t_4 == ((Py_ssize_t)-1))) __PYX_ERR(0, 59, __pyx_L1_error)
   __pyx_v_long_count = __pyx_t_4;
 
-  /* "mc_world_mcp/_preview_accel.pyx":65
+  /* "mc_world_mcp/_preview_accel.pyx":67
  *     cdef int palette_index
  * 
  *     for i in range(4096):             # <<<<<<<<<<<<<<
@@ -17311,7 +17321,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
   for (__pyx_t_4 = 0; __pyx_t_4 < 0x1000; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "mc_world_mcp/_preview_accel.pyx":66
+    /* "mc_world_mcp/_preview_accel.pyx":68
  * 
  *     for i in range(4096):
  *         long_index = i // values_per_long             # <<<<<<<<<<<<<<
@@ -17320,15 +17330,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
     if (unlikely(__pyx_v_values_per_long == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 66, __pyx_L1_error)
+      __PYX_ERR(0, 68, __pyx_L1_error)
     }
     else if (sizeof(Py_ssize_t) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_values_per_long == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_v_i))) {
       PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-      __PYX_ERR(0, 66, __pyx_L1_error)
+      __PYX_ERR(0, 68, __pyx_L1_error)
     }
     __pyx_v_long_index = __Pyx_div_Py_ssize_t(__pyx_v_i, __pyx_v_values_per_long, 0);
 
-    /* "mc_world_mcp/_preview_accel.pyx":67
+    /* "mc_world_mcp/_preview_accel.pyx":69
  *     for i in range(4096):
  *         long_index = i // values_per_long
  *         palette_index = 0             # <<<<<<<<<<<<<<
@@ -17337,7 +17347,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
     __pyx_v_palette_index = 0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":68
+    /* "mc_world_mcp/_preview_accel.pyx":70
  *         long_index = i // values_per_long
  *         palette_index = 0
  *         if long_index < long_count:             # <<<<<<<<<<<<<<
@@ -17347,7 +17357,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
     __pyx_t_2 = (__pyx_v_long_index < __pyx_v_long_count);
     if (__pyx_t_2) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":69
+      /* "mc_world_mcp/_preview_accel.pyx":71
  *         palette_index = 0
  *         if long_index < long_count:
  *             start = (i % values_per_long) * bits             # <<<<<<<<<<<<<<
@@ -17356,27 +17366,27 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
       if (unlikely(__pyx_v_values_per_long == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-        __PYX_ERR(0, 69, __pyx_L1_error)
+        __PYX_ERR(0, 71, __pyx_L1_error)
       }
       __pyx_v_start = (__Pyx_mod_Py_ssize_t(__pyx_v_i, __pyx_v_values_per_long, 0) * __pyx_v_bits);
 
-      /* "mc_world_mcp/_preview_accel.pyx":70
+      /* "mc_world_mcp/_preview_accel.pyx":72
  *         if long_index < long_count:
  *             start = (i % values_per_long) * bits
  *             signed_value = <int64_t>int(data[long_index])             # <<<<<<<<<<<<<<
  *             raw = <uint64_t>signed_value
  *             palette_index = <int>((raw >> start) & mask)
 */
-      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_data, __pyx_v_long_index, Py_ssize_t, 1, PyLong_FromSsize_t, 0, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_data, __pyx_v_long_index, Py_ssize_t, 1, PyLong_FromSsize_t, 0, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_5 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyNumber_Int(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_6 = __Pyx_PyLong_As_int64_t(__pyx_t_5); if (unlikely((__pyx_t_6 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyLong_As_int64_t(__pyx_t_5); if (unlikely((__pyx_t_6 == ((int64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 72, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_v_signed_value = ((int64_t)__pyx_t_6);
 
-      /* "mc_world_mcp/_preview_accel.pyx":71
+      /* "mc_world_mcp/_preview_accel.pyx":73
  *             start = (i % values_per_long) * bits
  *             signed_value = <int64_t>int(data[long_index])
  *             raw = <uint64_t>signed_value             # <<<<<<<<<<<<<<
@@ -17385,7 +17395,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
       __pyx_v_raw = ((uint64_t)__pyx_v_signed_value);
 
-      /* "mc_world_mcp/_preview_accel.pyx":72
+      /* "mc_world_mcp/_preview_accel.pyx":74
  *             signed_value = <int64_t>int(data[long_index])
  *             raw = <uint64_t>signed_value
  *             palette_index = <int>((raw >> start) & mask)             # <<<<<<<<<<<<<<
@@ -17394,7 +17404,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
       __pyx_v_palette_index = ((int)((__pyx_v_raw >> __pyx_v_start) & __pyx_v_mask));
 
-      /* "mc_world_mcp/_preview_accel.pyx":68
+      /* "mc_world_mcp/_preview_accel.pyx":70
  *         long_index = i // values_per_long
  *         palette_index = 0
  *         if long_index < long_count:             # <<<<<<<<<<<<<<
@@ -17403,7 +17413,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":73
+    /* "mc_world_mcp/_preview_accel.pyx":75
  *             raw = <uint64_t>signed_value
  *             palette_index = <int>((raw >> start) & mask)
  *         if 0 <= palette_index < palette_size:             # <<<<<<<<<<<<<<
@@ -17416,7 +17426,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
     }
     if (__pyx_t_2) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":74
+      /* "mc_world_mcp/_preview_accel.pyx":76
  *             palette_index = <int>((raw >> start) & mask)
  *         if 0 <= palette_index < palette_size:
  *             counts[palette_index] += 1             # <<<<<<<<<<<<<<
@@ -17424,12 +17434,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
  * 
 */
       __pyx_t_3 = __pyx_v_palette_index;
-      __pyx_t_5 = __Pyx_PyLong_AddObjC(__Pyx_PyList_GET_ITEM(__pyx_v_counts, __pyx_t_3), __pyx_mstate_global->__pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyLong_AddObjC(__Pyx_PyList_GET_ITEM(__pyx_v_counts, __pyx_t_3), __pyx_mstate_global->__pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      if (unlikely((__Pyx_SetItemInt(__pyx_v_counts, __pyx_t_3, __pyx_t_5, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 74, __pyx_L1_error)
+      if (unlikely((__Pyx_SetItemInt(__pyx_v_counts, __pyx_t_3, __pyx_t_5, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-      /* "mc_world_mcp/_preview_accel.pyx":73
+      /* "mc_world_mcp/_preview_accel.pyx":75
  *             raw = <uint64_t>signed_value
  *             palette_index = <int>((raw >> start) & mask)
  *         if 0 <= palette_index < palette_size:             # <<<<<<<<<<<<<<
@@ -17439,7 +17449,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
     }
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":75
+  /* "mc_world_mcp/_preview_accel.pyx":77
  *         if 0 <= palette_index < palette_size:
  *             counts[palette_index] += 1
  *     return counts             # <<<<<<<<<<<<<<
@@ -17451,7 +17461,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(P
   __pyx_r = __pyx_v_counts;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":46
+  /* "mc_world_mcp/_preview_accel.pyx":48
  * 
  * 
  * cpdef list count_palette_indices(object data, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
@@ -17512,39 +17522,39 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_data,&__pyx_mstate_global->__pyx_n_u_palette_size,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 46, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 48, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 46, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 48, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 46, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 48, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "count_palette_indices", 0) < (0)) __PYX_ERR(0, 46, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "count_palette_indices", 0) < (0)) __PYX_ERR(0, 48, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("count_palette_indices", 1, 2, 2, i); __PYX_ERR(0, 46, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("count_palette_indices", 1, 2, 2, i); __PYX_ERR(0, 48, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 46, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 48, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 46, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 48, __pyx_L3_error)
     }
     __pyx_v_data = values[0];
-    __pyx_v_palette_size = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_palette_size == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 46, __pyx_L3_error)
+    __pyx_v_palette_size = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_palette_size == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("count_palette_indices", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 46, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("count_palette_indices", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 48, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -17574,7 +17584,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_2count_palette_indices
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("count_palette_indices", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(__pyx_v_data, __pyx_v_palette_size, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_count_palette_indices(__pyx_v_data, __pyx_v_palette_size, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -17591,7 +17601,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_2count_palette_indices
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":78
+/* "mc_world_mcp/_preview_accel.pyx":80
  * 
  * 
  * cpdef list encode_indices(list indices, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
@@ -17633,7 +17643,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("encode_indices", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":79
+  /* "mc_world_mcp/_preview_accel.pyx":81
  * 
  * cpdef list encode_indices(list indices, Py_ssize_t palette_size):
  *     if palette_size <= 1:             # <<<<<<<<<<<<<<
@@ -17643,7 +17653,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   __pyx_t_1 = (__pyx_v_palette_size <= 1);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":80
+    /* "mc_world_mcp/_preview_accel.pyx":82
  * cpdef list encode_indices(list indices, Py_ssize_t palette_size):
  *     if palette_size <= 1:
  *         return []             # <<<<<<<<<<<<<<
@@ -17651,13 +17661,13 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
  *     cdef int bits = _bits_for_palette(palette_size)
 */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 80, __pyx_L1_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_r = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":79
+    /* "mc_world_mcp/_preview_accel.pyx":81
  * 
  * cpdef list encode_indices(list indices, Py_ssize_t palette_size):
  *     if palette_size <= 1:             # <<<<<<<<<<<<<<
@@ -17666,17 +17676,17 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":82
+  /* "mc_world_mcp/_preview_accel.pyx":84
  *         return []
  * 
  *     cdef int bits = _bits_for_palette(palette_size)             # <<<<<<<<<<<<<<
  *     cdef int values_per_long = 64 // bits
  *     if values_per_long <= 0:
 */
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(__pyx_v_palette_size); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__bits_for_palette(__pyx_v_palette_size); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 84, __pyx_L1_error)
   __pyx_v_bits = __pyx_t_3;
 
-  /* "mc_world_mcp/_preview_accel.pyx":83
+  /* "mc_world_mcp/_preview_accel.pyx":85
  * 
  *     cdef int bits = _bits_for_palette(palette_size)
  *     cdef int values_per_long = 64 // bits             # <<<<<<<<<<<<<<
@@ -17685,15 +17695,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
   if (unlikely(__pyx_v_bits == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-    __PYX_ERR(0, 83, __pyx_L1_error)
+    __PYX_ERR(0, 85, __pyx_L1_error)
   }
   else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_bits == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(64))) {
     PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-    __PYX_ERR(0, 83, __pyx_L1_error)
+    __PYX_ERR(0, 85, __pyx_L1_error)
   }
   __pyx_v_values_per_long = __Pyx_div_long(64, __pyx_v_bits, 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":84
+  /* "mc_world_mcp/_preview_accel.pyx":86
  *     cdef int bits = _bits_for_palette(palette_size)
  *     cdef int values_per_long = 64 // bits
  *     if values_per_long <= 0:             # <<<<<<<<<<<<<<
@@ -17703,7 +17713,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   __pyx_t_1 = (__pyx_v_values_per_long <= 0);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":85
+    /* "mc_world_mcp/_preview_accel.pyx":87
  *     cdef int values_per_long = 64 // bits
  *     if values_per_long <= 0:
  *         values_per_long = 1             # <<<<<<<<<<<<<<
@@ -17712,7 +17722,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
     __pyx_v_values_per_long = 1;
 
-    /* "mc_world_mcp/_preview_accel.pyx":84
+    /* "mc_world_mcp/_preview_accel.pyx":86
  *     cdef int bits = _bits_for_palette(palette_size)
  *     cdef int values_per_long = 64 // bits
  *     if values_per_long <= 0:             # <<<<<<<<<<<<<<
@@ -17721,7 +17731,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":86
+  /* "mc_world_mcp/_preview_accel.pyx":88
  *     if values_per_long <= 0:
  *         values_per_long = 1
  *     cdef Py_ssize_t long_count = (4096 + values_per_long - 1) // values_per_long             # <<<<<<<<<<<<<<
@@ -17731,15 +17741,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   __pyx_t_4 = ((0x1000 + __pyx_v_values_per_long) - 1);
   if (unlikely(__pyx_v_values_per_long == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-    __PYX_ERR(0, 86, __pyx_L1_error)
+    __PYX_ERR(0, 88, __pyx_L1_error)
   }
   else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_values_per_long == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_t_4))) {
     PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-    __PYX_ERR(0, 86, __pyx_L1_error)
+    __PYX_ERR(0, 88, __pyx_L1_error)
   }
   __pyx_v_long_count = __Pyx_div_long(__pyx_t_4, __pyx_v_values_per_long, 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":87
+  /* "mc_world_mcp/_preview_accel.pyx":89
  *         values_per_long = 1
  *     cdef Py_ssize_t long_count = (4096 + values_per_long - 1) // values_per_long
  *     cdef uint64_t mask = (<uint64_t>1 << bits) - 1             # <<<<<<<<<<<<<<
@@ -17748,7 +17758,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
   __pyx_v_mask = ((((uint64_t)1) << __pyx_v_bits) - 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":90
+  /* "mc_world_mcp/_preview_accel.pyx":92
  *     cdef uint64_t longs[4096]
  *     cdef Py_ssize_t i
  *     cdef Py_ssize_t limit = len(indices)             # <<<<<<<<<<<<<<
@@ -17757,12 +17767,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
   if (unlikely(__pyx_v_indices == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 90, __pyx_L1_error)
+    __PYX_ERR(0, 92, __pyx_L1_error)
   }
-  __pyx_t_5 = __Pyx_PyList_GET_SIZE(__pyx_v_indices); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyList_GET_SIZE(__pyx_v_indices); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 92, __pyx_L1_error)
   __pyx_v_limit = __pyx_t_5;
 
-  /* "mc_world_mcp/_preview_accel.pyx":96
+  /* "mc_world_mcp/_preview_accel.pyx":98
  *     cdef list result
  * 
  *     if limit > 4096:             # <<<<<<<<<<<<<<
@@ -17772,7 +17782,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   __pyx_t_1 = (__pyx_v_limit > 0x1000);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":97
+    /* "mc_world_mcp/_preview_accel.pyx":99
  * 
  *     if limit > 4096:
  *         limit = 4096             # <<<<<<<<<<<<<<
@@ -17781,7 +17791,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
     __pyx_v_limit = 0x1000;
 
-    /* "mc_world_mcp/_preview_accel.pyx":96
+    /* "mc_world_mcp/_preview_accel.pyx":98
  *     cdef list result
  * 
  *     if limit > 4096:             # <<<<<<<<<<<<<<
@@ -17790,7 +17800,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":98
+  /* "mc_world_mcp/_preview_accel.pyx":100
  *     if limit > 4096:
  *         limit = 4096
  *     for i in range(long_count):             # <<<<<<<<<<<<<<
@@ -17802,7 +17812,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":99
+    /* "mc_world_mcp/_preview_accel.pyx":101
  *         limit = 4096
  *     for i in range(long_count):
  *         longs[i] = 0             # <<<<<<<<<<<<<<
@@ -17812,7 +17822,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
     (__pyx_v_longs[__pyx_v_i]) = 0;
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":100
+  /* "mc_world_mcp/_preview_accel.pyx":102
  *     for i in range(long_count):
  *         longs[i] = 0
  *     for i in range(limit):             # <<<<<<<<<<<<<<
@@ -17824,7 +17834,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":101
+    /* "mc_world_mcp/_preview_accel.pyx":103
  *         longs[i] = 0
  *     for i in range(limit):
  *         value = (<uint64_t><int>indices[i]) & mask             # <<<<<<<<<<<<<<
@@ -17833,12 +17843,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
     if (unlikely(__pyx_v_indices == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-      __PYX_ERR(0, 101, __pyx_L1_error)
+      __PYX_ERR(0, 103, __pyx_L1_error)
     }
-    __pyx_t_3 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_indices, __pyx_v_i)); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 101, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_indices, __pyx_v_i)); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 103, __pyx_L1_error)
     __pyx_v_value = (((uint64_t)((int)__pyx_t_3)) & __pyx_v_mask);
 
-    /* "mc_world_mcp/_preview_accel.pyx":102
+    /* "mc_world_mcp/_preview_accel.pyx":104
  *     for i in range(limit):
  *         value = (<uint64_t><int>indices[i]) & mask
  *         long_index = i // values_per_long             # <<<<<<<<<<<<<<
@@ -17847,15 +17857,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
     if (unlikely(__pyx_v_values_per_long == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 102, __pyx_L1_error)
+      __PYX_ERR(0, 104, __pyx_L1_error)
     }
     else if (sizeof(Py_ssize_t) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_values_per_long == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_v_i))) {
       PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-      __PYX_ERR(0, 102, __pyx_L1_error)
+      __PYX_ERR(0, 104, __pyx_L1_error)
     }
     __pyx_v_long_index = __Pyx_div_Py_ssize_t(__pyx_v_i, __pyx_v_values_per_long, 0);
 
-    /* "mc_world_mcp/_preview_accel.pyx":103
+    /* "mc_world_mcp/_preview_accel.pyx":105
  *         value = (<uint64_t><int>indices[i]) & mask
  *         long_index = i // values_per_long
  *         start = (i % values_per_long) * bits             # <<<<<<<<<<<<<<
@@ -17864,11 +17874,11 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
 */
     if (unlikely(__pyx_v_values_per_long == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 103, __pyx_L1_error)
+      __PYX_ERR(0, 105, __pyx_L1_error)
     }
     __pyx_v_start = (__Pyx_mod_Py_ssize_t(__pyx_v_i, __pyx_v_values_per_long, 0) * __pyx_v_bits);
 
-    /* "mc_world_mcp/_preview_accel.pyx":104
+    /* "mc_world_mcp/_preview_accel.pyx":106
  *         long_index = i // values_per_long
  *         start = (i % values_per_long) * bits
  *         longs[long_index] |= value << start             # <<<<<<<<<<<<<<
@@ -17879,26 +17889,26 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
     (__pyx_v_longs[__pyx_t_8]) = ((__pyx_v_longs[__pyx_t_8]) | (__pyx_v_value << __pyx_v_start));
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":106
+  /* "mc_world_mcp/_preview_accel.pyx":108
  *         longs[long_index] |= value << start
  * 
  *     result = [0] * long_count             # <<<<<<<<<<<<<<
  *     for i in range(long_count):
  *         result[i] = <int64_t>longs[i]
 */
-  __pyx_t_2 = PyList_New(1 * ((__pyx_v_long_count<0) ? 0:__pyx_v_long_count)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(1 * ((__pyx_v_long_count<0) ? 0:__pyx_v_long_count)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   { Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < __pyx_v_long_count; __pyx_temp++) {
       __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
       __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_0);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_2, __pyx_temp, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 106, __pyx_L1_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_2, __pyx_temp, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 108, __pyx_L1_error);
     }
   }
   __pyx_v_result = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":107
+  /* "mc_world_mcp/_preview_accel.pyx":109
  * 
  *     result = [0] * long_count
  *     for i in range(long_count):             # <<<<<<<<<<<<<<
@@ -17910,20 +17920,20 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
     __pyx_v_i = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":108
+    /* "mc_world_mcp/_preview_accel.pyx":110
  *     result = [0] * long_count
  *     for i in range(long_count):
  *         result[i] = <int64_t>longs[i]             # <<<<<<<<<<<<<<
  *     return result
  * 
 */
-    __pyx_t_2 = __Pyx_PyLong_From_int64_t(((int64_t)(__pyx_v_longs[__pyx_v_i]))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyLong_From_int64_t(((int64_t)(__pyx_v_longs[__pyx_v_i]))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    if (unlikely((__Pyx_SetItemInt(__pyx_v_result, __pyx_v_i, __pyx_t_2, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 108, __pyx_L1_error)
+    if (unlikely((__Pyx_SetItemInt(__pyx_v_result, __pyx_v_i, __pyx_t_2, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 110, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":109
+  /* "mc_world_mcp/_preview_accel.pyx":111
  *     for i in range(long_count):
  *         result[i] = <int64_t>longs[i]
  *     return result             # <<<<<<<<<<<<<<
@@ -17935,7 +17945,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(PyObject
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":78
+  /* "mc_world_mcp/_preview_accel.pyx":80
  * 
  * 
  * cpdef list encode_indices(list indices, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
@@ -17995,39 +18005,39 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_indices,&__pyx_mstate_global->__pyx_n_u_palette_size,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 78, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 80, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 78, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 80, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 78, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 80, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "encode_indices", 0) < (0)) __PYX_ERR(0, 78, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "encode_indices", 0) < (0)) __PYX_ERR(0, 80, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 2; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("encode_indices", 1, 2, 2, i); __PYX_ERR(0, 78, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("encode_indices", 1, 2, 2, i); __PYX_ERR(0, 80, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 78, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 80, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 78, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 80, __pyx_L3_error)
     }
     __pyx_v_indices = ((PyObject*)values[0]);
-    __pyx_v_palette_size = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_palette_size == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 78, __pyx_L3_error)
+    __pyx_v_palette_size = __Pyx_PyIndex_AsSsize_t(values[1]); if (unlikely((__pyx_v_palette_size == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 80, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("encode_indices", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 78, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("encode_indices", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 80, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -18038,7 +18048,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_indices), (&PyList_Type), 1, "indices", 1))) __PYX_ERR(0, 78, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_indices), (&PyList_Type), 1, "indices", 1))) __PYX_ERR(0, 80, __pyx_L1_error)
   __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_4encode_indices(__pyx_self, __pyx_v_indices, __pyx_v_palette_size);
 
   /* function exit code */
@@ -18067,7 +18077,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_4encode_indices(CYTHON
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("encode_indices", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(__pyx_v_indices, __pyx_v_palette_size, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_encode_indices(__pyx_v_indices, __pyx_v_palette_size, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -18084,7 +18094,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_4encode_indices(CYTHON
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":112
+/* "mc_world_mcp/_preview_accel.pyx":114
  * 
  * 
  * cpdef list fill_top_projection(             # <<<<<<<<<<<<<<
@@ -18127,7 +18137,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("fill_top_projection", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":120
+  /* "mc_world_mcp/_preview_accel.pyx":122
  *     list blocks,
  * ):
  *     cdef list remaining = unresolved             # <<<<<<<<<<<<<<
@@ -18137,7 +18147,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
   __Pyx_INCREF(__pyx_v_unresolved);
   __pyx_v_remaining = __pyx_v_unresolved;
 
-  /* "mc_world_mcp/_preview_accel.pyx":122
+  /* "mc_world_mcp/_preview_accel.pyx":124
  *     cdef list remaining = unresolved
  *     cdef list next_remaining
  *     cdef Py_ssize_t palette_len = len(palette)             # <<<<<<<<<<<<<<
@@ -18146,12 +18156,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
   if (unlikely(__pyx_v_palette == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 122, __pyx_L1_error)
+    __PYX_ERR(0, 124, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_palette); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_palette); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 124, __pyx_L1_error)
   __pyx_v_palette_len = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":132
+  /* "mc_world_mcp/_preview_accel.pyx":134
  *     cdef object base_name
  * 
  *     for ly in range(15, -1, -1):             # <<<<<<<<<<<<<<
@@ -18161,7 +18171,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
   for (__pyx_t_2 = 15; __pyx_t_2 > -1; __pyx_t_2-=1) {
     __pyx_v_ly = __pyx_t_2;
 
-    /* "mc_world_mcp/_preview_accel.pyx":133
+    /* "mc_world_mcp/_preview_accel.pyx":135
  * 
  *     for ly in range(15, -1, -1):
  *         count = len(remaining)             # <<<<<<<<<<<<<<
@@ -18170,12 +18180,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
     if (unlikely(__pyx_v_remaining == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 133, __pyx_L1_error)
+      __PYX_ERR(0, 135, __pyx_L1_error)
     }
-    __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_remaining); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 133, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_remaining); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 135, __pyx_L1_error)
     __pyx_v_count = __pyx_t_1;
 
-    /* "mc_world_mcp/_preview_accel.pyx":134
+    /* "mc_world_mcp/_preview_accel.pyx":136
  *     for ly in range(15, -1, -1):
  *         count = len(remaining)
  *         if count == 0:             # <<<<<<<<<<<<<<
@@ -18185,7 +18195,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
     __pyx_t_3 = (__pyx_v_count == 0);
     if (__pyx_t_3) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":135
+      /* "mc_world_mcp/_preview_accel.pyx":137
  *         count = len(remaining)
  *         if count == 0:
  *             break             # <<<<<<<<<<<<<<
@@ -18194,7 +18204,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
       goto __pyx_L4_break;
 
-      /* "mc_world_mcp/_preview_accel.pyx":134
+      /* "mc_world_mcp/_preview_accel.pyx":136
  *     for ly in range(15, -1, -1):
  *         count = len(remaining)
  *         if count == 0:             # <<<<<<<<<<<<<<
@@ -18203,19 +18213,19 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":136
+    /* "mc_world_mcp/_preview_accel.pyx":138
  *         if count == 0:
  *             break
  *         next_remaining = []             # <<<<<<<<<<<<<<
  *         y_offset = ly << 8
  *         for i in range(count):
 */
-    __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 136, __pyx_L1_error)
+    __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_XDECREF_SET(__pyx_v_next_remaining, ((PyObject*)__pyx_t_4));
     __pyx_t_4 = 0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":137
+    /* "mc_world_mcp/_preview_accel.pyx":139
  *             break
  *         next_remaining = []
  *         y_offset = ly << 8             # <<<<<<<<<<<<<<
@@ -18224,7 +18234,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
     __pyx_v_y_offset = (__pyx_v_ly << 8);
 
-    /* "mc_world_mcp/_preview_accel.pyx":138
+    /* "mc_world_mcp/_preview_accel.pyx":140
  *         next_remaining = []
  *         y_offset = ly << 8
  *         for i in range(count):             # <<<<<<<<<<<<<<
@@ -18236,7 +18246,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "mc_world_mcp/_preview_accel.pyx":139
+      /* "mc_world_mcp/_preview_accel.pyx":141
  *         y_offset = ly << 8
  *         for i in range(count):
  *             column = <int>remaining[i]             # <<<<<<<<<<<<<<
@@ -18245,12 +18255,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
       if (unlikely(__pyx_v_remaining == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 139, __pyx_L1_error)
+        __PYX_ERR(0, 141, __pyx_L1_error)
       }
-      __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_remaining, __pyx_v_i)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 139, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_remaining, __pyx_v_i)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 141, __pyx_L1_error)
       __pyx_v_column = ((int)__pyx_t_7);
 
-      /* "mc_world_mcp/_preview_accel.pyx":140
+      /* "mc_world_mcp/_preview_accel.pyx":142
  *         for i in range(count):
  *             column = <int>remaining[i]
  *             palette_index = <int>indices[y_offset | column]             # <<<<<<<<<<<<<<
@@ -18259,13 +18269,13 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
       if (unlikely(__pyx_v_indices == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 140, __pyx_L1_error)
+        __PYX_ERR(0, 142, __pyx_L1_error)
       }
       __pyx_t_7 = (__pyx_v_y_offset | __pyx_v_column);
-      __pyx_t_8 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_indices, __pyx_t_7)); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 140, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_indices, __pyx_t_7)); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 142, __pyx_L1_error)
       __pyx_v_palette_index = ((int)__pyx_t_8);
 
-      /* "mc_world_mcp/_preview_accel.pyx":141
+      /* "mc_world_mcp/_preview_accel.pyx":143
  *             column = <int>remaining[i]
  *             palette_index = <int>indices[y_offset | column]
  *             if 0 <= palette_index < palette_len:             # <<<<<<<<<<<<<<
@@ -18278,7 +18288,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
       }
       if (__pyx_t_3) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":142
+        /* "mc_world_mcp/_preview_accel.pyx":144
  *             palette_index = <int>indices[y_offset | column]
  *             if 0 <= palette_index < palette_len:
  *                 block = palette[palette_index]             # <<<<<<<<<<<<<<
@@ -18287,14 +18297,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
         if (unlikely(__pyx_v_palette == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 142, __pyx_L1_error)
+          __PYX_ERR(0, 144, __pyx_L1_error)
         }
         __pyx_t_4 = __Pyx_PyList_GET_ITEM(__pyx_v_palette, __pyx_v_palette_index);
         __Pyx_INCREF(__pyx_t_4);
         __Pyx_XDECREF_SET(__pyx_v_block, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":143
+        /* "mc_world_mcp/_preview_accel.pyx":145
  *             if 0 <= palette_index < palette_len:
  *                 block = palette[palette_index]
  *                 base_name = palette_base_names[palette_index]             # <<<<<<<<<<<<<<
@@ -18303,14 +18313,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
 */
         if (unlikely(__pyx_v_palette_base_names == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 143, __pyx_L1_error)
+          __PYX_ERR(0, 145, __pyx_L1_error)
         }
         __pyx_t_4 = __Pyx_PyList_GET_ITEM(__pyx_v_palette_base_names, __pyx_v_palette_index);
         __Pyx_INCREF(__pyx_t_4);
         __Pyx_XDECREF_SET(__pyx_v_base_name, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":141
+        /* "mc_world_mcp/_preview_accel.pyx":143
  *             column = <int>remaining[i]
  *             palette_index = <int>indices[y_offset | column]
  *             if 0 <= palette_index < palette_len:             # <<<<<<<<<<<<<<
@@ -18320,7 +18330,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
         goto __pyx_L8;
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":145
+      /* "mc_world_mcp/_preview_accel.pyx":147
  *                 base_name = palette_base_names[palette_index]
  *             else:
  *                 block = "minecraft:air"             # <<<<<<<<<<<<<<
@@ -18331,7 +18341,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
         __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_minecraft_air);
         __Pyx_XDECREF_SET(__pyx_v_block, __pyx_mstate_global->__pyx_kp_u_minecraft_air);
 
-        /* "mc_world_mcp/_preview_accel.pyx":146
+        /* "mc_world_mcp/_preview_accel.pyx":148
  *             else:
  *                 block = "minecraft:air"
  *                 base_name = "minecraft:air"             # <<<<<<<<<<<<<<
@@ -18343,29 +18353,29 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
       }
       __pyx_L8:;
 
-      /* "mc_world_mcp/_preview_accel.pyx":147
+      /* "mc_world_mcp/_preview_accel.pyx":149
  *                 block = "minecraft:air"
  *                 base_name = "minecraft:air"
  *             if base_name in skip:             # <<<<<<<<<<<<<<
  *                 next_remaining.append(column)
  *             else:
 */
-      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_v_base_name, __pyx_v_skip, Py_EQ)); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 147, __pyx_L1_error)
+      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_v_base_name, __pyx_v_skip, Py_EQ)); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 149, __pyx_L1_error)
       if (__pyx_t_3) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":148
+        /* "mc_world_mcp/_preview_accel.pyx":150
  *                 base_name = "minecraft:air"
  *             if base_name in skip:
  *                 next_remaining.append(column)             # <<<<<<<<<<<<<<
  *             else:
  *                 blocks[column] = block
 */
-        __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_column); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 148, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_column); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 150, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_next_remaining, __pyx_t_4); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 148, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_next_remaining, __pyx_t_4); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 150, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":147
+        /* "mc_world_mcp/_preview_accel.pyx":149
  *                 block = "minecraft:air"
  *                 base_name = "minecraft:air"
  *             if base_name in skip:             # <<<<<<<<<<<<<<
@@ -18375,7 +18385,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
         goto __pyx_L9;
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":150
+      /* "mc_world_mcp/_preview_accel.pyx":152
  *                 next_remaining.append(column)
  *             else:
  *                 blocks[column] = block             # <<<<<<<<<<<<<<
@@ -18385,14 +18395,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
       /*else*/ {
         if (unlikely(__pyx_v_blocks == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 150, __pyx_L1_error)
+          __PYX_ERR(0, 152, __pyx_L1_error)
         }
-        if (unlikely((__Pyx_SetItemInt(__pyx_v_blocks, __pyx_v_column, __pyx_v_block, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument) < 0))) __PYX_ERR(0, 150, __pyx_L1_error)
+        if (unlikely((__Pyx_SetItemInt(__pyx_v_blocks, __pyx_v_column, __pyx_v_block, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument) < 0))) __PYX_ERR(0, 152, __pyx_L1_error)
       }
       __pyx_L9:;
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":151
+    /* "mc_world_mcp/_preview_accel.pyx":153
  *             else:
  *                 blocks[column] = block
  *         remaining = next_remaining             # <<<<<<<<<<<<<<
@@ -18404,7 +18414,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
   }
   __pyx_L4_break:;
 
-  /* "mc_world_mcp/_preview_accel.pyx":152
+  /* "mc_world_mcp/_preview_accel.pyx":154
  *                 blocks[column] = block
  *         remaining = next_remaining
  *     return remaining             # <<<<<<<<<<<<<<
@@ -18416,7 +18426,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(PyO
   __pyx_r = __pyx_v_remaining;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":112
+  /* "mc_world_mcp/_preview_accel.pyx":114
  * 
  * 
  * cpdef list fill_top_projection(             # <<<<<<<<<<<<<<
@@ -18483,56 +18493,56 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_indices,&__pyx_mstate_global->__pyx_n_u_palette,&__pyx_mstate_global->__pyx_n_u_palette_base_names,&__pyx_mstate_global->__pyx_n_u_skip,&__pyx_mstate_global->__pyx_n_u_unresolved,&__pyx_mstate_global->__pyx_n_u_blocks,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 112, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 114, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  6:
         values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 112, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 114, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  5:
         values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 112, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 114, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 112, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 114, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 112, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 114, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 112, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 114, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 112, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 114, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "fill_top_projection", 0) < (0)) __PYX_ERR(0, 112, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "fill_top_projection", 0) < (0)) __PYX_ERR(0, 114, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 6; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("fill_top_projection", 1, 6, 6, i); __PYX_ERR(0, 112, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("fill_top_projection", 1, 6, 6, i); __PYX_ERR(0, 114, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 6)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 112, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 114, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 112, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 114, __pyx_L3_error)
       values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 112, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 114, __pyx_L3_error)
       values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 112, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 114, __pyx_L3_error)
       values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 112, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 114, __pyx_L3_error)
       values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 112, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 114, __pyx_L3_error)
     }
     __pyx_v_indices = ((PyObject*)values[0]);
     __pyx_v_palette = ((PyObject*)values[1]);
@@ -18543,7 +18553,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fill_top_projection", 1, 6, 6, __pyx_nargs); __PYX_ERR(0, 112, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fill_top_projection", 1, 6, 6, __pyx_nargs); __PYX_ERR(0, 114, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -18554,11 +18564,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_indices), (&PyList_Type), 1, "indices", 1))) __PYX_ERR(0, 113, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette), (&PyList_Type), 1, "palette", 1))) __PYX_ERR(0, 114, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette_base_names), (&PyList_Type), 1, "palette_base_names", 1))) __PYX_ERR(0, 115, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_unresolved), (&PyList_Type), 1, "unresolved", 1))) __PYX_ERR(0, 117, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_blocks), (&PyList_Type), 1, "blocks", 1))) __PYX_ERR(0, 118, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_indices), (&PyList_Type), 1, "indices", 1))) __PYX_ERR(0, 115, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette), (&PyList_Type), 1, "palette", 1))) __PYX_ERR(0, 116, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette_base_names), (&PyList_Type), 1, "palette_base_names", 1))) __PYX_ERR(0, 117, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_unresolved), (&PyList_Type), 1, "unresolved", 1))) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_blocks), (&PyList_Type), 1, "blocks", 1))) __PYX_ERR(0, 120, __pyx_L1_error)
   __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_6fill_top_projection(__pyx_self, __pyx_v_indices, __pyx_v_palette, __pyx_v_palette_base_names, __pyx_v_skip, __pyx_v_unresolved, __pyx_v_blocks);
 
   /* function exit code */
@@ -18587,7 +18597,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_6fill_top_projection(C
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("fill_top_projection", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(__pyx_v_indices, __pyx_v_palette, __pyx_v_palette_base_names, __pyx_v_skip, __pyx_v_unresolved, __pyx_v_blocks, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_fill_top_projection(__pyx_v_indices, __pyx_v_palette, __pyx_v_palette_base_names, __pyx_v_skip, __pyx_v_unresolved, __pyx_v_blocks, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -18604,7 +18614,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_6fill_top_projection(C
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":155
+/* "mc_world_mcp/_preview_accel.pyx":157
  * 
  * 
  * cpdef list fill_floor_projection(             # <<<<<<<<<<<<<<
@@ -18648,7 +18658,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("fill_floor_projection", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":167
+  /* "mc_world_mcp/_preview_accel.pyx":169
  *     int max_y,
  * ):
  *     cdef list remaining = unresolved             # <<<<<<<<<<<<<<
@@ -18658,7 +18668,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
   __Pyx_INCREF(__pyx_v_unresolved);
   __pyx_v_remaining = __pyx_v_unresolved;
 
-  /* "mc_world_mcp/_preview_accel.pyx":169
+  /* "mc_world_mcp/_preview_accel.pyx":171
  *     cdef list remaining = unresolved
  *     cdef list next_remaining
  *     cdef Py_ssize_t palette_len = len(palette)             # <<<<<<<<<<<<<<
@@ -18667,12 +18677,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
   if (unlikely(__pyx_v_palette == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-    __PYX_ERR(0, 169, __pyx_L1_error)
+    __PYX_ERR(0, 171, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_palette); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 169, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_palette); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 171, __pyx_L1_error)
   __pyx_v_palette_len = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":180
+  /* "mc_world_mcp/_preview_accel.pyx":182
  *     cdef object base_name
  * 
  *     for ly in range(15, -1, -1):             # <<<<<<<<<<<<<<
@@ -18682,7 +18692,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
   for (__pyx_t_2 = 15; __pyx_t_2 > -1; __pyx_t_2-=1) {
     __pyx_v_ly = __pyx_t_2;
 
-    /* "mc_world_mcp/_preview_accel.pyx":181
+    /* "mc_world_mcp/_preview_accel.pyx":183
  * 
  *     for ly in range(15, -1, -1):
  *         count = len(remaining)             # <<<<<<<<<<<<<<
@@ -18691,12 +18701,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
     if (unlikely(__pyx_v_remaining == Py_None)) {
       PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
-      __PYX_ERR(0, 181, __pyx_L1_error)
+      __PYX_ERR(0, 183, __pyx_L1_error)
     }
-    __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_remaining); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 181, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_remaining); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 183, __pyx_L1_error)
     __pyx_v_count = __pyx_t_1;
 
-    /* "mc_world_mcp/_preview_accel.pyx":182
+    /* "mc_world_mcp/_preview_accel.pyx":184
  *     for ly in range(15, -1, -1):
  *         count = len(remaining)
  *         if count == 0:             # <<<<<<<<<<<<<<
@@ -18706,7 +18716,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
     __pyx_t_3 = (__pyx_v_count == 0);
     if (__pyx_t_3) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":183
+      /* "mc_world_mcp/_preview_accel.pyx":185
  *         count = len(remaining)
  *         if count == 0:
  *             break             # <<<<<<<<<<<<<<
@@ -18715,7 +18725,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
       goto __pyx_L4_break;
 
-      /* "mc_world_mcp/_preview_accel.pyx":182
+      /* "mc_world_mcp/_preview_accel.pyx":184
  *     for ly in range(15, -1, -1):
  *         count = len(remaining)
  *         if count == 0:             # <<<<<<<<<<<<<<
@@ -18724,19 +18734,19 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":184
+    /* "mc_world_mcp/_preview_accel.pyx":186
  *         if count == 0:
  *             break
  *         next_remaining = []             # <<<<<<<<<<<<<<
  *         y = section_y * 16 + ly
  *         if y > max_y:
 */
-    __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 184, __pyx_L1_error)
+    __pyx_t_4 = PyList_New(0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 186, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_XDECREF_SET(__pyx_v_next_remaining, ((PyObject*)__pyx_t_4));
     __pyx_t_4 = 0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":185
+    /* "mc_world_mcp/_preview_accel.pyx":187
  *             break
  *         next_remaining = []
  *         y = section_y * 16 + ly             # <<<<<<<<<<<<<<
@@ -18745,7 +18755,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
     __pyx_v_y = ((__pyx_v_section_y * 16) + __pyx_v_ly);
 
-    /* "mc_world_mcp/_preview_accel.pyx":186
+    /* "mc_world_mcp/_preview_accel.pyx":188
  *         next_remaining = []
  *         y = section_y * 16 + ly
  *         if y > max_y:             # <<<<<<<<<<<<<<
@@ -18755,7 +18765,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
     __pyx_t_3 = (__pyx_v_y > __pyx_v_max_y);
     if (__pyx_t_3) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":187
+      /* "mc_world_mcp/_preview_accel.pyx":189
  *         y = section_y * 16 + ly
  *         if y > max_y:
  *             continue             # <<<<<<<<<<<<<<
@@ -18764,7 +18774,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
       goto __pyx_L3_continue;
 
-      /* "mc_world_mcp/_preview_accel.pyx":186
+      /* "mc_world_mcp/_preview_accel.pyx":188
  *         next_remaining = []
  *         y = section_y * 16 + ly
  *         if y > max_y:             # <<<<<<<<<<<<<<
@@ -18773,7 +18783,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":188
+    /* "mc_world_mcp/_preview_accel.pyx":190
  *         if y > max_y:
  *             continue
  *         if y < min_y:             # <<<<<<<<<<<<<<
@@ -18783,7 +18793,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
     __pyx_t_3 = (__pyx_v_y < __pyx_v_min_y);
     if (__pyx_t_3) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":189
+      /* "mc_world_mcp/_preview_accel.pyx":191
  *             continue
  *         if y < min_y:
  *             break             # <<<<<<<<<<<<<<
@@ -18792,7 +18802,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
       goto __pyx_L4_break;
 
-      /* "mc_world_mcp/_preview_accel.pyx":188
+      /* "mc_world_mcp/_preview_accel.pyx":190
  *         if y > max_y:
  *             continue
  *         if y < min_y:             # <<<<<<<<<<<<<<
@@ -18801,7 +18811,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":190
+    /* "mc_world_mcp/_preview_accel.pyx":192
  *         if y < min_y:
  *             break
  *         y_offset = ly << 8             # <<<<<<<<<<<<<<
@@ -18810,7 +18820,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
     __pyx_v_y_offset = (__pyx_v_ly << 8);
 
-    /* "mc_world_mcp/_preview_accel.pyx":191
+    /* "mc_world_mcp/_preview_accel.pyx":193
  *             break
  *         y_offset = ly << 8
  *         for i in range(count):             # <<<<<<<<<<<<<<
@@ -18822,7 +18832,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "mc_world_mcp/_preview_accel.pyx":192
+      /* "mc_world_mcp/_preview_accel.pyx":194
  *         y_offset = ly << 8
  *         for i in range(count):
  *             column = <int>remaining[i]             # <<<<<<<<<<<<<<
@@ -18831,12 +18841,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
       if (unlikely(__pyx_v_remaining == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 192, __pyx_L1_error)
+        __PYX_ERR(0, 194, __pyx_L1_error)
       }
-      __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_remaining, __pyx_v_i)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 192, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_remaining, __pyx_v_i)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 194, __pyx_L1_error)
       __pyx_v_column = ((int)__pyx_t_7);
 
-      /* "mc_world_mcp/_preview_accel.pyx":193
+      /* "mc_world_mcp/_preview_accel.pyx":195
  *         for i in range(count):
  *             column = <int>remaining[i]
  *             palette_index = <int>indices[y_offset | column]             # <<<<<<<<<<<<<<
@@ -18845,13 +18855,13 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
       if (unlikely(__pyx_v_indices == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 193, __pyx_L1_error)
+        __PYX_ERR(0, 195, __pyx_L1_error)
       }
       __pyx_t_7 = (__pyx_v_y_offset | __pyx_v_column);
-      __pyx_t_8 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_indices, __pyx_t_7)); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_indices, __pyx_t_7)); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 195, __pyx_L1_error)
       __pyx_v_palette_index = ((int)__pyx_t_8);
 
-      /* "mc_world_mcp/_preview_accel.pyx":194
+      /* "mc_world_mcp/_preview_accel.pyx":196
  *             column = <int>remaining[i]
  *             palette_index = <int>indices[y_offset | column]
  *             if 0 <= palette_index < palette_len:             # <<<<<<<<<<<<<<
@@ -18864,7 +18874,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
       }
       if (__pyx_t_3) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":195
+        /* "mc_world_mcp/_preview_accel.pyx":197
  *             palette_index = <int>indices[y_offset | column]
  *             if 0 <= palette_index < palette_len:
  *                 block = palette[palette_index]             # <<<<<<<<<<<<<<
@@ -18873,14 +18883,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
         if (unlikely(__pyx_v_palette == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 195, __pyx_L1_error)
+          __PYX_ERR(0, 197, __pyx_L1_error)
         }
         __pyx_t_4 = __Pyx_PyList_GET_ITEM(__pyx_v_palette, __pyx_v_palette_index);
         __Pyx_INCREF(__pyx_t_4);
         __Pyx_XDECREF_SET(__pyx_v_block, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":196
+        /* "mc_world_mcp/_preview_accel.pyx":198
  *             if 0 <= palette_index < palette_len:
  *                 block = palette[palette_index]
  *                 base_name = palette_base_names[palette_index]             # <<<<<<<<<<<<<<
@@ -18889,14 +18899,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
 */
         if (unlikely(__pyx_v_palette_base_names == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 196, __pyx_L1_error)
+          __PYX_ERR(0, 198, __pyx_L1_error)
         }
         __pyx_t_4 = __Pyx_PyList_GET_ITEM(__pyx_v_palette_base_names, __pyx_v_palette_index);
         __Pyx_INCREF(__pyx_t_4);
         __Pyx_XDECREF_SET(__pyx_v_base_name, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":194
+        /* "mc_world_mcp/_preview_accel.pyx":196
  *             column = <int>remaining[i]
  *             palette_index = <int>indices[y_offset | column]
  *             if 0 <= palette_index < palette_len:             # <<<<<<<<<<<<<<
@@ -18906,7 +18916,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
         goto __pyx_L10;
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":198
+      /* "mc_world_mcp/_preview_accel.pyx":200
  *                 base_name = palette_base_names[palette_index]
  *             else:
  *                 block = "minecraft:air"             # <<<<<<<<<<<<<<
@@ -18917,7 +18927,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
         __Pyx_INCREF(__pyx_mstate_global->__pyx_kp_u_minecraft_air);
         __Pyx_XDECREF_SET(__pyx_v_block, __pyx_mstate_global->__pyx_kp_u_minecraft_air);
 
-        /* "mc_world_mcp/_preview_accel.pyx":199
+        /* "mc_world_mcp/_preview_accel.pyx":201
  *             else:
  *                 block = "minecraft:air"
  *                 base_name = "minecraft:air"             # <<<<<<<<<<<<<<
@@ -18929,29 +18939,29 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
       }
       __pyx_L10:;
 
-      /* "mc_world_mcp/_preview_accel.pyx":200
+      /* "mc_world_mcp/_preview_accel.pyx":202
  *                 block = "minecraft:air"
  *                 base_name = "minecraft:air"
  *             if base_name in skip:             # <<<<<<<<<<<<<<
  *                 next_remaining.append(column)
  *             else:
 */
-      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_v_base_name, __pyx_v_skip, Py_EQ)); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 200, __pyx_L1_error)
+      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__pyx_v_base_name, __pyx_v_skip, Py_EQ)); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 202, __pyx_L1_error)
       if (__pyx_t_3) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":201
+        /* "mc_world_mcp/_preview_accel.pyx":203
  *                 base_name = "minecraft:air"
  *             if base_name in skip:
  *                 next_remaining.append(column)             # <<<<<<<<<<<<<<
  *             else:
  *                 blocks[column] = block
 */
-        __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_column); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 201, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_column); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_next_remaining, __pyx_t_4); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 201, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyList_Append(__pyx_v_next_remaining, __pyx_t_4); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 203, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":200
+        /* "mc_world_mcp/_preview_accel.pyx":202
  *                 block = "minecraft:air"
  *                 base_name = "minecraft:air"
  *             if base_name in skip:             # <<<<<<<<<<<<<<
@@ -18961,7 +18971,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
         goto __pyx_L11;
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":203
+      /* "mc_world_mcp/_preview_accel.pyx":205
  *                 next_remaining.append(column)
  *             else:
  *                 blocks[column] = block             # <<<<<<<<<<<<<<
@@ -18971,30 +18981,30 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
       /*else*/ {
         if (unlikely(__pyx_v_blocks == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 203, __pyx_L1_error)
+          __PYX_ERR(0, 205, __pyx_L1_error)
         }
-        if (unlikely((__Pyx_SetItemInt(__pyx_v_blocks, __pyx_v_column, __pyx_v_block, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument) < 0))) __PYX_ERR(0, 203, __pyx_L1_error)
+        if (unlikely((__Pyx_SetItemInt(__pyx_v_blocks, __pyx_v_column, __pyx_v_block, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument) < 0))) __PYX_ERR(0, 205, __pyx_L1_error)
 
-        /* "mc_world_mcp/_preview_accel.pyx":204
+        /* "mc_world_mcp/_preview_accel.pyx":206
  *             else:
  *                 blocks[column] = block
  *                 heights[column] = y             # <<<<<<<<<<<<<<
  *         remaining = next_remaining
  *     return remaining
 */
-        __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 204, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyLong_From_int(__pyx_v_y); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 206, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         if (unlikely(__pyx_v_heights == Py_None)) {
           PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-          __PYX_ERR(0, 204, __pyx_L1_error)
+          __PYX_ERR(0, 206, __pyx_L1_error)
         }
-        if (unlikely((__Pyx_SetItemInt(__pyx_v_heights, __pyx_v_column, __pyx_t_4, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument) < 0))) __PYX_ERR(0, 204, __pyx_L1_error)
+        if (unlikely((__Pyx_SetItemInt(__pyx_v_heights, __pyx_v_column, __pyx_t_4, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument) < 0))) __PYX_ERR(0, 206, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       }
       __pyx_L11:;
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":205
+    /* "mc_world_mcp/_preview_accel.pyx":207
  *                 blocks[column] = block
  *                 heights[column] = y
  *         remaining = next_remaining             # <<<<<<<<<<<<<<
@@ -19007,7 +19017,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
   }
   __pyx_L4_break:;
 
-  /* "mc_world_mcp/_preview_accel.pyx":206
+  /* "mc_world_mcp/_preview_accel.pyx":208
  *                 heights[column] = y
  *         remaining = next_remaining
  *     return remaining             # <<<<<<<<<<<<<<
@@ -19019,7 +19029,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(P
   __pyx_r = __pyx_v_remaining;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":155
+  /* "mc_world_mcp/_preview_accel.pyx":157
  * 
  * 
  * cpdef list fill_floor_projection(             # <<<<<<<<<<<<<<
@@ -19090,80 +19100,80 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_indices,&__pyx_mstate_global->__pyx_n_u_palette,&__pyx_mstate_global->__pyx_n_u_palette_base_names,&__pyx_mstate_global->__pyx_n_u_skip,&__pyx_mstate_global->__pyx_n_u_unresolved,&__pyx_mstate_global->__pyx_n_u_blocks,&__pyx_mstate_global->__pyx_n_u_heights,&__pyx_mstate_global->__pyx_n_u_section_y,&__pyx_mstate_global->__pyx_n_u_min_y,&__pyx_mstate_global->__pyx_n_u_max_y,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 155, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 157, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case 10:
         values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  9:
         values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  8:
         values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  7:
         values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  6:
         values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  5:
         values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 155, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 157, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "fill_floor_projection", 0) < (0)) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "fill_floor_projection", 0) < (0)) __PYX_ERR(0, 157, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 10; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("fill_floor_projection", 1, 10, 10, i); __PYX_ERR(0, 155, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("fill_floor_projection", 1, 10, 10, i); __PYX_ERR(0, 157, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 10)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 157, __pyx_L3_error)
       values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 155, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 157, __pyx_L3_error)
     }
     __pyx_v_indices = ((PyObject*)values[0]);
     __pyx_v_palette = ((PyObject*)values[1]);
@@ -19172,13 +19182,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
     __pyx_v_unresolved = ((PyObject*)values[4]);
     __pyx_v_blocks = ((PyObject*)values[5]);
     __pyx_v_heights = ((PyObject*)values[6]);
-    __pyx_v_section_y = __Pyx_PyLong_As_int(values[7]); if (unlikely((__pyx_v_section_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 163, __pyx_L3_error)
-    __pyx_v_min_y = __Pyx_PyLong_As_int(values[8]); if (unlikely((__pyx_v_min_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 164, __pyx_L3_error)
-    __pyx_v_max_y = __Pyx_PyLong_As_int(values[9]); if (unlikely((__pyx_v_max_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L3_error)
+    __pyx_v_section_y = __Pyx_PyLong_As_int(values[7]); if (unlikely((__pyx_v_section_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L3_error)
+    __pyx_v_min_y = __Pyx_PyLong_As_int(values[8]); if (unlikely((__pyx_v_min_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 166, __pyx_L3_error)
+    __pyx_v_max_y = __Pyx_PyLong_As_int(values[9]); if (unlikely((__pyx_v_max_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("fill_floor_projection", 1, 10, 10, __pyx_nargs); __PYX_ERR(0, 155, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("fill_floor_projection", 1, 10, 10, __pyx_nargs); __PYX_ERR(0, 157, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -19189,12 +19199,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_indices), (&PyList_Type), 1, "indices", 1))) __PYX_ERR(0, 156, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette), (&PyList_Type), 1, "palette", 1))) __PYX_ERR(0, 157, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette_base_names), (&PyList_Type), 1, "palette_base_names", 1))) __PYX_ERR(0, 158, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_unresolved), (&PyList_Type), 1, "unresolved", 1))) __PYX_ERR(0, 160, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_blocks), (&PyList_Type), 1, "blocks", 1))) __PYX_ERR(0, 161, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_heights), (&PyList_Type), 1, "heights", 1))) __PYX_ERR(0, 162, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_indices), (&PyList_Type), 1, "indices", 1))) __PYX_ERR(0, 158, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette), (&PyList_Type), 1, "palette", 1))) __PYX_ERR(0, 159, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette_base_names), (&PyList_Type), 1, "palette_base_names", 1))) __PYX_ERR(0, 160, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_unresolved), (&PyList_Type), 1, "unresolved", 1))) __PYX_ERR(0, 162, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_blocks), (&PyList_Type), 1, "blocks", 1))) __PYX_ERR(0, 163, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_heights), (&PyList_Type), 1, "heights", 1))) __PYX_ERR(0, 164, __pyx_L1_error)
   __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_8fill_floor_projection(__pyx_self, __pyx_v_indices, __pyx_v_palette, __pyx_v_palette_base_names, __pyx_v_skip, __pyx_v_unresolved, __pyx_v_blocks, __pyx_v_heights, __pyx_v_section_y, __pyx_v_min_y, __pyx_v_max_y);
 
   /* function exit code */
@@ -19223,7 +19233,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_8fill_floor_projection
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("fill_floor_projection", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(__pyx_v_indices, __pyx_v_palette, __pyx_v_palette_base_names, __pyx_v_skip, __pyx_v_unresolved, __pyx_v_blocks, __pyx_v_heights, __pyx_v_section_y, __pyx_v_min_y, __pyx_v_max_y, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_fill_floor_projection(__pyx_v_indices, __pyx_v_palette, __pyx_v_palette_base_names, __pyx_v_skip, __pyx_v_unresolved, __pyx_v_blocks, __pyx_v_heights, __pyx_v_section_y, __pyx_v_min_y, __pyx_v_max_y, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -19240,7 +19250,669 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_8fill_floor_projection
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":209
+/* "mc_world_mcp/_preview_accel.pyx":211
+ * 
+ * 
+ * cpdef int fill_closeup_side_samples(             # <<<<<<<<<<<<<<
+ *     list indices,
+ *     list palette_base_names,
+*/
+
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_11fill_closeup_side_samples(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static int __pyx_f_12mc_world_mcp_14_preview_accel_fill_closeup_side_samples(PyObject *__pyx_v_indices, PyObject *__pyx_v_palette_base_names, PyObject *__pyx_v_palette_colors, PyObject *__pyx_v_skip, PyObject *__pyx_v_heights, PyObject *__pyx_v_samples, int __pyx_v_section_y, int __pyx_v_side_depth, int __pyx_v_min_y, int __pyx_v_max_y, CYTHON_UNUSED int __pyx_skip_dispatch) {
+  int __pyx_v_section_min_y;
+  int __pyx_v_section_max_y;
+  Py_ssize_t __pyx_v_palette_len;
+  Py_ssize_t __pyx_v_column;
+  PyObject *__pyx_v_top_obj = 0;
+  int __pyx_v_top;
+  int __pyx_v_start_y;
+  int __pyx_v_end_y;
+  int __pyx_v_y;
+  int __pyx_v_sample_base;
+  int __pyx_v_palette_index;
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  Py_ssize_t __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  long __pyx_t_6;
+  long __pyx_t_7;
+  long __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("fill_closeup_side_samples", 0);
+
+  /* "mc_world_mcp/_preview_accel.pyx":223
+ *     int max_y,
+ * ):
+ *     cdef int section_min_y = section_y * 16             # <<<<<<<<<<<<<<
+ *     cdef int section_max_y = section_min_y + 15
+ *     cdef Py_ssize_t palette_len = len(palette_base_names)
+*/
+  __pyx_v_section_min_y = (__pyx_v_section_y * 16);
+
+  /* "mc_world_mcp/_preview_accel.pyx":224
+ * ):
+ *     cdef int section_min_y = section_y * 16
+ *     cdef int section_max_y = section_min_y + 15             # <<<<<<<<<<<<<<
+ *     cdef Py_ssize_t palette_len = len(palette_base_names)
+ *     cdef Py_ssize_t column
+*/
+  __pyx_v_section_max_y = (__pyx_v_section_min_y + 15);
+
+  /* "mc_world_mcp/_preview_accel.pyx":225
+ *     cdef int section_min_y = section_y * 16
+ *     cdef int section_max_y = section_min_y + 15
+ *     cdef Py_ssize_t palette_len = len(palette_base_names)             # <<<<<<<<<<<<<<
+ *     cdef Py_ssize_t column
+ *     cdef object top_obj
+*/
+  if (unlikely(__pyx_v_palette_base_names == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
+    __PYX_ERR(0, 225, __pyx_L1_error)
+  }
+  __pyx_t_1 = __Pyx_PyList_GET_SIZE(__pyx_v_palette_base_names); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_v_palette_len = __pyx_t_1;
+
+  /* "mc_world_mcp/_preview_accel.pyx":235
+ *     cdef int palette_index
+ * 
+ *     if side_depth <= 0 or section_min_y > max_y or section_max_y < min_y:             # <<<<<<<<<<<<<<
+ *         return 0
+ * 
+*/
+  __pyx_t_3 = (__pyx_v_side_depth <= 0);
+  if (!__pyx_t_3) {
+  } else {
+    __pyx_t_2 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_3 = (__pyx_v_section_min_y > __pyx_v_max_y);
+  if (!__pyx_t_3) {
+  } else {
+    __pyx_t_2 = __pyx_t_3;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_3 = (__pyx_v_section_max_y < __pyx_v_min_y);
+  __pyx_t_2 = __pyx_t_3;
+  __pyx_L4_bool_binop_done:;
+  if (__pyx_t_2) {
+
+    /* "mc_world_mcp/_preview_accel.pyx":236
+ * 
+ *     if side_depth <= 0 or section_min_y > max_y or section_max_y < min_y:
+ *         return 0             # <<<<<<<<<<<<<<
+ * 
+ *     for column in range(256):
+*/
+    __pyx_r = 0;
+    goto __pyx_L0;
+
+    /* "mc_world_mcp/_preview_accel.pyx":235
+ *     cdef int palette_index
+ * 
+ *     if side_depth <= 0 or section_min_y > max_y or section_max_y < min_y:             # <<<<<<<<<<<<<<
+ *         return 0
+ * 
+*/
+  }
+
+  /* "mc_world_mcp/_preview_accel.pyx":238
+ *         return 0
+ * 
+ *     for column in range(256):             # <<<<<<<<<<<<<<
+ *         top_obj = heights[column]
+ *         if top_obj is None:
+*/
+  for (__pyx_t_1 = 0; __pyx_t_1 < 0x100; __pyx_t_1+=1) {
+    __pyx_v_column = __pyx_t_1;
+
+    /* "mc_world_mcp/_preview_accel.pyx":239
+ * 
+ *     for column in range(256):
+ *         top_obj = heights[column]             # <<<<<<<<<<<<<<
+ *         if top_obj is None:
+ *             continue
+*/
+    if (unlikely(__pyx_v_heights == Py_None)) {
+      PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+      __PYX_ERR(0, 239, __pyx_L1_error)
+    }
+    __pyx_t_4 = __Pyx_PyList_GET_ITEM(__pyx_v_heights, __pyx_v_column);
+    __Pyx_INCREF(__pyx_t_4);
+    __Pyx_XDECREF_SET(__pyx_v_top_obj, __pyx_t_4);
+    __pyx_t_4 = 0;
+
+    /* "mc_world_mcp/_preview_accel.pyx":240
+ *     for column in range(256):
+ *         top_obj = heights[column]
+ *         if top_obj is None:             # <<<<<<<<<<<<<<
+ *             continue
+ *         top = <int>top_obj
+*/
+    __pyx_t_2 = (__pyx_v_top_obj == Py_None);
+    if (__pyx_t_2) {
+
+      /* "mc_world_mcp/_preview_accel.pyx":241
+ *         top_obj = heights[column]
+ *         if top_obj is None:
+ *             continue             # <<<<<<<<<<<<<<
+ *         top = <int>top_obj
+ *         start_y = top
+*/
+      goto __pyx_L7_continue;
+
+      /* "mc_world_mcp/_preview_accel.pyx":240
+ *     for column in range(256):
+ *         top_obj = heights[column]
+ *         if top_obj is None:             # <<<<<<<<<<<<<<
+ *             continue
+ *         top = <int>top_obj
+*/
+    }
+
+    /* "mc_world_mcp/_preview_accel.pyx":242
+ *         if top_obj is None:
+ *             continue
+ *         top = <int>top_obj             # <<<<<<<<<<<<<<
+ *         start_y = top
+ *         if start_y > section_max_y:
+*/
+    __pyx_t_5 = __Pyx_PyLong_As_int(__pyx_v_top_obj); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 242, __pyx_L1_error)
+    __pyx_v_top = ((int)__pyx_t_5);
+
+    /* "mc_world_mcp/_preview_accel.pyx":243
+ *             continue
+ *         top = <int>top_obj
+ *         start_y = top             # <<<<<<<<<<<<<<
+ *         if start_y > section_max_y:
+ *             start_y = section_max_y
+*/
+    __pyx_v_start_y = __pyx_v_top;
+
+    /* "mc_world_mcp/_preview_accel.pyx":244
+ *         top = <int>top_obj
+ *         start_y = top
+ *         if start_y > section_max_y:             # <<<<<<<<<<<<<<
+ *             start_y = section_max_y
+ *         if start_y > max_y:
+*/
+    __pyx_t_2 = (__pyx_v_start_y > __pyx_v_section_max_y);
+    if (__pyx_t_2) {
+
+      /* "mc_world_mcp/_preview_accel.pyx":245
+ *         start_y = top
+ *         if start_y > section_max_y:
+ *             start_y = section_max_y             # <<<<<<<<<<<<<<
+ *         if start_y > max_y:
+ *             start_y = max_y
+*/
+      __pyx_v_start_y = __pyx_v_section_max_y;
+
+      /* "mc_world_mcp/_preview_accel.pyx":244
+ *         top = <int>top_obj
+ *         start_y = top
+ *         if start_y > section_max_y:             # <<<<<<<<<<<<<<
+ *             start_y = section_max_y
+ *         if start_y > max_y:
+*/
+    }
+
+    /* "mc_world_mcp/_preview_accel.pyx":246
+ *         if start_y > section_max_y:
+ *             start_y = section_max_y
+ *         if start_y > max_y:             # <<<<<<<<<<<<<<
+ *             start_y = max_y
+ *         end_y = top - side_depth + 1
+*/
+    __pyx_t_2 = (__pyx_v_start_y > __pyx_v_max_y);
+    if (__pyx_t_2) {
+
+      /* "mc_world_mcp/_preview_accel.pyx":247
+ *             start_y = section_max_y
+ *         if start_y > max_y:
+ *             start_y = max_y             # <<<<<<<<<<<<<<
+ *         end_y = top - side_depth + 1
+ *         if end_y < section_min_y:
+*/
+      __pyx_v_start_y = __pyx_v_max_y;
+
+      /* "mc_world_mcp/_preview_accel.pyx":246
+ *         if start_y > section_max_y:
+ *             start_y = section_max_y
+ *         if start_y > max_y:             # <<<<<<<<<<<<<<
+ *             start_y = max_y
+ *         end_y = top - side_depth + 1
+*/
+    }
+
+    /* "mc_world_mcp/_preview_accel.pyx":248
+ *         if start_y > max_y:
+ *             start_y = max_y
+ *         end_y = top - side_depth + 1             # <<<<<<<<<<<<<<
+ *         if end_y < section_min_y:
+ *             end_y = section_min_y
+*/
+    __pyx_v_end_y = ((__pyx_v_top - __pyx_v_side_depth) + 1);
+
+    /* "mc_world_mcp/_preview_accel.pyx":249
+ *             start_y = max_y
+ *         end_y = top - side_depth + 1
+ *         if end_y < section_min_y:             # <<<<<<<<<<<<<<
+ *             end_y = section_min_y
+ *         if end_y < min_y:
+*/
+    __pyx_t_2 = (__pyx_v_end_y < __pyx_v_section_min_y);
+    if (__pyx_t_2) {
+
+      /* "mc_world_mcp/_preview_accel.pyx":250
+ *         end_y = top - side_depth + 1
+ *         if end_y < section_min_y:
+ *             end_y = section_min_y             # <<<<<<<<<<<<<<
+ *         if end_y < min_y:
+ *             end_y = min_y
+*/
+      __pyx_v_end_y = __pyx_v_section_min_y;
+
+      /* "mc_world_mcp/_preview_accel.pyx":249
+ *             start_y = max_y
+ *         end_y = top - side_depth + 1
+ *         if end_y < section_min_y:             # <<<<<<<<<<<<<<
+ *             end_y = section_min_y
+ *         if end_y < min_y:
+*/
+    }
+
+    /* "mc_world_mcp/_preview_accel.pyx":251
+ *         if end_y < section_min_y:
+ *             end_y = section_min_y
+ *         if end_y < min_y:             # <<<<<<<<<<<<<<
+ *             end_y = min_y
+ *         if end_y > start_y:
+*/
+    __pyx_t_2 = (__pyx_v_end_y < __pyx_v_min_y);
+    if (__pyx_t_2) {
+
+      /* "mc_world_mcp/_preview_accel.pyx":252
+ *             end_y = section_min_y
+ *         if end_y < min_y:
+ *             end_y = min_y             # <<<<<<<<<<<<<<
+ *         if end_y > start_y:
+ *             continue
+*/
+      __pyx_v_end_y = __pyx_v_min_y;
+
+      /* "mc_world_mcp/_preview_accel.pyx":251
+ *         if end_y < section_min_y:
+ *             end_y = section_min_y
+ *         if end_y < min_y:             # <<<<<<<<<<<<<<
+ *             end_y = min_y
+ *         if end_y > start_y:
+*/
+    }
+
+    /* "mc_world_mcp/_preview_accel.pyx":253
+ *         if end_y < min_y:
+ *             end_y = min_y
+ *         if end_y > start_y:             # <<<<<<<<<<<<<<
+ *             continue
+ *         sample_base = <int>column * side_depth
+*/
+    __pyx_t_2 = (__pyx_v_end_y > __pyx_v_start_y);
+    if (__pyx_t_2) {
+
+      /* "mc_world_mcp/_preview_accel.pyx":254
+ *             end_y = min_y
+ *         if end_y > start_y:
+ *             continue             # <<<<<<<<<<<<<<
+ *         sample_base = <int>column * side_depth
+ *         for y in range(start_y, end_y - 1, -1):
+*/
+      goto __pyx_L7_continue;
+
+      /* "mc_world_mcp/_preview_accel.pyx":253
+ *         if end_y < min_y:
+ *             end_y = min_y
+ *         if end_y > start_y:             # <<<<<<<<<<<<<<
+ *             continue
+ *         sample_base = <int>column * side_depth
+*/
+    }
+
+    /* "mc_world_mcp/_preview_accel.pyx":255
+ *         if end_y > start_y:
+ *             continue
+ *         sample_base = <int>column * side_depth             # <<<<<<<<<<<<<<
+ *         for y in range(start_y, end_y - 1, -1):
+ *             palette_index = <int>indices[((y & 15) << 8) | <int>column]
+*/
+    __pyx_v_sample_base = (((int)__pyx_v_column) * __pyx_v_side_depth);
+
+    /* "mc_world_mcp/_preview_accel.pyx":256
+ *             continue
+ *         sample_base = <int>column * side_depth
+ *         for y in range(start_y, end_y - 1, -1):             # <<<<<<<<<<<<<<
+ *             palette_index = <int>indices[((y & 15) << 8) | <int>column]
+ *             if 0 <= palette_index < palette_len and palette_base_names[palette_index] not in skip:
+*/
+    __pyx_t_6 = (__pyx_v_end_y - 1);
+    __pyx_t_7 = __pyx_t_6;
+    for (__pyx_t_5 = __pyx_v_start_y; __pyx_t_5 > __pyx_t_7; __pyx_t_5-=1) {
+      __pyx_v_y = __pyx_t_5;
+
+      /* "mc_world_mcp/_preview_accel.pyx":257
+ *         sample_base = <int>column * side_depth
+ *         for y in range(start_y, end_y - 1, -1):
+ *             palette_index = <int>indices[((y & 15) << 8) | <int>column]             # <<<<<<<<<<<<<<
+ *             if 0 <= palette_index < palette_len and palette_base_names[palette_index] not in skip:
+ *                 samples[sample_base + top - y] = palette_colors[palette_index]
+*/
+      if (unlikely(__pyx_v_indices == Py_None)) {
+        PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+        __PYX_ERR(0, 257, __pyx_L1_error)
+      }
+      __pyx_t_8 = (((__pyx_v_y & 15) << 8) | ((int)__pyx_v_column));
+      __pyx_t_9 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_indices, __pyx_t_8)); if (unlikely((__pyx_t_9 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 257, __pyx_L1_error)
+      __pyx_v_palette_index = ((int)__pyx_t_9);
+
+      /* "mc_world_mcp/_preview_accel.pyx":258
+ *         for y in range(start_y, end_y - 1, -1):
+ *             palette_index = <int>indices[((y & 15) << 8) | <int>column]
+ *             if 0 <= palette_index < palette_len and palette_base_names[palette_index] not in skip:             # <<<<<<<<<<<<<<
+ *                 samples[sample_base + top - y] = palette_colors[palette_index]
+ *     return 0
+*/
+      __pyx_t_3 = (0 <= __pyx_v_palette_index);
+      if (__pyx_t_3) {
+        __pyx_t_3 = (__pyx_v_palette_index < __pyx_v_palette_len);
+      }
+      if (__pyx_t_3) {
+      } else {
+        __pyx_t_2 = __pyx_t_3;
+        goto __pyx_L18_bool_binop_done;
+      }
+      if (unlikely(__pyx_v_palette_base_names == Py_None)) {
+        PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+        __PYX_ERR(0, 258, __pyx_L1_error)
+      }
+      __pyx_t_3 = (__Pyx_PySequence_ContainsTF(__Pyx_PyList_GET_ITEM(__pyx_v_palette_base_names, __pyx_v_palette_index), __pyx_v_skip, Py_NE)); if (unlikely((__pyx_t_3 < 0))) __PYX_ERR(0, 258, __pyx_L1_error)
+      __pyx_t_2 = __pyx_t_3;
+      __pyx_L18_bool_binop_done:;
+      if (__pyx_t_2) {
+
+        /* "mc_world_mcp/_preview_accel.pyx":259
+ *             palette_index = <int>indices[((y & 15) << 8) | <int>column]
+ *             if 0 <= palette_index < palette_len and palette_base_names[palette_index] not in skip:
+ *                 samples[sample_base + top - y] = palette_colors[palette_index]             # <<<<<<<<<<<<<<
+ *     return 0
+ * 
+*/
+        if (unlikely(__pyx_v_palette_colors == Py_None)) {
+          PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+          __PYX_ERR(0, 259, __pyx_L1_error)
+        }
+        __pyx_t_4 = __Pyx_PyList_GET_ITEM(__pyx_v_palette_colors, __pyx_v_palette_index);
+        __Pyx_INCREF(__pyx_t_4);
+        if (unlikely(__pyx_v_samples == Py_None)) {
+          PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+          __PYX_ERR(0, 259, __pyx_L1_error)
+        }
+        __pyx_t_9 = ((__pyx_v_sample_base + __pyx_v_top) - __pyx_v_y);
+        if (unlikely((__Pyx_SetItemInt(__pyx_v_samples, __pyx_t_9, __pyx_t_4, int, 1, __Pyx_PyLong_From_int, 1, 0, 0, 1, __Pyx_ReferenceSharing_FunctionArgument) < 0))) __PYX_ERR(0, 259, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+        /* "mc_world_mcp/_preview_accel.pyx":258
+ *         for y in range(start_y, end_y - 1, -1):
+ *             palette_index = <int>indices[((y & 15) << 8) | <int>column]
+ *             if 0 <= palette_index < palette_len and palette_base_names[palette_index] not in skip:             # <<<<<<<<<<<<<<
+ *                 samples[sample_base + top - y] = palette_colors[palette_index]
+ *     return 0
+*/
+      }
+    }
+    __pyx_L7_continue:;
+  }
+
+  /* "mc_world_mcp/_preview_accel.pyx":260
+ *             if 0 <= palette_index < palette_len and palette_base_names[palette_index] not in skip:
+ *                 samples[sample_base + top - y] = palette_colors[palette_index]
+ *     return 0             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+  __pyx_r = 0;
+  goto __pyx_L0;
+
+  /* "mc_world_mcp/_preview_accel.pyx":211
+ * 
+ * 
+ * cpdef int fill_closeup_side_samples(             # <<<<<<<<<<<<<<
+ *     list indices,
+ *     list palette_base_names,
+*/
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("mc_world_mcp._preview_accel.fill_closeup_side_samples", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_top_obj);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_11fill_closeup_side_samples(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_12mc_world_mcp_14_preview_accel_11fill_closeup_side_samples = {"fill_closeup_side_samples", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12mc_world_mcp_14_preview_accel_11fill_closeup_side_samples, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_11fill_closeup_side_samples(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_indices = 0;
+  PyObject *__pyx_v_palette_base_names = 0;
+  PyObject *__pyx_v_palette_colors = 0;
+  PyObject *__pyx_v_skip = 0;
+  PyObject *__pyx_v_heights = 0;
+  PyObject *__pyx_v_samples = 0;
+  int __pyx_v_section_y;
+  int __pyx_v_side_depth;
+  int __pyx_v_min_y;
+  int __pyx_v_max_y;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[10] = {0,0,0,0,0,0,0,0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("fill_closeup_side_samples (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_SIZE
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_indices,&__pyx_mstate_global->__pyx_n_u_palette_base_names,&__pyx_mstate_global->__pyx_n_u_palette_colors,&__pyx_mstate_global->__pyx_n_u_skip,&__pyx_mstate_global->__pyx_n_u_heights,&__pyx_mstate_global->__pyx_n_u_samples,&__pyx_mstate_global->__pyx_n_u_section_y,&__pyx_mstate_global->__pyx_n_u_side_depth,&__pyx_mstate_global->__pyx_n_u_min_y,&__pyx_mstate_global->__pyx_n_u_max_y,0};
+    const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 211, __pyx_L3_error)
+    if (__pyx_kwds_len > 0) {
+      switch (__pyx_nargs) {
+        case 10:
+        values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  9:
+        values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  8:
+        values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  7:
+        values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  6:
+        values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  5:
+        values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  4:
+        values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  3:
+        values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  2:
+        values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  1:
+        values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 211, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      const Py_ssize_t kwd_pos_args = __pyx_nargs;
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "fill_closeup_side_samples", 0) < (0)) __PYX_ERR(0, 211, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 10; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("fill_closeup_side_samples", 1, 10, 10, i); __PYX_ERR(0, 211, __pyx_L3_error) }
+      }
+    } else if (unlikely(__pyx_nargs != 10)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 211, __pyx_L3_error)
+      values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 211, __pyx_L3_error)
+    }
+    __pyx_v_indices = ((PyObject*)values[0]);
+    __pyx_v_palette_base_names = ((PyObject*)values[1]);
+    __pyx_v_palette_colors = ((PyObject*)values[2]);
+    __pyx_v_skip = values[3];
+    __pyx_v_heights = ((PyObject*)values[4]);
+    __pyx_v_samples = ((PyObject*)values[5]);
+    __pyx_v_section_y = __Pyx_PyLong_As_int(values[6]); if (unlikely((__pyx_v_section_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L3_error)
+    __pyx_v_side_depth = __Pyx_PyLong_As_int(values[7]); if (unlikely((__pyx_v_side_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 219, __pyx_L3_error)
+    __pyx_v_min_y = __Pyx_PyLong_As_int(values[8]); if (unlikely((__pyx_v_min_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 220, __pyx_L3_error)
+    __pyx_v_max_y = __Pyx_PyLong_As_int(values[9]); if (unlikely((__pyx_v_max_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("fill_closeup_side_samples", 1, 10, 10, __pyx_nargs); __PYX_ERR(0, 211, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __Pyx_AddTraceback("mc_world_mcp._preview_accel.fill_closeup_side_samples", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_indices), (&PyList_Type), 1, "indices", 1))) __PYX_ERR(0, 212, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette_base_names), (&PyList_Type), 1, "palette_base_names", 1))) __PYX_ERR(0, 213, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_palette_colors), (&PyList_Type), 1, "palette_colors", 1))) __PYX_ERR(0, 214, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_heights), (&PyList_Type), 1, "heights", 1))) __PYX_ERR(0, 216, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_samples), (&PyList_Type), 1, "samples", 1))) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_10fill_closeup_side_samples(__pyx_self, __pyx_v_indices, __pyx_v_palette_base_names, __pyx_v_palette_colors, __pyx_v_skip, __pyx_v_heights, __pyx_v_samples, __pyx_v_section_y, __pyx_v_side_depth, __pyx_v_min_y, __pyx_v_max_y);
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __pyx_r = NULL;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  goto __pyx_L7_cleaned_up;
+  __pyx_L0:;
+  for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+    Py_XDECREF(values[__pyx_temp]);
+  }
+  __pyx_L7_cleaned_up:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_10fill_closeup_side_samples(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_indices, PyObject *__pyx_v_palette_base_names, PyObject *__pyx_v_palette_colors, PyObject *__pyx_v_skip, PyObject *__pyx_v_heights, PyObject *__pyx_v_samples, int __pyx_v_section_y, int __pyx_v_side_depth, int __pyx_v_min_y, int __pyx_v_max_y) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("fill_closeup_side_samples", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_fill_closeup_side_samples(__pyx_v_indices, __pyx_v_palette_base_names, __pyx_v_palette_colors, __pyx_v_skip, __pyx_v_heights, __pyx_v_samples, __pyx_v_section_y, __pyx_v_side_depth, __pyx_v_min_y, __pyx_v_max_y, 1); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyLong_From_int(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_r = __pyx_t_2;
+  __pyx_t_2 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("mc_world_mcp._preview_accel.fill_closeup_side_samples", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "mc_world_mcp/_preview_accel.pyx":263
  * 
  * 
  * cpdef list project_template_states(object template_blocks, int width, int height, int size_y, int axis_code):             # <<<<<<<<<<<<<<
@@ -19248,7 +19920,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_8fill_floor_projection
  *     cdef list depths = [-1] * pixel_count
 */
 
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_11project_template_states(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_13project_template_states(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -19286,7 +19958,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("project_template_states", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":210
+  /* "mc_world_mcp/_preview_accel.pyx":264
  * 
  * cpdef list project_template_states(object template_blocks, int width, int height, int size_y, int axis_code):
  *     cdef Py_ssize_t pixel_count = width * height             # <<<<<<<<<<<<<<
@@ -19295,45 +19967,45 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
   __pyx_v_pixel_count = (__pyx_v_width * __pyx_v_height);
 
-  /* "mc_world_mcp/_preview_accel.pyx":211
+  /* "mc_world_mcp/_preview_accel.pyx":265
  * cpdef list project_template_states(object template_blocks, int width, int height, int size_y, int axis_code):
  *     cdef Py_ssize_t pixel_count = width * height
  *     cdef list depths = [-1] * pixel_count             # <<<<<<<<<<<<<<
  *     cdef list states = [-1] * pixel_count
  *     cdef object block
 */
-  __pyx_t_1 = PyList_New(1 * ((__pyx_v_pixel_count<0) ? 0:__pyx_v_pixel_count)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1 * ((__pyx_v_pixel_count<0) ? 0:__pyx_v_pixel_count)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   { Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < __pyx_v_pixel_count; __pyx_temp++) {
       __Pyx_INCREF(__pyx_mstate_global->__pyx_int_neg_1);
       __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_neg_1);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_neg_1) != (0)) __PYX_ERR(0, 211, __pyx_L1_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_neg_1) != (0)) __PYX_ERR(0, 265, __pyx_L1_error);
     }
   }
   __pyx_v_depths = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":212
+  /* "mc_world_mcp/_preview_accel.pyx":266
  *     cdef Py_ssize_t pixel_count = width * height
  *     cdef list depths = [-1] * pixel_count
  *     cdef list states = [-1] * pixel_count             # <<<<<<<<<<<<<<
  *     cdef object block
  *     cdef object pos
 */
-  __pyx_t_1 = PyList_New(1 * ((__pyx_v_pixel_count<0) ? 0:__pyx_v_pixel_count)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1 * ((__pyx_v_pixel_count<0) ? 0:__pyx_v_pixel_count)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 266, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   { Py_ssize_t __pyx_temp;
     for (__pyx_temp=0; __pyx_temp < __pyx_v_pixel_count; __pyx_temp++) {
       __Pyx_INCREF(__pyx_mstate_global->__pyx_int_neg_1);
       __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_neg_1);
-      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_neg_1) != (0)) __PYX_ERR(0, 212, __pyx_L1_error);
+      if (__Pyx_PyList_SET_ITEM(__pyx_t_1, __pyx_temp, __pyx_mstate_global->__pyx_int_neg_1) != (0)) __PYX_ERR(0, 266, __pyx_L1_error);
     }
   }
   __pyx_v_states = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":224
+  /* "mc_world_mcp/_preview_accel.pyx":278
  *     cdef Py_ssize_t index
  * 
  *     for block in template_blocks:             # <<<<<<<<<<<<<<
@@ -19345,9 +20017,9 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
     __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_template_blocks); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_template_blocks); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 278, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_3 = (CYTHON_COMPILING_IN_LIMITED_API) ? PyIter_Next : __Pyx_PyObject_GetIterNextFunc(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 278, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
@@ -19355,7 +20027,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
         {
           Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_1);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 224, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 278, __pyx_L1_error)
           #endif
           if (__pyx_t_2 >= __pyx_temp) break;
         }
@@ -19365,7 +20037,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
         {
           Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_1);
           #if !CYTHON_ASSUME_SAFE_SIZE
-          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 224, __pyx_L1_error)
+          if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 278, __pyx_L1_error)
           #endif
           if (__pyx_t_2 >= __pyx_temp) break;
         }
@@ -19376,13 +20048,13 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
         #endif
         ++__pyx_t_2;
       }
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 278, __pyx_L1_error)
     } else {
       __pyx_t_4 = __pyx_t_3(__pyx_t_1);
       if (unlikely(!__pyx_t_4)) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
-          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 224, __pyx_L1_error)
+          if (unlikely(!__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) __PYX_ERR(0, 278, __pyx_L1_error)
           PyErr_Clear();
         }
         break;
@@ -19392,7 +20064,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
     __Pyx_XDECREF_SET(__pyx_v_block, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":225
+    /* "mc_world_mcp/_preview_accel.pyx":279
  * 
  *     for block in template_blocks:
  *         pos = block.get("pos", [0, 0, 0])             # <<<<<<<<<<<<<<
@@ -19401,97 +20073,97 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
     __pyx_t_5 = __pyx_v_block;
     __Pyx_INCREF(__pyx_t_5);
-    __pyx_t_6 = PyList_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 225, __pyx_L1_error)
+    __pyx_t_6 = PyList_New(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 279, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
     __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_0);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 0, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 225, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 0, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 279, __pyx_L1_error);
     __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
     __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_0);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 1, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 225, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 1, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 279, __pyx_L1_error);
     __Pyx_INCREF(__pyx_mstate_global->__pyx_int_0);
     __Pyx_GIVEREF(__pyx_mstate_global->__pyx_int_0);
-    if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 2, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 225, __pyx_L1_error);
+    if (__Pyx_PyList_SET_ITEM(__pyx_t_6, 2, __pyx_mstate_global->__pyx_int_0) != (0)) __PYX_ERR(0, 279, __pyx_L1_error);
     __pyx_t_7 = 0;
     {
       PyObject *__pyx_callargs[3] = {__pyx_t_5, __pyx_mstate_global->__pyx_n_u_pos, __pyx_t_6};
       __pyx_t_4 = __Pyx_PyObject_FastCallMethod((PyObject*)__pyx_mstate_global->__pyx_n_u_get, __pyx_callargs+__pyx_t_7, (3-__pyx_t_7) | (1*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 225, __pyx_L1_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 279, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     }
     __Pyx_XDECREF_SET(__pyx_v_pos, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":226
+    /* "mc_world_mcp/_preview_accel.pyx":280
  *     for block in template_blocks:
  *         pos = block.get("pos", [0, 0, 0])
  *         px = <int>int(pos[0])             # <<<<<<<<<<<<<<
  *         py = <int>int(pos[1])
  *         pz = <int>int(pos[2])
 */
-    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_pos, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 226, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_pos, 0, long, 1, __Pyx_PyLong_From_long, 0, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 280, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyNumber_Int(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 226, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyNumber_Int(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 280, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 226, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 280, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_px = ((int)__pyx_t_8);
 
-    /* "mc_world_mcp/_preview_accel.pyx":227
+    /* "mc_world_mcp/_preview_accel.pyx":281
  *         pos = block.get("pos", [0, 0, 0])
  *         px = <int>int(pos[0])
  *         py = <int>int(pos[1])             # <<<<<<<<<<<<<<
  *         pz = <int>int(pos[2])
  *         state = <int>int(block.get("state", 0))
 */
-    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_pos, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 227, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_pos, 1, long, 1, __Pyx_PyLong_From_long, 0, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 281, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = __Pyx_PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 227, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 281, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_4); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 227, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_4); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 281, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_py = ((int)__pyx_t_8);
 
-    /* "mc_world_mcp/_preview_accel.pyx":228
+    /* "mc_world_mcp/_preview_accel.pyx":282
  *         px = <int>int(pos[0])
  *         py = <int>int(pos[1])
  *         pz = <int>int(pos[2])             # <<<<<<<<<<<<<<
  *         state = <int>int(block.get("state", 0))
  *         if axis_code == 0:
 */
-    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_pos, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetItemInt(__pyx_v_pos, 2, long, 1, __Pyx_PyLong_From_long, 0, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 282, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = __Pyx_PyNumber_Int(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 228, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyNumber_Int(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 282, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 228, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 282, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_pz = ((int)__pyx_t_8);
 
-    /* "mc_world_mcp/_preview_accel.pyx":229
+    /* "mc_world_mcp/_preview_accel.pyx":283
  *         py = <int>int(pos[1])
  *         pz = <int>int(pos[2])
  *         state = <int>int(block.get("state", 0))             # <<<<<<<<<<<<<<
  *         if axis_code == 0:
  *             image_x = px
 */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_block, __pyx_mstate_global->__pyx_n_u_get); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 229, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_block, __pyx_mstate_global->__pyx_n_u_get); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_mstate_global->__pyx_tuple[1], NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_mstate_global->__pyx_tuple[1], NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyNumber_Int(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 229, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyNumber_Int(__pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 229, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyLong_As_int(__pyx_t_6); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 283, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_state = ((int)__pyx_t_8);
 
-    /* "mc_world_mcp/_preview_accel.pyx":230
+    /* "mc_world_mcp/_preview_accel.pyx":284
  *         pz = <int>int(pos[2])
  *         state = <int>int(block.get("state", 0))
  *         if axis_code == 0:             # <<<<<<<<<<<<<<
@@ -19501,7 +20173,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
     switch (__pyx_v_axis_code) {
       case 0:
 
-      /* "mc_world_mcp/_preview_accel.pyx":231
+      /* "mc_world_mcp/_preview_accel.pyx":285
  *         state = <int>int(block.get("state", 0))
  *         if axis_code == 0:
  *             image_x = px             # <<<<<<<<<<<<<<
@@ -19510,7 +20182,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_image_x = __pyx_v_px;
 
-      /* "mc_world_mcp/_preview_accel.pyx":232
+      /* "mc_world_mcp/_preview_accel.pyx":286
  *         if axis_code == 0:
  *             image_x = px
  *             image_y = pz             # <<<<<<<<<<<<<<
@@ -19519,7 +20191,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_image_y = __pyx_v_pz;
 
-      /* "mc_world_mcp/_preview_accel.pyx":233
+      /* "mc_world_mcp/_preview_accel.pyx":287
  *             image_x = px
  *             image_y = pz
  *             depth = py             # <<<<<<<<<<<<<<
@@ -19528,7 +20200,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_depth = __pyx_v_py;
 
-      /* "mc_world_mcp/_preview_accel.pyx":230
+      /* "mc_world_mcp/_preview_accel.pyx":284
  *         pz = <int>int(pos[2])
  *         state = <int>int(block.get("state", 0))
  *         if axis_code == 0:             # <<<<<<<<<<<<<<
@@ -19538,7 +20210,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
       break;
       case 1:
 
-      /* "mc_world_mcp/_preview_accel.pyx":235
+      /* "mc_world_mcp/_preview_accel.pyx":289
  *             depth = py
  *         elif axis_code == 1:
  *             image_x = pz             # <<<<<<<<<<<<<<
@@ -19547,7 +20219,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_image_x = __pyx_v_pz;
 
-      /* "mc_world_mcp/_preview_accel.pyx":236
+      /* "mc_world_mcp/_preview_accel.pyx":290
  *         elif axis_code == 1:
  *             image_x = pz
  *             image_y = size_y - py - 1             # <<<<<<<<<<<<<<
@@ -19556,7 +20228,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_image_y = ((__pyx_v_size_y - __pyx_v_py) - 1);
 
-      /* "mc_world_mcp/_preview_accel.pyx":237
+      /* "mc_world_mcp/_preview_accel.pyx":291
  *             image_x = pz
  *             image_y = size_y - py - 1
  *             depth = px             # <<<<<<<<<<<<<<
@@ -19565,7 +20237,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_depth = __pyx_v_px;
 
-      /* "mc_world_mcp/_preview_accel.pyx":234
+      /* "mc_world_mcp/_preview_accel.pyx":288
  *             image_y = pz
  *             depth = py
  *         elif axis_code == 1:             # <<<<<<<<<<<<<<
@@ -19575,7 +20247,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
       break;
       default:
 
-      /* "mc_world_mcp/_preview_accel.pyx":239
+      /* "mc_world_mcp/_preview_accel.pyx":293
  *             depth = px
  *         else:
  *             image_x = px             # <<<<<<<<<<<<<<
@@ -19584,7 +20256,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_image_x = __pyx_v_px;
 
-      /* "mc_world_mcp/_preview_accel.pyx":240
+      /* "mc_world_mcp/_preview_accel.pyx":294
  *         else:
  *             image_x = px
  *             image_y = size_y - py - 1             # <<<<<<<<<<<<<<
@@ -19593,7 +20265,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_image_y = ((__pyx_v_size_y - __pyx_v_py) - 1);
 
-      /* "mc_world_mcp/_preview_accel.pyx":241
+      /* "mc_world_mcp/_preview_accel.pyx":295
  *             image_x = px
  *             image_y = size_y - py - 1
  *             depth = pz             # <<<<<<<<<<<<<<
@@ -19604,7 +20276,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
       break;
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":243
+    /* "mc_world_mcp/_preview_accel.pyx":297
  *             depth = pz
  * 
  *         if 0 <= image_x < width and 0 <= image_y < height:             # <<<<<<<<<<<<<<
@@ -19628,7 +20300,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_9) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":244
+      /* "mc_world_mcp/_preview_accel.pyx":298
  * 
  *         if 0 <= image_x < width and 0 <= image_y < height:
  *             index = image_y * width + image_x             # <<<<<<<<<<<<<<
@@ -19637,42 +20309,42 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       __pyx_v_index = ((__pyx_v_image_y * __pyx_v_width) + __pyx_v_image_x);
 
-      /* "mc_world_mcp/_preview_accel.pyx":245
+      /* "mc_world_mcp/_preview_accel.pyx":299
  *         if 0 <= image_x < width and 0 <= image_y < height:
  *             index = image_y * width + image_x
  *             if depth >= <int>depths[index]:             # <<<<<<<<<<<<<<
  *                 depths[index] = depth
  *                 states[index] = state
 */
-      __pyx_t_8 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_depths, __pyx_v_index)); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_depths, __pyx_v_index)); if (unlikely((__pyx_t_8 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 299, __pyx_L1_error)
       __pyx_t_9 = (__pyx_v_depth >= ((int)__pyx_t_8));
       if (__pyx_t_9) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":246
+        /* "mc_world_mcp/_preview_accel.pyx":300
  *             index = image_y * width + image_x
  *             if depth >= <int>depths[index]:
  *                 depths[index] = depth             # <<<<<<<<<<<<<<
  *                 states[index] = state
  *     return states
 */
-        __pyx_t_6 = __Pyx_PyLong_From_int(__pyx_v_depth); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 246, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyLong_From_int(__pyx_v_depth); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 300, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        if (unlikely((__Pyx_SetItemInt(__pyx_v_depths, __pyx_v_index, __pyx_t_6, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 246, __pyx_L1_error)
+        if (unlikely((__Pyx_SetItemInt(__pyx_v_depths, __pyx_v_index, __pyx_t_6, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 300, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":247
+        /* "mc_world_mcp/_preview_accel.pyx":301
  *             if depth >= <int>depths[index]:
  *                 depths[index] = depth
  *                 states[index] = state             # <<<<<<<<<<<<<<
  *     return states
  * 
 */
-        __pyx_t_6 = __Pyx_PyLong_From_int(__pyx_v_state); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 247, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyLong_From_int(__pyx_v_state); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 301, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        if (unlikely((__Pyx_SetItemInt(__pyx_v_states, __pyx_v_index, __pyx_t_6, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 247, __pyx_L1_error)
+        if (unlikely((__Pyx_SetItemInt(__pyx_v_states, __pyx_v_index, __pyx_t_6, Py_ssize_t, 1, PyLong_FromSsize_t, 1, 0, 0, 1, __Pyx_ReferenceSharing_OwnStrongReference) < 0))) __PYX_ERR(0, 301, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-        /* "mc_world_mcp/_preview_accel.pyx":245
+        /* "mc_world_mcp/_preview_accel.pyx":299
  *         if 0 <= image_x < width and 0 <= image_y < height:
  *             index = image_y * width + image_x
  *             if depth >= <int>depths[index]:             # <<<<<<<<<<<<<<
@@ -19681,7 +20353,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":243
+      /* "mc_world_mcp/_preview_accel.pyx":297
  *             depth = pz
  * 
  *         if 0 <= image_x < width and 0 <= image_y < height:             # <<<<<<<<<<<<<<
@@ -19690,7 +20362,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":224
+    /* "mc_world_mcp/_preview_accel.pyx":278
  *     cdef Py_ssize_t index
  * 
  *     for block in template_blocks:             # <<<<<<<<<<<<<<
@@ -19700,7 +20372,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":248
+  /* "mc_world_mcp/_preview_accel.pyx":302
  *                 depths[index] = depth
  *                 states[index] = state
  *     return states             # <<<<<<<<<<<<<<
@@ -19712,7 +20384,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
   __pyx_r = __pyx_v_states;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":209
+  /* "mc_world_mcp/_preview_accel.pyx":263
  * 
  * 
  * cpdef list project_template_states(object template_blocks, int width, int height, int size_y, int axis_code):             # <<<<<<<<<<<<<<
@@ -19739,15 +20411,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_project_template_states
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_11project_template_states(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_13project_template_states(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_12mc_world_mcp_14_preview_accel_11project_template_states = {"project_template_states", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12mc_world_mcp_14_preview_accel_11project_template_states, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_11project_template_states(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_12mc_world_mcp_14_preview_accel_13project_template_states = {"project_template_states", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12mc_world_mcp_14_preview_accel_13project_template_states, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_13project_template_states(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -19781,60 +20453,60 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_template_blocks,&__pyx_mstate_global->__pyx_n_u_width,&__pyx_mstate_global->__pyx_n_u_height,&__pyx_mstate_global->__pyx_n_u_size_y,&__pyx_mstate_global->__pyx_n_u_axis_code,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 209, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 263, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  5:
         values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 209, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 263, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 209, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 263, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 209, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 263, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 209, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 263, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 209, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 263, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "project_template_states", 0) < (0)) __PYX_ERR(0, 209, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "project_template_states", 0) < (0)) __PYX_ERR(0, 263, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 5; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("project_template_states", 1, 5, 5, i); __PYX_ERR(0, 209, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("project_template_states", 1, 5, 5, i); __PYX_ERR(0, 263, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 5)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 209, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 263, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 209, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 263, __pyx_L3_error)
       values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 209, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 263, __pyx_L3_error)
       values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 209, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 263, __pyx_L3_error)
       values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 209, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 263, __pyx_L3_error)
     }
     __pyx_v_template_blocks = values[0];
-    __pyx_v_width = __Pyx_PyLong_As_int(values[1]); if (unlikely((__pyx_v_width == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L3_error)
-    __pyx_v_height = __Pyx_PyLong_As_int(values[2]); if (unlikely((__pyx_v_height == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L3_error)
-    __pyx_v_size_y = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_size_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L3_error)
-    __pyx_v_axis_code = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_axis_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L3_error)
+    __pyx_v_width = __Pyx_PyLong_As_int(values[1]); if (unlikely((__pyx_v_width == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L3_error)
+    __pyx_v_height = __Pyx_PyLong_As_int(values[2]); if (unlikely((__pyx_v_height == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L3_error)
+    __pyx_v_size_y = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_size_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L3_error)
+    __pyx_v_axis_code = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_axis_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("project_template_states", 1, 5, 5, __pyx_nargs); __PYX_ERR(0, 209, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("project_template_states", 1, 5, 5, __pyx_nargs); __PYX_ERR(0, 263, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -19845,7 +20517,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_10project_template_states(__pyx_self, __pyx_v_template_blocks, __pyx_v_width, __pyx_v_height, __pyx_v_size_y, __pyx_v_axis_code);
+  __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_12project_template_states(__pyx_self, __pyx_v_template_blocks, __pyx_v_width, __pyx_v_height, __pyx_v_size_y, __pyx_v_axis_code);
 
   /* function exit code */
   for (Py_ssize_t __pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
@@ -19855,7 +20527,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_10project_template_states(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_template_blocks, int __pyx_v_width, int __pyx_v_height, int __pyx_v_size_y, int __pyx_v_axis_code) {
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_12project_template_states(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_template_blocks, int __pyx_v_width, int __pyx_v_height, int __pyx_v_size_y, int __pyx_v_axis_code) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -19864,7 +20536,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_10project_template_sta
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("project_template_states", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_project_template_states(__pyx_v_template_blocks, __pyx_v_width, __pyx_v_height, __pyx_v_size_y, __pyx_v_axis_code, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_project_template_states(__pyx_v_template_blocks, __pyx_v_width, __pyx_v_height, __pyx_v_size_y, __pyx_v_axis_code, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -19881,7 +20553,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_10project_template_sta
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":251
+/* "mc_world_mcp/_preview_accel.pyx":305
  * 
  * 
  * cdef inline int _max_int(int a, int b):             # <<<<<<<<<<<<<<
@@ -19894,7 +20566,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__max_int(int __
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "mc_world_mcp/_preview_accel.pyx":252
+  /* "mc_world_mcp/_preview_accel.pyx":306
  * 
  * cdef inline int _max_int(int a, int b):
  *     return a if a > b else b             # <<<<<<<<<<<<<<
@@ -19910,7 +20582,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__max_int(int __
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":251
+  /* "mc_world_mcp/_preview_accel.pyx":305
  * 
  * 
  * cdef inline int _max_int(int a, int b):             # <<<<<<<<<<<<<<
@@ -19923,7 +20595,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__max_int(int __
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":255
+/* "mc_world_mcp/_preview_accel.pyx":309
  * 
  * 
  * cdef inline int _min_int(int a, int b):             # <<<<<<<<<<<<<<
@@ -19936,7 +20608,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__min_int(int __
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "mc_world_mcp/_preview_accel.pyx":256
+  /* "mc_world_mcp/_preview_accel.pyx":310
  * 
  * cdef inline int _min_int(int a, int b):
  *     return a if a < b else b             # <<<<<<<<<<<<<<
@@ -19952,7 +20624,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__min_int(int __
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":255
+  /* "mc_world_mcp/_preview_accel.pyx":309
  * 
  * 
  * cdef inline int _min_int(int a, int b):             # <<<<<<<<<<<<<<
@@ -19965,7 +20637,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__min_int(int __
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":259
+/* "mc_world_mcp/_preview_accel.pyx":313
  * 
  * 
  * cdef inline int _clamp_int(int value, int lower, int upper):             # <<<<<<<<<<<<<<
@@ -19977,7 +20649,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":260
+  /* "mc_world_mcp/_preview_accel.pyx":314
  * 
  * cdef inline int _clamp_int(int value, int lower, int upper):
  *     if value < lower:             # <<<<<<<<<<<<<<
@@ -19987,7 +20659,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
   __pyx_t_1 = (__pyx_v_value < __pyx_v_lower);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":261
+    /* "mc_world_mcp/_preview_accel.pyx":315
  * cdef inline int _clamp_int(int value, int lower, int upper):
  *     if value < lower:
  *         return lower             # <<<<<<<<<<<<<<
@@ -19997,7 +20669,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
     __pyx_r = __pyx_v_lower;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":260
+    /* "mc_world_mcp/_preview_accel.pyx":314
  * 
  * cdef inline int _clamp_int(int value, int lower, int upper):
  *     if value < lower:             # <<<<<<<<<<<<<<
@@ -20006,7 +20678,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":262
+  /* "mc_world_mcp/_preview_accel.pyx":316
  *     if value < lower:
  *         return lower
  *     if value > upper:             # <<<<<<<<<<<<<<
@@ -20016,7 +20688,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
   __pyx_t_1 = (__pyx_v_value > __pyx_v_upper);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":263
+    /* "mc_world_mcp/_preview_accel.pyx":317
  *         return lower
  *     if value > upper:
  *         return upper             # <<<<<<<<<<<<<<
@@ -20026,7 +20698,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
     __pyx_r = __pyx_v_upper;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":262
+    /* "mc_world_mcp/_preview_accel.pyx":316
  *     if value < lower:
  *         return lower
  *     if value > upper:             # <<<<<<<<<<<<<<
@@ -20035,7 +20707,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":264
+  /* "mc_world_mcp/_preview_accel.pyx":318
  *     if value > upper:
  *         return upper
  *     return value             # <<<<<<<<<<<<<<
@@ -20045,7 +20717,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
   __pyx_r = __pyx_v_value;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":259
+  /* "mc_world_mcp/_preview_accel.pyx":313
  * 
  * 
  * cdef inline int _clamp_int(int value, int lower, int upper):             # <<<<<<<<<<<<<<
@@ -20058,7 +20730,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(int 
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":267
+/* "mc_world_mcp/_preview_accel.pyx":321
  * 
  * 
  * cdef inline int _scaled_length(int src_w, int src_h, int max_w, int max_h, bint width):             # <<<<<<<<<<<<<<
@@ -20078,7 +20750,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":268
+  /* "mc_world_mcp/_preview_accel.pyx":322
  * 
  * cdef inline int _scaled_length(int src_w, int src_h, int max_w, int max_h, bint width):
  *     cdef double ratio_w = max_w / <double>src_w             # <<<<<<<<<<<<<<
@@ -20087,11 +20759,11 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
 */
   if (unlikely(((double)__pyx_v_src_w) == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 268, __pyx_L1_error)
+    __PYX_ERR(0, 322, __pyx_L1_error)
   }
   __pyx_v_ratio_w = (((double)__pyx_v_max_w) / ((double)__pyx_v_src_w));
 
-  /* "mc_world_mcp/_preview_accel.pyx":269
+  /* "mc_world_mcp/_preview_accel.pyx":323
  * cdef inline int _scaled_length(int src_w, int src_h, int max_w, int max_h, bint width):
  *     cdef double ratio_w = max_w / <double>src_w
  *     cdef double ratio_h = max_h / <double>src_h             # <<<<<<<<<<<<<<
@@ -20100,11 +20772,11 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
 */
   if (unlikely(((double)__pyx_v_src_h) == 0)) {
     PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-    __PYX_ERR(0, 269, __pyx_L1_error)
+    __PYX_ERR(0, 323, __pyx_L1_error)
   }
   __pyx_v_ratio_h = (((double)__pyx_v_max_h) / ((double)__pyx_v_src_h));
 
-  /* "mc_world_mcp/_preview_accel.pyx":270
+  /* "mc_world_mcp/_preview_accel.pyx":324
  *     cdef double ratio_w = max_w / <double>src_w
  *     cdef double ratio_h = max_h / <double>src_h
  *     cdef double ratio = ratio_w if ratio_w < ratio_h else ratio_h             # <<<<<<<<<<<<<<
@@ -20119,7 +20791,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
   }
   __pyx_v_ratio = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":272
+  /* "mc_world_mcp/_preview_accel.pyx":326
  *     cdef double ratio = ratio_w if ratio_w < ratio_h else ratio_h
  *     cdef int value
  *     if width:             # <<<<<<<<<<<<<<
@@ -20128,7 +20800,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
 */
   if (__pyx_v_width) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":273
+    /* "mc_world_mcp/_preview_accel.pyx":327
  *     cdef int value
  *     if width:
  *         value = <int>(src_w * ratio)             # <<<<<<<<<<<<<<
@@ -20137,7 +20809,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
 */
     __pyx_v_value = ((int)(__pyx_v_src_w * __pyx_v_ratio));
 
-    /* "mc_world_mcp/_preview_accel.pyx":272
+    /* "mc_world_mcp/_preview_accel.pyx":326
  *     cdef double ratio = ratio_w if ratio_w < ratio_h else ratio_h
  *     cdef int value
  *     if width:             # <<<<<<<<<<<<<<
@@ -20147,7 +20819,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
     goto __pyx_L3;
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":275
+  /* "mc_world_mcp/_preview_accel.pyx":329
  *         value = <int>(src_w * ratio)
  *     else:
  *         value = <int>(src_h * ratio)             # <<<<<<<<<<<<<<
@@ -20159,7 +20831,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
   }
   __pyx_L3:;
 
-  /* "mc_world_mcp/_preview_accel.pyx":276
+  /* "mc_world_mcp/_preview_accel.pyx":330
  *     else:
  *         value = <int>(src_h * ratio)
  *     if value < 1:             # <<<<<<<<<<<<<<
@@ -20169,7 +20841,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
   __pyx_t_2 = (__pyx_v_value < 1);
   if (__pyx_t_2) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":277
+    /* "mc_world_mcp/_preview_accel.pyx":331
  *         value = <int>(src_h * ratio)
  *     if value < 1:
  *         return 1             # <<<<<<<<<<<<<<
@@ -20179,7 +20851,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":276
+    /* "mc_world_mcp/_preview_accel.pyx":330
  *     else:
  *         value = <int>(src_h * ratio)
  *     if value < 1:             # <<<<<<<<<<<<<<
@@ -20188,7 +20860,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":278
+  /* "mc_world_mcp/_preview_accel.pyx":332
  *     if value < 1:
  *         return 1
  *     return value             # <<<<<<<<<<<<<<
@@ -20198,7 +20870,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
   __pyx_r = __pyx_v_value;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":267
+  /* "mc_world_mcp/_preview_accel.pyx":321
  * 
  * 
  * cdef inline int _scaled_length(int src_w, int src_h, int max_w, int max_h, bint width):             # <<<<<<<<<<<<<<
@@ -20214,7 +20886,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":281
+/* "mc_world_mcp/_preview_accel.pyx":335
  * 
  * 
  * cdef void _fill_rgba(unsigned char[::1] dst, int pixels, int r, int g, int b, int a):             # <<<<<<<<<<<<<<
@@ -20230,7 +20902,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
   int __pyx_t_3;
   Py_ssize_t __pyx_t_4;
 
-  /* "mc_world_mcp/_preview_accel.pyx":284
+  /* "mc_world_mcp/_preview_accel.pyx":338
  *     cdef int i
  *     cdef Py_ssize_t offset
  *     for i in range(pixels):             # <<<<<<<<<<<<<<
@@ -20242,7 +20914,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "mc_world_mcp/_preview_accel.pyx":285
+    /* "mc_world_mcp/_preview_accel.pyx":339
  *     cdef Py_ssize_t offset
  *     for i in range(pixels):
  *         offset = i * 4             # <<<<<<<<<<<<<<
@@ -20251,7 +20923,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
 */
     __pyx_v_offset = (__pyx_v_i * 4);
 
-    /* "mc_world_mcp/_preview_accel.pyx":286
+    /* "mc_world_mcp/_preview_accel.pyx":340
  *     for i in range(pixels):
  *         offset = i * 4
  *         dst[offset] = <unsigned char>r             # <<<<<<<<<<<<<<
@@ -20261,7 +20933,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
     __pyx_t_4 = __pyx_v_offset;
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_4)) )) = ((unsigned char)__pyx_v_r);
 
-    /* "mc_world_mcp/_preview_accel.pyx":287
+    /* "mc_world_mcp/_preview_accel.pyx":341
  *         offset = i * 4
  *         dst[offset] = <unsigned char>r
  *         dst[offset + 1] = <unsigned char>g             # <<<<<<<<<<<<<<
@@ -20271,7 +20943,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
     __pyx_t_4 = (__pyx_v_offset + 1);
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_4)) )) = ((unsigned char)__pyx_v_g);
 
-    /* "mc_world_mcp/_preview_accel.pyx":288
+    /* "mc_world_mcp/_preview_accel.pyx":342
  *         dst[offset] = <unsigned char>r
  *         dst[offset + 1] = <unsigned char>g
  *         dst[offset + 2] = <unsigned char>b             # <<<<<<<<<<<<<<
@@ -20281,7 +20953,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
     __pyx_t_4 = (__pyx_v_offset + 2);
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_4)) )) = ((unsigned char)__pyx_v_b);
 
-    /* "mc_world_mcp/_preview_accel.pyx":289
+    /* "mc_world_mcp/_preview_accel.pyx":343
  *         dst[offset + 1] = <unsigned char>g
  *         dst[offset + 2] = <unsigned char>b
  *         dst[offset + 3] = <unsigned char>a             # <<<<<<<<<<<<<<
@@ -20292,7 +20964,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_4)) )) = ((unsigned char)__pyx_v_a);
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":281
+  /* "mc_world_mcp/_preview_accel.pyx":335
  * 
  * 
  * cdef void _fill_rgba(unsigned char[::1] dst, int pixels, int r, int g, int b, int a):             # <<<<<<<<<<<<<<
@@ -20303,7 +20975,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__Pyx_memviewslic
   /* function exit code */
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":292
+/* "mc_world_mcp/_preview_accel.pyx":346
  * 
  * 
  * cdef inline void _blend_pixel(             # <<<<<<<<<<<<<<
@@ -20319,7 +20991,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   Py_ssize_t __pyx_t_2;
   Py_ssize_t __pyx_t_3;
 
-  /* "mc_world_mcp/_preview_accel.pyx":303
+  /* "mc_world_mcp/_preview_accel.pyx":357
  *     cdef int inv
  *     cdef int out_a
  *     if sa <= 0:             # <<<<<<<<<<<<<<
@@ -20329,7 +21001,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_t_1 = (__pyx_v_sa <= 0);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":304
+    /* "mc_world_mcp/_preview_accel.pyx":358
  *     cdef int out_a
  *     if sa <= 0:
  *         return             # <<<<<<<<<<<<<<
@@ -20338,7 +21010,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
 */
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":303
+    /* "mc_world_mcp/_preview_accel.pyx":357
  *     cdef int inv
  *     cdef int out_a
  *     if sa <= 0:             # <<<<<<<<<<<<<<
@@ -20347,7 +21019,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":305
+  /* "mc_world_mcp/_preview_accel.pyx":359
  *     if sa <= 0:
  *         return
  *     if sa >= 255:             # <<<<<<<<<<<<<<
@@ -20357,7 +21029,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_t_1 = (__pyx_v_sa >= 0xFF);
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":306
+    /* "mc_world_mcp/_preview_accel.pyx":360
  *         return
  *     if sa >= 255:
  *         dst[offset] = <unsigned char>sr             # <<<<<<<<<<<<<<
@@ -20367,7 +21039,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
     __pyx_t_2 = __pyx_v_offset;
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) )) = ((unsigned char)__pyx_v_sr);
 
-    /* "mc_world_mcp/_preview_accel.pyx":307
+    /* "mc_world_mcp/_preview_accel.pyx":361
  *     if sa >= 255:
  *         dst[offset] = <unsigned char>sr
  *         dst[offset + 1] = <unsigned char>sg             # <<<<<<<<<<<<<<
@@ -20377,7 +21049,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
     __pyx_t_2 = (__pyx_v_offset + 1);
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) )) = ((unsigned char)__pyx_v_sg);
 
-    /* "mc_world_mcp/_preview_accel.pyx":308
+    /* "mc_world_mcp/_preview_accel.pyx":362
  *         dst[offset] = <unsigned char>sr
  *         dst[offset + 1] = <unsigned char>sg
  *         dst[offset + 2] = <unsigned char>sb             # <<<<<<<<<<<<<<
@@ -20387,7 +21059,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
     __pyx_t_2 = (__pyx_v_offset + 2);
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) )) = ((unsigned char)__pyx_v_sb);
 
-    /* "mc_world_mcp/_preview_accel.pyx":309
+    /* "mc_world_mcp/_preview_accel.pyx":363
  *         dst[offset + 1] = <unsigned char>sg
  *         dst[offset + 2] = <unsigned char>sb
  *         dst[offset + 3] = <unsigned char>255             # <<<<<<<<<<<<<<
@@ -20397,7 +21069,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
     __pyx_t_2 = (__pyx_v_offset + 3);
     *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) )) = ((unsigned char)0xFF);
 
-    /* "mc_world_mcp/_preview_accel.pyx":310
+    /* "mc_world_mcp/_preview_accel.pyx":364
  *         dst[offset + 2] = <unsigned char>sb
  *         dst[offset + 3] = <unsigned char>255
  *         return             # <<<<<<<<<<<<<<
@@ -20406,7 +21078,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
 */
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":305
+    /* "mc_world_mcp/_preview_accel.pyx":359
  *     if sa <= 0:
  *         return
  *     if sa >= 255:             # <<<<<<<<<<<<<<
@@ -20415,7 +21087,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":311
+  /* "mc_world_mcp/_preview_accel.pyx":365
  *         dst[offset + 3] = <unsigned char>255
  *         return
  *     da = dst[offset + 3]             # <<<<<<<<<<<<<<
@@ -20425,7 +21097,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_t_2 = (__pyx_v_offset + 3);
   __pyx_v_da = (*((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) )));
 
-  /* "mc_world_mcp/_preview_accel.pyx":312
+  /* "mc_world_mcp/_preview_accel.pyx":366
  *         return
  *     da = dst[offset + 3]
  *     inv = 255 - sa             # <<<<<<<<<<<<<<
@@ -20434,7 +21106,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
 */
   __pyx_v_inv = (0xFF - __pyx_v_sa);
 
-  /* "mc_world_mcp/_preview_accel.pyx":313
+  /* "mc_world_mcp/_preview_accel.pyx":367
  *     da = dst[offset + 3]
  *     inv = 255 - sa
  *     out_a = sa + (da * inv + 127) // 255             # <<<<<<<<<<<<<<
@@ -20443,7 +21115,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
 */
   __pyx_v_out_a = (__pyx_v_sa + __Pyx_div_long(((__pyx_v_da * __pyx_v_inv) + 0x7F), 0xFF, 1));
 
-  /* "mc_world_mcp/_preview_accel.pyx":314
+  /* "mc_world_mcp/_preview_accel.pyx":368
  *     inv = 255 - sa
  *     out_a = sa + (da * inv + 127) // 255
  *     dst[offset] = <unsigned char>((sr * sa + dst[offset] * inv + 127) // 255)             # <<<<<<<<<<<<<<
@@ -20454,7 +21126,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_t_3 = __pyx_v_offset;
   *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_3)) )) = ((unsigned char)__Pyx_div_long((((__pyx_v_sr * __pyx_v_sa) + ((*((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) ))) * __pyx_v_inv)) + 0x7F), 0xFF, 1));
 
-  /* "mc_world_mcp/_preview_accel.pyx":315
+  /* "mc_world_mcp/_preview_accel.pyx":369
  *     out_a = sa + (da * inv + 127) // 255
  *     dst[offset] = <unsigned char>((sr * sa + dst[offset] * inv + 127) // 255)
  *     dst[offset + 1] = <unsigned char>((sg * sa + dst[offset + 1] * inv + 127) // 255)             # <<<<<<<<<<<<<<
@@ -20465,7 +21137,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_t_3 = (__pyx_v_offset + 1);
   *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_3)) )) = ((unsigned char)__Pyx_div_long((((__pyx_v_sg * __pyx_v_sa) + ((*((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) ))) * __pyx_v_inv)) + 0x7F), 0xFF, 1));
 
-  /* "mc_world_mcp/_preview_accel.pyx":316
+  /* "mc_world_mcp/_preview_accel.pyx":370
  *     dst[offset] = <unsigned char>((sr * sa + dst[offset] * inv + 127) // 255)
  *     dst[offset + 1] = <unsigned char>((sg * sa + dst[offset + 1] * inv + 127) // 255)
  *     dst[offset + 2] = <unsigned char>((sb * sa + dst[offset + 2] * inv + 127) // 255)             # <<<<<<<<<<<<<<
@@ -20476,7 +21148,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_t_3 = (__pyx_v_offset + 2);
   *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_3)) )) = ((unsigned char)__Pyx_div_long((((__pyx_v_sb * __pyx_v_sa) + ((*((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) ))) * __pyx_v_inv)) + 0x7F), 0xFF, 1));
 
-  /* "mc_world_mcp/_preview_accel.pyx":317
+  /* "mc_world_mcp/_preview_accel.pyx":371
  *     dst[offset + 1] = <unsigned char>((sg * sa + dst[offset + 1] * inv + 127) // 255)
  *     dst[offset + 2] = <unsigned char>((sb * sa + dst[offset + 2] * inv + 127) // 255)
  *     dst[offset + 3] = <unsigned char>out_a             # <<<<<<<<<<<<<<
@@ -20486,7 +21158,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_t_2 = (__pyx_v_offset + 3);
   *((unsigned char *) ( /* dim=0 */ ((char *) (((unsigned char *) __pyx_v_dst.data) + __pyx_t_2)) )) = ((unsigned char)__pyx_v_out_a);
 
-  /* "mc_world_mcp/_preview_accel.pyx":292
+  /* "mc_world_mcp/_preview_accel.pyx":346
  * 
  * 
  * cdef inline void _blend_pixel(             # <<<<<<<<<<<<<<
@@ -20498,7 +21170,7 @@ static CYTHON_INLINE void __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(_
   __pyx_L0:;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":320
+/* "mc_world_mcp/_preview_accel.pyx":374
  * 
  * 
  * cdef void _draw_scaled_icon(             # <<<<<<<<<<<<<<
@@ -20531,7 +21203,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":343
+  /* "mc_world_mcp/_preview_accel.pyx":397
  *     cdef int sb
  *     cdef int sa
  *     for y in range(draw_h):             # <<<<<<<<<<<<<<
@@ -20543,7 +21215,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_y = __pyx_t_3;
 
-    /* "mc_world_mcp/_preview_accel.pyx":344
+    /* "mc_world_mcp/_preview_accel.pyx":398
  *     cdef int sa
  *     for y in range(draw_h):
  *         sy = (y * src_h) // draw_h             # <<<<<<<<<<<<<<
@@ -20553,15 +21225,15 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
     __pyx_t_4 = (__pyx_v_y * __pyx_v_src_h);
     if (unlikely(__pyx_v_draw_h == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 344, __pyx_L1_error)
+      __PYX_ERR(0, 398, __pyx_L1_error)
     }
     else if (sizeof(int) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_draw_h == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_t_4))) {
       PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-      __PYX_ERR(0, 344, __pyx_L1_error)
+      __PYX_ERR(0, 398, __pyx_L1_error)
     }
     __pyx_v_sy = __Pyx_div_int(__pyx_t_4, __pyx_v_draw_h, 0);
 
-    /* "mc_world_mcp/_preview_accel.pyx":345
+    /* "mc_world_mcp/_preview_accel.pyx":399
  *     for y in range(draw_h):
  *         sy = (y * src_h) // draw_h
  *         if flip_y:             # <<<<<<<<<<<<<<
@@ -20570,7 +21242,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
     if (__pyx_v_flip_y) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":346
+      /* "mc_world_mcp/_preview_accel.pyx":400
  *         sy = (y * src_h) // draw_h
  *         if flip_y:
  *             sy = src_h - sy - 1             # <<<<<<<<<<<<<<
@@ -20579,7 +21251,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       __pyx_v_sy = ((__pyx_v_src_h - __pyx_v_sy) - 1);
 
-      /* "mc_world_mcp/_preview_accel.pyx":345
+      /* "mc_world_mcp/_preview_accel.pyx":399
  *     for y in range(draw_h):
  *         sy = (y * src_h) // draw_h
  *         if flip_y:             # <<<<<<<<<<<<<<
@@ -20588,7 +21260,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":347
+    /* "mc_world_mcp/_preview_accel.pyx":401
  *         if flip_y:
  *             sy = src_h - sy - 1
  *         if off_y + y < 0 or off_y + y >= canvas:             # <<<<<<<<<<<<<<
@@ -20606,7 +21278,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
     __pyx_L7_bool_binop_done:;
     if (__pyx_t_5) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":348
+      /* "mc_world_mcp/_preview_accel.pyx":402
  *             sy = src_h - sy - 1
  *         if off_y + y < 0 or off_y + y >= canvas:
  *             continue             # <<<<<<<<<<<<<<
@@ -20615,7 +21287,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       goto __pyx_L3_continue;
 
-      /* "mc_world_mcp/_preview_accel.pyx":347
+      /* "mc_world_mcp/_preview_accel.pyx":401
  *         if flip_y:
  *             sy = src_h - sy - 1
  *         if off_y + y < 0 or off_y + y >= canvas:             # <<<<<<<<<<<<<<
@@ -20624,7 +21296,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":349
+    /* "mc_world_mcp/_preview_accel.pyx":403
  *         if off_y + y < 0 or off_y + y >= canvas:
  *             continue
  *         for x in range(draw_w):             # <<<<<<<<<<<<<<
@@ -20636,7 +21308,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_x = __pyx_t_8;
 
-      /* "mc_world_mcp/_preview_accel.pyx":350
+      /* "mc_world_mcp/_preview_accel.pyx":404
  *             continue
  *         for x in range(draw_w):
  *             if off_x + x < 0 or off_x + x >= canvas:             # <<<<<<<<<<<<<<
@@ -20654,7 +21326,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
       __pyx_L12_bool_binop_done:;
       if (__pyx_t_5) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":351
+        /* "mc_world_mcp/_preview_accel.pyx":405
  *         for x in range(draw_w):
  *             if off_x + x < 0 or off_x + x >= canvas:
  *                 continue             # <<<<<<<<<<<<<<
@@ -20663,7 +21335,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
         goto __pyx_L9_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":350
+        /* "mc_world_mcp/_preview_accel.pyx":404
  *             continue
  *         for x in range(draw_w):
  *             if off_x + x < 0 or off_x + x >= canvas:             # <<<<<<<<<<<<<<
@@ -20672,7 +21344,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":352
+      /* "mc_world_mcp/_preview_accel.pyx":406
  *             if off_x + x < 0 or off_x + x >= canvas:
  *                 continue
  *             sx = (x * src_w) // draw_w             # <<<<<<<<<<<<<<
@@ -20682,15 +21354,15 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
       __pyx_t_9 = (__pyx_v_x * __pyx_v_src_w);
       if (unlikely(__pyx_v_draw_w == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-        __PYX_ERR(0, 352, __pyx_L1_error)
+        __PYX_ERR(0, 406, __pyx_L1_error)
       }
       else if (sizeof(int) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_v_draw_w == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_t_9))) {
         PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-        __PYX_ERR(0, 352, __pyx_L1_error)
+        __PYX_ERR(0, 406, __pyx_L1_error)
       }
       __pyx_v_sx = __Pyx_div_int(__pyx_t_9, __pyx_v_draw_w, 0);
 
-      /* "mc_world_mcp/_preview_accel.pyx":353
+      /* "mc_world_mcp/_preview_accel.pyx":407
  *                 continue
  *             sx = (x * src_w) // draw_w
  *             if flip_x:             # <<<<<<<<<<<<<<
@@ -20699,7 +21371,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       if (__pyx_v_flip_x) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":354
+        /* "mc_world_mcp/_preview_accel.pyx":408
  *             sx = (x * src_w) // draw_w
  *             if flip_x:
  *                 sx = src_w - sx - 1             # <<<<<<<<<<<<<<
@@ -20708,7 +21380,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
         __pyx_v_sx = ((__pyx_v_src_w - __pyx_v_sx) - 1);
 
-        /* "mc_world_mcp/_preview_accel.pyx":353
+        /* "mc_world_mcp/_preview_accel.pyx":407
  *                 continue
  *             sx = (x * src_w) // draw_w
  *             if flip_x:             # <<<<<<<<<<<<<<
@@ -20717,7 +21389,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":355
+      /* "mc_world_mcp/_preview_accel.pyx":409
  *             if flip_x:
  *                 sx = src_w - sx - 1
  *             src_offset = (sy * src_w + sx) * 4             # <<<<<<<<<<<<<<
@@ -20726,7 +21398,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       __pyx_v_src_offset = (((__pyx_v_sy * __pyx_v_src_w) + __pyx_v_sx) * 4);
 
-      /* "mc_world_mcp/_preview_accel.pyx":356
+      /* "mc_world_mcp/_preview_accel.pyx":410
  *                 sx = src_w - sx - 1
  *             src_offset = (sy * src_w + sx) * 4
  *             sa = src[src_offset + 3]             # <<<<<<<<<<<<<<
@@ -20736,7 +21408,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
       __pyx_t_10 = (__pyx_v_src_offset + 3);
       __pyx_v_sa = (*((unsigned char const  *) ( /* dim=0 */ ((char *) (((unsigned char const  *) __pyx_v_src.data) + __pyx_t_10)) )));
 
-      /* "mc_world_mcp/_preview_accel.pyx":357
+      /* "mc_world_mcp/_preview_accel.pyx":411
  *             src_offset = (sy * src_w + sx) * 4
  *             sa = src[src_offset + 3]
  *             if sa == 0:             # <<<<<<<<<<<<<<
@@ -20746,7 +21418,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
       __pyx_t_5 = (__pyx_v_sa == 0);
       if (__pyx_t_5) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":358
+        /* "mc_world_mcp/_preview_accel.pyx":412
  *             sa = src[src_offset + 3]
  *             if sa == 0:
  *                 continue             # <<<<<<<<<<<<<<
@@ -20755,7 +21427,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
         goto __pyx_L9_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":357
+        /* "mc_world_mcp/_preview_accel.pyx":411
  *             src_offset = (sy * src_w + sx) * 4
  *             sa = src[src_offset + 3]
  *             if sa == 0:             # <<<<<<<<<<<<<<
@@ -20764,7 +21436,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":359
+      /* "mc_world_mcp/_preview_accel.pyx":413
  *             if sa == 0:
  *                 continue
  *             sr = src[src_offset]             # <<<<<<<<<<<<<<
@@ -20774,7 +21446,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
       __pyx_t_10 = __pyx_v_src_offset;
       __pyx_v_sr = (*((unsigned char const  *) ( /* dim=0 */ ((char *) (((unsigned char const  *) __pyx_v_src.data) + __pyx_t_10)) )));
 
-      /* "mc_world_mcp/_preview_accel.pyx":360
+      /* "mc_world_mcp/_preview_accel.pyx":414
  *                 continue
  *             sr = src[src_offset]
  *             sg = src[src_offset + 1]             # <<<<<<<<<<<<<<
@@ -20784,7 +21456,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
       __pyx_t_10 = (__pyx_v_src_offset + 1);
       __pyx_v_sg = (*((unsigned char const  *) ( /* dim=0 */ ((char *) (((unsigned char const  *) __pyx_v_src.data) + __pyx_t_10)) )));
 
-      /* "mc_world_mcp/_preview_accel.pyx":361
+      /* "mc_world_mcp/_preview_accel.pyx":415
  *             sr = src[src_offset]
  *             sg = src[src_offset + 1]
  *             sb = src[src_offset + 2]             # <<<<<<<<<<<<<<
@@ -20794,7 +21466,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
       __pyx_t_10 = (__pyx_v_src_offset + 2);
       __pyx_v_sb = (*((unsigned char const  *) ( /* dim=0 */ ((char *) (((unsigned char const  *) __pyx_v_src.data) + __pyx_t_10)) )));
 
-      /* "mc_world_mcp/_preview_accel.pyx":362
+      /* "mc_world_mcp/_preview_accel.pyx":416
  *             sg = src[src_offset + 1]
  *             sb = src[src_offset + 2]
  *             dst_offset = ((off_y + y) * canvas + (off_x + x)) * 4             # <<<<<<<<<<<<<<
@@ -20803,20 +21475,20 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
 */
       __pyx_v_dst_offset = ((((__pyx_v_off_y + __pyx_v_y) * __pyx_v_canvas) + (__pyx_v_off_x + __pyx_v_x)) * 4);
 
-      /* "mc_world_mcp/_preview_accel.pyx":363
+      /* "mc_world_mcp/_preview_accel.pyx":417
  *             sb = src[src_offset + 2]
  *             dst_offset = ((off_y + y) * canvas + (off_x + x)) * 4
  *             _blend_pixel(dst, dst_offset, sr, sg, sb, sa)             # <<<<<<<<<<<<<<
  * 
  * 
 */
-      __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(__pyx_v_dst, __pyx_v_dst_offset, __pyx_v_sr, __pyx_v_sg, __pyx_v_sb, __pyx_v_sa); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 363, __pyx_L1_error)
+      __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(__pyx_v_dst, __pyx_v_dst_offset, __pyx_v_sr, __pyx_v_sg, __pyx_v_sb, __pyx_v_sa); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 417, __pyx_L1_error)
       __pyx_L9_continue:;
     }
     __pyx_L3_continue:;
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":320
+  /* "mc_world_mcp/_preview_accel.pyx":374
  * 
  * 
  * cdef void _draw_scaled_icon(             # <<<<<<<<<<<<<<
@@ -20831,7 +21503,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__Pyx_memv
   __pyx_L0:;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":366
+/* "mc_world_mcp/_preview_accel.pyx":420
  * 
  * 
  * cdef void _draw_rotated_icon(             # <<<<<<<<<<<<<<
@@ -20871,7 +21543,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":380
+  /* "mc_world_mcp/_preview_accel.pyx":434
  *     bint shadow,
  * ):
  *     cdef double c = cos(radians)             # <<<<<<<<<<<<<<
@@ -20880,7 +21552,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
   __pyx_v_c = cos(__pyx_v_radians);
 
-  /* "mc_world_mcp/_preview_accel.pyx":381
+  /* "mc_world_mcp/_preview_accel.pyx":435
  * ):
  *     cdef double c = cos(radians)
  *     cdef double s = sin(radians)             # <<<<<<<<<<<<<<
@@ -20889,7 +21561,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
   __pyx_v_s = sin(__pyx_v_radians);
 
-  /* "mc_world_mcp/_preview_accel.pyx":382
+  /* "mc_world_mcp/_preview_accel.pyx":436
  *     cdef double c = cos(radians)
  *     cdef double s = sin(radians)
  *     cdef double center = canvas / 2.0             # <<<<<<<<<<<<<<
@@ -20898,7 +21570,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
   __pyx_v_center = (((double)__pyx_v_canvas) / 2.0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":398
+  /* "mc_world_mcp/_preview_accel.pyx":452
  *     cdef Py_ssize_t src_offset
  *     cdef Py_ssize_t dst_offset
  *     for y in range(canvas):             # <<<<<<<<<<<<<<
@@ -20910,7 +21582,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_y = __pyx_t_3;
 
-    /* "mc_world_mcp/_preview_accel.pyx":399
+    /* "mc_world_mcp/_preview_accel.pyx":453
  *     cdef Py_ssize_t dst_offset
  *     for y in range(canvas):
  *         dy = ((y - off_y) - center) / y_scale             # <<<<<<<<<<<<<<
@@ -20920,11 +21592,11 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
     __pyx_t_4 = ((__pyx_v_y - __pyx_v_off_y) - __pyx_v_center);
     if (unlikely(__pyx_v_y_scale == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-      __PYX_ERR(0, 399, __pyx_L1_error)
+      __PYX_ERR(0, 453, __pyx_L1_error)
     }
     __pyx_v_dy = (__pyx_t_4 / __pyx_v_y_scale);
 
-    /* "mc_world_mcp/_preview_accel.pyx":400
+    /* "mc_world_mcp/_preview_accel.pyx":454
  *     for y in range(canvas):
  *         dy = ((y - off_y) - center) / y_scale
  *         for x in range(canvas):             # <<<<<<<<<<<<<<
@@ -20936,7 +21608,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_x = __pyx_t_7;
 
-      /* "mc_world_mcp/_preview_accel.pyx":401
+      /* "mc_world_mcp/_preview_accel.pyx":455
  *         dy = ((y - off_y) - center) / y_scale
  *         for x in range(canvas):
  *             dx = (x - off_x) - center             # <<<<<<<<<<<<<<
@@ -20945,7 +21617,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       __pyx_v_dx = ((__pyx_v_x - __pyx_v_off_x) - __pyx_v_center);
 
-      /* "mc_world_mcp/_preview_accel.pyx":402
+      /* "mc_world_mcp/_preview_accel.pyx":456
  *         for x in range(canvas):
  *             dx = (x - off_x) - center
  *             bx = c * dx + s * dy + base_w / 2.0             # <<<<<<<<<<<<<<
@@ -20954,7 +21626,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       __pyx_v_bx = (((__pyx_v_c * __pyx_v_dx) + (__pyx_v_s * __pyx_v_dy)) + (((double)__pyx_v_base_w) / 2.0));
 
-      /* "mc_world_mcp/_preview_accel.pyx":403
+      /* "mc_world_mcp/_preview_accel.pyx":457
  *             dx = (x - off_x) - center
  *             bx = c * dx + s * dy + base_w / 2.0
  *             by = -s * dx + c * dy + base_h / 2.0             # <<<<<<<<<<<<<<
@@ -20963,7 +21635,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       __pyx_v_by = ((((-__pyx_v_s) * __pyx_v_dx) + (__pyx_v_c * __pyx_v_dy)) + (((double)__pyx_v_base_h) / 2.0));
 
-      /* "mc_world_mcp/_preview_accel.pyx":404
+      /* "mc_world_mcp/_preview_accel.pyx":458
  *             bx = c * dx + s * dy + base_w / 2.0
  *             by = -s * dx + c * dy + base_h / 2.0
  *             if bx < 0 or by < 0 or bx >= base_w or by >= base_h:             # <<<<<<<<<<<<<<
@@ -20993,7 +21665,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
       __pyx_L8_bool_binop_done:;
       if (__pyx_t_8) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":405
+        /* "mc_world_mcp/_preview_accel.pyx":459
  *             by = -s * dx + c * dy + base_h / 2.0
  *             if bx < 0 or by < 0 or bx >= base_w or by >= base_h:
  *                 continue             # <<<<<<<<<<<<<<
@@ -21002,7 +21674,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
         goto __pyx_L5_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":404
+        /* "mc_world_mcp/_preview_accel.pyx":458
  *             bx = c * dx + s * dy + base_w / 2.0
  *             by = -s * dx + c * dy + base_h / 2.0
  *             if bx < 0 or by < 0 or bx >= base_w or by >= base_h:             # <<<<<<<<<<<<<<
@@ -21011,7 +21683,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":406
+      /* "mc_world_mcp/_preview_accel.pyx":460
  *             if bx < 0 or by < 0 or bx >= base_w or by >= base_h:
  *                 continue
  *             sx = <int>(bx * src_w / base_w)             # <<<<<<<<<<<<<<
@@ -21021,11 +21693,11 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
       __pyx_t_4 = (__pyx_v_bx * __pyx_v_src_w);
       if (unlikely(__pyx_v_base_w == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 406, __pyx_L1_error)
+        __PYX_ERR(0, 460, __pyx_L1_error)
       }
       __pyx_v_sx = ((int)(__pyx_t_4 / ((double)__pyx_v_base_w)));
 
-      /* "mc_world_mcp/_preview_accel.pyx":407
+      /* "mc_world_mcp/_preview_accel.pyx":461
  *                 continue
  *             sx = <int>(bx * src_w / base_w)
  *             sy = <int>(by * src_h / base_h)             # <<<<<<<<<<<<<<
@@ -21035,11 +21707,11 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
       __pyx_t_4 = (__pyx_v_by * __pyx_v_src_h);
       if (unlikely(__pyx_v_base_h == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 407, __pyx_L1_error)
+        __PYX_ERR(0, 461, __pyx_L1_error)
       }
       __pyx_v_sy = ((int)(__pyx_t_4 / ((double)__pyx_v_base_h)));
 
-      /* "mc_world_mcp/_preview_accel.pyx":408
+      /* "mc_world_mcp/_preview_accel.pyx":462
  *             sx = <int>(bx * src_w / base_w)
  *             sy = <int>(by * src_h / base_h)
  *             if sx < 0 or sx >= src_w or sy < 0 or sy >= src_h:             # <<<<<<<<<<<<<<
@@ -21069,7 +21741,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
       __pyx_L13_bool_binop_done:;
       if (__pyx_t_8) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":409
+        /* "mc_world_mcp/_preview_accel.pyx":463
  *             sy = <int>(by * src_h / base_h)
  *             if sx < 0 or sx >= src_w or sy < 0 or sy >= src_h:
  *                 continue             # <<<<<<<<<<<<<<
@@ -21078,7 +21750,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
         goto __pyx_L5_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":408
+        /* "mc_world_mcp/_preview_accel.pyx":462
  *             sx = <int>(bx * src_w / base_w)
  *             sy = <int>(by * src_h / base_h)
  *             if sx < 0 or sx >= src_w or sy < 0 or sy >= src_h:             # <<<<<<<<<<<<<<
@@ -21087,7 +21759,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":410
+      /* "mc_world_mcp/_preview_accel.pyx":464
  *             if sx < 0 or sx >= src_w or sy < 0 or sy >= src_h:
  *                 continue
  *             src_offset = (sy * src_w + sx) * 4             # <<<<<<<<<<<<<<
@@ -21096,7 +21768,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       __pyx_v_src_offset = (((__pyx_v_sy * __pyx_v_src_w) + __pyx_v_sx) * 4);
 
-      /* "mc_world_mcp/_preview_accel.pyx":411
+      /* "mc_world_mcp/_preview_accel.pyx":465
  *                 continue
  *             src_offset = (sy * src_w + sx) * 4
  *             sa = src[src_offset + 3]             # <<<<<<<<<<<<<<
@@ -21106,7 +21778,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
       __pyx_t_10 = (__pyx_v_src_offset + 3);
       __pyx_v_sa = (*((unsigned char const  *) ( /* dim=0 */ ((char *) (((unsigned char const  *) __pyx_v_src.data) + __pyx_t_10)) )));
 
-      /* "mc_world_mcp/_preview_accel.pyx":412
+      /* "mc_world_mcp/_preview_accel.pyx":466
  *             src_offset = (sy * src_w + sx) * 4
  *             sa = src[src_offset + 3]
  *             if sa == 0:             # <<<<<<<<<<<<<<
@@ -21116,7 +21788,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
       __pyx_t_8 = (__pyx_v_sa == 0);
       if (__pyx_t_8) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":413
+        /* "mc_world_mcp/_preview_accel.pyx":467
  *             sa = src[src_offset + 3]
  *             if sa == 0:
  *                 continue             # <<<<<<<<<<<<<<
@@ -21125,7 +21797,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
         goto __pyx_L5_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":412
+        /* "mc_world_mcp/_preview_accel.pyx":466
  *             src_offset = (sy * src_w + sx) * 4
  *             sa = src[src_offset + 3]
  *             if sa == 0:             # <<<<<<<<<<<<<<
@@ -21134,7 +21806,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":414
+      /* "mc_world_mcp/_preview_accel.pyx":468
  *             if sa == 0:
  *                 continue
  *             if shadow:             # <<<<<<<<<<<<<<
@@ -21143,7 +21815,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       if (__pyx_v_shadow) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":415
+        /* "mc_world_mcp/_preview_accel.pyx":469
  *                 continue
  *             if shadow:
  *                 sr = 28             # <<<<<<<<<<<<<<
@@ -21152,7 +21824,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
         __pyx_v_sr = 28;
 
-        /* "mc_world_mcp/_preview_accel.pyx":416
+        /* "mc_world_mcp/_preview_accel.pyx":470
  *             if shadow:
  *                 sr = 28
  *                 sg = 26             # <<<<<<<<<<<<<<
@@ -21161,7 +21833,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
         __pyx_v_sg = 26;
 
-        /* "mc_world_mcp/_preview_accel.pyx":417
+        /* "mc_world_mcp/_preview_accel.pyx":471
  *                 sr = 28
  *                 sg = 26
  *                 sb = 36             # <<<<<<<<<<<<<<
@@ -21170,7 +21842,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
         __pyx_v_sb = 36;
 
-        /* "mc_world_mcp/_preview_accel.pyx":418
+        /* "mc_world_mcp/_preview_accel.pyx":472
  *                 sg = 26
  *                 sb = 36
  *                 sa = (sa * 95) // 255             # <<<<<<<<<<<<<<
@@ -21179,7 +21851,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
         __pyx_v_sa = __Pyx_div_long((__pyx_v_sa * 95), 0xFF, 1);
 
-        /* "mc_world_mcp/_preview_accel.pyx":414
+        /* "mc_world_mcp/_preview_accel.pyx":468
  *             if sa == 0:
  *                 continue
  *             if shadow:             # <<<<<<<<<<<<<<
@@ -21189,7 +21861,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
         goto __pyx_L18;
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":420
+      /* "mc_world_mcp/_preview_accel.pyx":474
  *                 sa = (sa * 95) // 255
  *             else:
  *                 sr = src[src_offset]             # <<<<<<<<<<<<<<
@@ -21200,7 +21872,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
         __pyx_t_10 = __pyx_v_src_offset;
         __pyx_v_sr = (*((unsigned char const  *) ( /* dim=0 */ ((char *) (((unsigned char const  *) __pyx_v_src.data) + __pyx_t_10)) )));
 
-        /* "mc_world_mcp/_preview_accel.pyx":421
+        /* "mc_world_mcp/_preview_accel.pyx":475
  *             else:
  *                 sr = src[src_offset]
  *                 sg = src[src_offset + 1]             # <<<<<<<<<<<<<<
@@ -21210,7 +21882,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
         __pyx_t_10 = (__pyx_v_src_offset + 1);
         __pyx_v_sg = (*((unsigned char const  *) ( /* dim=0 */ ((char *) (((unsigned char const  *) __pyx_v_src.data) + __pyx_t_10)) )));
 
-        /* "mc_world_mcp/_preview_accel.pyx":422
+        /* "mc_world_mcp/_preview_accel.pyx":476
  *                 sr = src[src_offset]
  *                 sg = src[src_offset + 1]
  *                 sb = src[src_offset + 2]             # <<<<<<<<<<<<<<
@@ -21222,7 +21894,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
       }
       __pyx_L18:;
 
-      /* "mc_world_mcp/_preview_accel.pyx":423
+      /* "mc_world_mcp/_preview_accel.pyx":477
  *                 sg = src[src_offset + 1]
  *                 sb = src[src_offset + 2]
  *             dst_offset = (y * canvas + x) * 4             # <<<<<<<<<<<<<<
@@ -21231,19 +21903,19 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
 */
       __pyx_v_dst_offset = (((__pyx_v_y * __pyx_v_canvas) + __pyx_v_x) * 4);
 
-      /* "mc_world_mcp/_preview_accel.pyx":424
+      /* "mc_world_mcp/_preview_accel.pyx":478
  *                 sb = src[src_offset + 2]
  *             dst_offset = (y * canvas + x) * 4
  *             _blend_pixel(dst, dst_offset, sr, sg, sb, sa)             # <<<<<<<<<<<<<<
  * 
  * 
 */
-      __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(__pyx_v_dst, __pyx_v_dst_offset, __pyx_v_sr, __pyx_v_sg, __pyx_v_sb, __pyx_v_sa); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 424, __pyx_L1_error)
+      __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(__pyx_v_dst, __pyx_v_dst_offset, __pyx_v_sr, __pyx_v_sg, __pyx_v_sb, __pyx_v_sa); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 478, __pyx_L1_error)
       __pyx_L5_continue:;
     }
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":366
+  /* "mc_world_mcp/_preview_accel.pyx":420
  * 
  * 
  * cdef void _draw_rotated_icon(             # <<<<<<<<<<<<<<
@@ -21258,7 +21930,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
   __pyx_L0:;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":427
+/* "mc_world_mcp/_preview_accel.pyx":481
  * 
  * 
  * cpdef bytes render_item_view_rgba(bytes source, int src_w, int src_h, int view_code, int size, tuple background):             # <<<<<<<<<<<<<<
@@ -21266,7 +21938,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__Pyx_mem
  *     cdef bytearray out = bytearray(size * size * 4)
 */
 
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_13render_item_view_rgba(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_15render_item_view_rgba(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -21306,19 +21978,19 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("render_item_view_rgba", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":428
+  /* "mc_world_mcp/_preview_accel.pyx":482
  * 
  * cpdef bytes render_item_view_rgba(bytes source, int src_w, int src_h, int view_code, int size, tuple background):
  *     cdef const unsigned char[::1] src = source             # <<<<<<<<<<<<<<
  *     cdef bytearray out = bytearray(size * size * 4)
  *     cdef unsigned char[::1] dst = out
 */
-  __pyx_t_1 = __Pyx_PyObject_to_MemoryviewSlice_dc_unsigned_char__const__(__pyx_v_source, 0); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 428, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_to_MemoryviewSlice_dc_unsigned_char__const__(__pyx_v_source, 0); if (unlikely(!__pyx_t_1.memview)) __PYX_ERR(0, 482, __pyx_L1_error)
   __pyx_v_src = __pyx_t_1;
   __pyx_t_1.memview = NULL;
   __pyx_t_1.data = NULL;
 
-  /* "mc_world_mcp/_preview_accel.pyx":429
+  /* "mc_world_mcp/_preview_accel.pyx":483
  * cpdef bytes render_item_view_rgba(bytes source, int src_w, int src_h, int view_code, int size, tuple background):
  *     cdef const unsigned char[::1] src = source
  *     cdef bytearray out = bytearray(size * size * 4)             # <<<<<<<<<<<<<<
@@ -21326,7 +21998,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
  *     cdef int bg_r = <int>background[0]
 */
   __pyx_t_3 = NULL;
-  __pyx_t_4 = __Pyx_PyLong_From_long(((__pyx_v_size * __pyx_v_size) * 4)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 429, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyLong_From_long(((__pyx_v_size * __pyx_v_size) * 4)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 483, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_5 = 1;
   {
@@ -21334,25 +22006,25 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)(&PyByteArray_Type), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 429, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 483, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   }
   __pyx_v_out = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":430
+  /* "mc_world_mcp/_preview_accel.pyx":484
  *     cdef const unsigned char[::1] src = source
  *     cdef bytearray out = bytearray(size * size * 4)
  *     cdef unsigned char[::1] dst = out             # <<<<<<<<<<<<<<
  *     cdef int bg_r = <int>background[0]
  *     cdef int bg_g = <int>background[1]
 */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_unsigned_char(__pyx_v_out, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 430, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_unsigned_char(__pyx_v_out, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 484, __pyx_L1_error)
   __pyx_v_dst = __pyx_t_6;
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "mc_world_mcp/_preview_accel.pyx":431
+  /* "mc_world_mcp/_preview_accel.pyx":485
  *     cdef bytearray out = bytearray(size * size * 4)
  *     cdef unsigned char[::1] dst = out
  *     cdef int bg_r = <int>background[0]             # <<<<<<<<<<<<<<
@@ -21361,12 +22033,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 431, __pyx_L1_error)
+    __PYX_ERR(0, 485, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 0)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 431, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 0)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 485, __pyx_L1_error)
   __pyx_v_bg_r = ((int)__pyx_t_7);
 
-  /* "mc_world_mcp/_preview_accel.pyx":432
+  /* "mc_world_mcp/_preview_accel.pyx":486
  *     cdef unsigned char[::1] dst = out
  *     cdef int bg_r = <int>background[0]
  *     cdef int bg_g = <int>background[1]             # <<<<<<<<<<<<<<
@@ -21375,12 +22047,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 432, __pyx_L1_error)
+    __PYX_ERR(0, 486, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 1)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 432, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 1)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 486, __pyx_L1_error)
   __pyx_v_bg_g = ((int)__pyx_t_7);
 
-  /* "mc_world_mcp/_preview_accel.pyx":433
+  /* "mc_world_mcp/_preview_accel.pyx":487
  *     cdef int bg_r = <int>background[0]
  *     cdef int bg_g = <int>background[1]
  *     cdef int bg_b = <int>background[2]             # <<<<<<<<<<<<<<
@@ -21389,12 +22061,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 433, __pyx_L1_error)
+    __PYX_ERR(0, 487, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 2)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 433, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 2)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 487, __pyx_L1_error)
   __pyx_v_bg_b = ((int)__pyx_t_7);
 
-  /* "mc_world_mcp/_preview_accel.pyx":434
+  /* "mc_world_mcp/_preview_accel.pyx":488
  *     cdef int bg_g = <int>background[1]
  *     cdef int bg_b = <int>background[2]
  *     cdef int bg_a = <int>background[3]             # <<<<<<<<<<<<<<
@@ -21403,12 +22075,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 434, __pyx_L1_error)
+    __PYX_ERR(0, 488, __pyx_L1_error)
   }
-  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 3)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 434, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 3)); if (unlikely((__pyx_t_7 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 488, __pyx_L1_error)
   __pyx_v_bg_a = ((int)__pyx_t_7);
 
-  /* "mc_world_mcp/_preview_accel.pyx":444
+  /* "mc_world_mcp/_preview_accel.pyx":498
  *     cdef double y_scale
  * 
  *     if src_w <= 0 or src_h <= 0 or size <= 0:             # <<<<<<<<<<<<<<
@@ -21432,7 +22104,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_8) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":445
+    /* "mc_world_mcp/_preview_accel.pyx":499
  * 
  *     if src_w <= 0 or src_h <= 0 or size <= 0:
  *         return bytes(out)             # <<<<<<<<<<<<<<
@@ -21446,14 +22118,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
       PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_out};
       __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 445, __pyx_L1_error)
+      if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 499, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
     }
     __pyx_r = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":444
+    /* "mc_world_mcp/_preview_accel.pyx":498
  *     cdef double y_scale
  * 
  *     if src_w <= 0 or src_h <= 0 or size <= 0:             # <<<<<<<<<<<<<<
@@ -21462,16 +22134,16 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":447
+  /* "mc_world_mcp/_preview_accel.pyx":501
  *         return bytes(out)
  * 
  *     _fill_rgba(dst, size * size, bg_r, bg_g, bg_b, bg_a)             # <<<<<<<<<<<<<<
  * 
  *     if view_code == 0 or view_code == 1:
 */
-  __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__pyx_v_dst, (__pyx_v_size * __pyx_v_size), __pyx_v_bg_r, __pyx_v_bg_g, __pyx_v_bg_b, __pyx_v_bg_a); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 447, __pyx_L1_error)
+  __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__pyx_v_dst, (__pyx_v_size * __pyx_v_size), __pyx_v_bg_r, __pyx_v_bg_g, __pyx_v_bg_b, __pyx_v_bg_a); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 501, __pyx_L1_error)
 
-  /* "mc_world_mcp/_preview_accel.pyx":449
+  /* "mc_world_mcp/_preview_accel.pyx":503
  *     _fill_rgba(dst, size * size, bg_r, bg_g, bg_b, bg_a)
  * 
  *     if view_code == 0 or view_code == 1:             # <<<<<<<<<<<<<<
@@ -21482,27 +22154,27 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     case 0:
     case 1:
 
-    /* "mc_world_mcp/_preview_accel.pyx":450
+    /* "mc_world_mcp/_preview_accel.pyx":504
  * 
  *     if view_code == 0 or view_code == 1:
  *         draw_w = _scaled_length(src_w, src_h, size * 78 // 100, size * 78 // 100, True)             # <<<<<<<<<<<<<<
  *         draw_h = _scaled_length(src_w, src_h, size * 78 // 100, size * 78 // 100, False)
  *         off_x = (size - draw_w) // 2
 */
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), 1); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 450, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), 1); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 504, __pyx_L1_error)
     __pyx_v_draw_w = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":451
+    /* "mc_world_mcp/_preview_accel.pyx":505
  *     if view_code == 0 or view_code == 1:
  *         draw_w = _scaled_length(src_w, src_h, size * 78 // 100, size * 78 // 100, True)
  *         draw_h = _scaled_length(src_w, src_h, size * 78 // 100, size * 78 // 100, False)             # <<<<<<<<<<<<<<
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2
 */
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 451, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), __Pyx_div_long((__pyx_v_size * 78), 0x64, 1), 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 505, __pyx_L1_error)
     __pyx_v_draw_h = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":452
+    /* "mc_world_mcp/_preview_accel.pyx":506
  *         draw_w = _scaled_length(src_w, src_h, size * 78 // 100, size * 78 // 100, True)
  *         draw_h = _scaled_length(src_w, src_h, size * 78 // 100, size * 78 // 100, False)
  *         off_x = (size - draw_w) // 2             # <<<<<<<<<<<<<<
@@ -21511,7 +22183,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     __pyx_v_off_x = __Pyx_div_long((__pyx_v_size - __pyx_v_draw_w), 2, 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":453
+    /* "mc_world_mcp/_preview_accel.pyx":507
  *         draw_h = _scaled_length(src_w, src_h, size * 78 // 100, size * 78 // 100, False)
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2             # <<<<<<<<<<<<<<
@@ -21520,16 +22192,16 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     __pyx_v_off_y = __Pyx_div_long((__pyx_v_size - __pyx_v_draw_h), 2, 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":454
+    /* "mc_world_mcp/_preview_accel.pyx":508
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, view_code == 1, False)             # <<<<<<<<<<<<<<
  *     elif view_code == 2 or view_code == 3:
  *         draw_w = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, True)
 */
-    __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_off_x, __pyx_v_off_y, (__pyx_v_view_code == 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 454, __pyx_L1_error)
+    __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_off_x, __pyx_v_off_y, (__pyx_v_view_code == 1), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 508, __pyx_L1_error)
 
-    /* "mc_world_mcp/_preview_accel.pyx":449
+    /* "mc_world_mcp/_preview_accel.pyx":503
  *     _fill_rgba(dst, size * size, bg_r, bg_g, bg_b, bg_a)
  * 
  *     if view_code == 0 or view_code == 1:             # <<<<<<<<<<<<<<
@@ -21539,7 +22211,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     break;
     case 2:
 
-    /* "mc_world_mcp/_preview_accel.pyx":455
+    /* "mc_world_mcp/_preview_accel.pyx":509
  *         off_y = (size - draw_h) // 2
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, view_code == 1, False)
  *     elif view_code == 2 or view_code == 3:             # <<<<<<<<<<<<<<
@@ -21548,29 +22220,29 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     case 3:
 
-    /* "mc_world_mcp/_preview_accel.pyx":456
+    /* "mc_world_mcp/_preview_accel.pyx":510
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, view_code == 1, False)
  *     elif view_code == 2 or view_code == 3:
  *         draw_w = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, True)             # <<<<<<<<<<<<<<
  *         draw_h = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, False)
  *         off_x = (size - draw_w) // 2
 */
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 456, __pyx_L1_error)
-    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __pyx_t_7, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), 1); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 456, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 510, __pyx_L1_error)
+    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __pyx_t_7, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), 1); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 510, __pyx_L1_error)
     __pyx_v_draw_w = __pyx_t_10;
 
-    /* "mc_world_mcp/_preview_accel.pyx":457
+    /* "mc_world_mcp/_preview_accel.pyx":511
  *     elif view_code == 2 or view_code == 3:
  *         draw_w = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, True)
  *         draw_h = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, False)             # <<<<<<<<<<<<<<
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2
 */
-    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 457, __pyx_L1_error)
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __pyx_t_10, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 457, __pyx_L1_error)
+    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 511, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __pyx_t_10, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 511, __pyx_L1_error)
     __pyx_v_draw_h = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":458
+    /* "mc_world_mcp/_preview_accel.pyx":512
  *         draw_w = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, True)
  *         draw_h = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, False)
  *         off_x = (size - draw_w) // 2             # <<<<<<<<<<<<<<
@@ -21579,7 +22251,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     __pyx_v_off_x = __Pyx_div_long((__pyx_v_size - __pyx_v_draw_w), 2, 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":459
+    /* "mc_world_mcp/_preview_accel.pyx":513
  *         draw_h = _scaled_length(src_w, src_h, _max_int(2, size // 8), size * 72 // 100, False)
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2             # <<<<<<<<<<<<<<
@@ -21588,16 +22260,16 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     __pyx_v_off_y = __Pyx_div_long((__pyx_v_size - __pyx_v_draw_h), 2, 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":460
+    /* "mc_world_mcp/_preview_accel.pyx":514
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, False, view_code == 2)             # <<<<<<<<<<<<<<
  *     elif view_code == 4 or view_code == 5:
  *         draw_w = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), True)
 */
-    __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_off_x, __pyx_v_off_y, 0, (__pyx_v_view_code == 2)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 460, __pyx_L1_error)
+    __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_off_x, __pyx_v_off_y, 0, (__pyx_v_view_code == 2)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 514, __pyx_L1_error)
 
-    /* "mc_world_mcp/_preview_accel.pyx":455
+    /* "mc_world_mcp/_preview_accel.pyx":509
  *         off_y = (size - draw_h) // 2
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, view_code == 1, False)
  *     elif view_code == 2 or view_code == 3:             # <<<<<<<<<<<<<<
@@ -21607,7 +22279,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     break;
     case 4:
 
-    /* "mc_world_mcp/_preview_accel.pyx":461
+    /* "mc_world_mcp/_preview_accel.pyx":515
  *         off_y = (size - draw_h) // 2
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, False, view_code == 2)
  *     elif view_code == 4 or view_code == 5:             # <<<<<<<<<<<<<<
@@ -21616,29 +22288,29 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     case 5:
 
-    /* "mc_world_mcp/_preview_accel.pyx":462
+    /* "mc_world_mcp/_preview_accel.pyx":516
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, False, view_code == 2)
  *     elif view_code == 4 or view_code == 5:
  *         draw_w = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), True)             # <<<<<<<<<<<<<<
  *         draw_h = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), False)
  *         off_x = (size - draw_w) // 2
 */
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 462, __pyx_L1_error)
-    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), __pyx_t_7, 1); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 462, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 516, __pyx_L1_error)
+    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), __pyx_t_7, 1); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 516, __pyx_L1_error)
     __pyx_v_draw_w = __pyx_t_10;
 
-    /* "mc_world_mcp/_preview_accel.pyx":463
+    /* "mc_world_mcp/_preview_accel.pyx":517
  *     elif view_code == 4 or view_code == 5:
  *         draw_w = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), True)
  *         draw_h = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), False)             # <<<<<<<<<<<<<<
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2
 */
-    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 463, __pyx_L1_error)
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), __pyx_t_10, 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 463, __pyx_L1_error)
+    __pyx_t_10 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 8, 1)); if (unlikely(__pyx_t_10 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 517, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 72), 0x64, 1), __pyx_t_10, 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 517, __pyx_L1_error)
     __pyx_v_draw_h = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":464
+    /* "mc_world_mcp/_preview_accel.pyx":518
  *         draw_w = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), True)
  *         draw_h = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), False)
  *         off_x = (size - draw_w) // 2             # <<<<<<<<<<<<<<
@@ -21647,7 +22319,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     __pyx_v_off_x = __Pyx_div_long((__pyx_v_size - __pyx_v_draw_w), 2, 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":465
+    /* "mc_world_mcp/_preview_accel.pyx":519
  *         draw_h = _scaled_length(src_w, src_h, size * 72 // 100, _max_int(2, size // 8), False)
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2             # <<<<<<<<<<<<<<
@@ -21656,16 +22328,16 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
     __pyx_v_off_y = __Pyx_div_long((__pyx_v_size - __pyx_v_draw_h), 2, 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":466
+    /* "mc_world_mcp/_preview_accel.pyx":520
  *         off_x = (size - draw_w) // 2
  *         off_y = (size - draw_h) // 2
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, view_code == 5, False)             # <<<<<<<<<<<<<<
  *     else:
  *         draw_w = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, True)
 */
-    __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_off_x, __pyx_v_off_y, (__pyx_v_view_code == 5), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 466, __pyx_L1_error)
+    __pyx_f_12mc_world_mcp_14_preview_accel__draw_scaled_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_off_x, __pyx_v_off_y, (__pyx_v_view_code == 5), 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 520, __pyx_L1_error)
 
-    /* "mc_world_mcp/_preview_accel.pyx":461
+    /* "mc_world_mcp/_preview_accel.pyx":515
  *         off_y = (size - draw_h) // 2
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, False, view_code == 2)
  *     elif view_code == 4 or view_code == 5:             # <<<<<<<<<<<<<<
@@ -21675,27 +22347,27 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     break;
     default:
 
-    /* "mc_world_mcp/_preview_accel.pyx":468
+    /* "mc_world_mcp/_preview_accel.pyx":522
  *         _draw_scaled_icon(src, dst, src_w, src_h, size, draw_w, draw_h, off_x, off_y, view_code == 5, False)
  *     else:
  *         draw_w = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, True)             # <<<<<<<<<<<<<<
  *         draw_h = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, False)
  *         if view_code == 6:
 */
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), 1); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 468, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), 1); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 522, __pyx_L1_error)
     __pyx_v_draw_w = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":469
+    /* "mc_world_mcp/_preview_accel.pyx":523
  *     else:
  *         draw_w = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, True)
  *         draw_h = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, False)             # <<<<<<<<<<<<<<
  *         if view_code == 6:
  *             radians = 0.7853981633974483
 */
-    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 469, __pyx_L1_error)
+    __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__scaled_length(__pyx_v_src_w, __pyx_v_src_h, __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), __Pyx_div_long((__pyx_v_size * 62), 0x64, 1), 0); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L1_error)
     __pyx_v_draw_h = __pyx_t_7;
 
-    /* "mc_world_mcp/_preview_accel.pyx":470
+    /* "mc_world_mcp/_preview_accel.pyx":524
  *         draw_w = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, True)
  *         draw_h = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, False)
  *         if view_code == 6:             # <<<<<<<<<<<<<<
@@ -21705,7 +22377,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     __pyx_t_8 = (__pyx_v_view_code == 6);
     if (__pyx_t_8) {
 
-      /* "mc_world_mcp/_preview_accel.pyx":471
+      /* "mc_world_mcp/_preview_accel.pyx":525
  *         draw_h = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, False)
  *         if view_code == 6:
  *             radians = 0.7853981633974483             # <<<<<<<<<<<<<<
@@ -21714,7 +22386,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
       __pyx_v_radians = 0.7853981633974483;
 
-      /* "mc_world_mcp/_preview_accel.pyx":472
+      /* "mc_world_mcp/_preview_accel.pyx":526
  *         if view_code == 6:
  *             radians = 0.7853981633974483
  *             y_scale = 0.58             # <<<<<<<<<<<<<<
@@ -21723,17 +22395,17 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
       __pyx_v_y_scale = 0.58;
 
-      /* "mc_world_mcp/_preview_accel.pyx":473
+      /* "mc_world_mcp/_preview_accel.pyx":527
  *             radians = 0.7853981633974483
  *             y_scale = 0.58
  *             depth = _max_int(2, size // 18)             # <<<<<<<<<<<<<<
  *         else:
  *             radians = -0.4886921905584123
 */
-      __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 18, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 473, __pyx_L1_error)
+      __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __Pyx_div_long(__pyx_v_size, 18, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 527, __pyx_L1_error)
       __pyx_v_depth = __pyx_t_7;
 
-      /* "mc_world_mcp/_preview_accel.pyx":470
+      /* "mc_world_mcp/_preview_accel.pyx":524
  *         draw_w = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, True)
  *         draw_h = _scaled_length(src_w, src_h, size * 62 // 100, size * 62 // 100, False)
  *         if view_code == 6:             # <<<<<<<<<<<<<<
@@ -21743,7 +22415,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
       goto __pyx_L7;
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":475
+    /* "mc_world_mcp/_preview_accel.pyx":529
  *             depth = _max_int(2, size // 18)
  *         else:
  *             radians = -0.4886921905584123             # <<<<<<<<<<<<<<
@@ -21753,7 +22425,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     /*else*/ {
       __pyx_v_radians = -0.4886921905584123;
 
-      /* "mc_world_mcp/_preview_accel.pyx":476
+      /* "mc_world_mcp/_preview_accel.pyx":530
  *         else:
  *             radians = -0.4886921905584123
  *             y_scale = 0.78             # <<<<<<<<<<<<<<
@@ -21762,19 +22434,19 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 */
       __pyx_v_y_scale = 0.78;
 
-      /* "mc_world_mcp/_preview_accel.pyx":477
+      /* "mc_world_mcp/_preview_accel.pyx":531
  *             radians = -0.4886921905584123
  *             y_scale = 0.78
  *             depth = _max_int(3, size // 12)             # <<<<<<<<<<<<<<
  *         for offset in range(depth, 0, -1):
  *             _draw_rotated_icon(src, dst, src_w, src_h, size, draw_w, draw_h, radians, y_scale, offset, offset, True)
 */
-      __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(3, __Pyx_div_long(__pyx_v_size, 12, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 477, __pyx_L1_error)
+      __pyx_t_7 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(3, __Pyx_div_long(__pyx_v_size, 12, 1)); if (unlikely(__pyx_t_7 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 531, __pyx_L1_error)
       __pyx_v_depth = __pyx_t_7;
     }
     __pyx_L7:;
 
-    /* "mc_world_mcp/_preview_accel.pyx":478
+    /* "mc_world_mcp/_preview_accel.pyx":532
  *             y_scale = 0.78
  *             depth = _max_int(3, size // 12)
  *         for offset in range(depth, 0, -1):             # <<<<<<<<<<<<<<
@@ -21784,28 +22456,28 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     for (__pyx_t_7 = __pyx_v_depth; __pyx_t_7 > 0; __pyx_t_7-=1) {
       __pyx_v_offset = __pyx_t_7;
 
-      /* "mc_world_mcp/_preview_accel.pyx":479
+      /* "mc_world_mcp/_preview_accel.pyx":533
  *             depth = _max_int(3, size // 12)
  *         for offset in range(depth, 0, -1):
  *             _draw_rotated_icon(src, dst, src_w, src_h, size, draw_w, draw_h, radians, y_scale, offset, offset, True)             # <<<<<<<<<<<<<<
  *         _draw_rotated_icon(src, dst, src_w, src_h, size, draw_w, draw_h, radians, y_scale, 0, 0, False)
  *     return bytes(out)
 */
-      __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_radians, __pyx_v_y_scale, __pyx_v_offset, __pyx_v_offset, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 479, __pyx_L1_error)
+      __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_radians, __pyx_v_y_scale, __pyx_v_offset, __pyx_v_offset, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 533, __pyx_L1_error)
     }
 
-    /* "mc_world_mcp/_preview_accel.pyx":480
+    /* "mc_world_mcp/_preview_accel.pyx":534
  *         for offset in range(depth, 0, -1):
  *             _draw_rotated_icon(src, dst, src_w, src_h, size, draw_w, draw_h, radians, y_scale, offset, offset, True)
  *         _draw_rotated_icon(src, dst, src_w, src_h, size, draw_w, draw_h, radians, y_scale, 0, 0, False)             # <<<<<<<<<<<<<<
  *     return bytes(out)
  * 
 */
-    __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_radians, __pyx_v_y_scale, 0, 0, 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 480, __pyx_L1_error)
+    __pyx_f_12mc_world_mcp_14_preview_accel__draw_rotated_icon(__pyx_v_src, __pyx_v_dst, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_size, __pyx_v_draw_w, __pyx_v_draw_h, __pyx_v_radians, __pyx_v_y_scale, 0, 0, 0); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 534, __pyx_L1_error)
     break;
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":481
+  /* "mc_world_mcp/_preview_accel.pyx":535
  *             _draw_rotated_icon(src, dst, src_w, src_h, size, draw_w, draw_h, radians, y_scale, offset, offset, True)
  *         _draw_rotated_icon(src, dst, src_w, src_h, size, draw_w, draw_h, radians, y_scale, 0, 0, False)
  *     return bytes(out)             # <<<<<<<<<<<<<<
@@ -21819,14 +22491,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
     PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_out};
     __pyx_t_2 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_5, (2-__pyx_t_5) | (__pyx_t_5*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 481, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 535, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
   }
   __pyx_r = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":427
+  /* "mc_world_mcp/_preview_accel.pyx":481
  * 
  * 
  * cpdef bytes render_item_view_rgba(bytes source, int src_w, int src_h, int view_code, int size, tuple background):             # <<<<<<<<<<<<<<
@@ -21853,15 +22525,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(P
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_13render_item_view_rgba(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_15render_item_view_rgba(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_12mc_world_mcp_14_preview_accel_13render_item_view_rgba = {"render_item_view_rgba", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12mc_world_mcp_14_preview_accel_13render_item_view_rgba, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_13render_item_view_rgba(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_12mc_world_mcp_14_preview_accel_15render_item_view_rgba = {"render_item_view_rgba", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12mc_world_mcp_14_preview_accel_15render_item_view_rgba, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_15render_item_view_rgba(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -21896,67 +22568,67 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   {
     PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_source,&__pyx_mstate_global->__pyx_n_u_src_w,&__pyx_mstate_global->__pyx_n_u_src_h,&__pyx_mstate_global->__pyx_n_u_view_code,&__pyx_mstate_global->__pyx_n_u_size,&__pyx_mstate_global->__pyx_n_u_background,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 427, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 481, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
         case  6:
         values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 427, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 481, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  5:
         values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 427, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 481, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 427, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 481, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 427, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 481, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 427, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 481, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 427, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 481, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "render_item_view_rgba", 0) < (0)) __PYX_ERR(0, 427, __pyx_L3_error)
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "render_item_view_rgba", 0) < (0)) __PYX_ERR(0, 481, __pyx_L3_error)
       for (Py_ssize_t i = __pyx_nargs; i < 6; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("render_item_view_rgba", 1, 6, 6, i); __PYX_ERR(0, 427, __pyx_L3_error) }
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("render_item_view_rgba", 1, 6, 6, i); __PYX_ERR(0, 481, __pyx_L3_error) }
       }
     } else if (unlikely(__pyx_nargs != 6)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 427, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 481, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 427, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 481, __pyx_L3_error)
       values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 427, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 481, __pyx_L3_error)
       values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 427, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 481, __pyx_L3_error)
       values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 427, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 481, __pyx_L3_error)
       values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 427, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 481, __pyx_L3_error)
     }
     __pyx_v_source = ((PyObject*)values[0]);
-    __pyx_v_src_w = __Pyx_PyLong_As_int(values[1]); if (unlikely((__pyx_v_src_w == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 427, __pyx_L3_error)
-    __pyx_v_src_h = __Pyx_PyLong_As_int(values[2]); if (unlikely((__pyx_v_src_h == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 427, __pyx_L3_error)
-    __pyx_v_view_code = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_view_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 427, __pyx_L3_error)
-    __pyx_v_size = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_size == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 427, __pyx_L3_error)
+    __pyx_v_src_w = __Pyx_PyLong_As_int(values[1]); if (unlikely((__pyx_v_src_w == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 481, __pyx_L3_error)
+    __pyx_v_src_h = __Pyx_PyLong_As_int(values[2]); if (unlikely((__pyx_v_src_h == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 481, __pyx_L3_error)
+    __pyx_v_view_code = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_view_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 481, __pyx_L3_error)
+    __pyx_v_size = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_size == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 481, __pyx_L3_error)
     __pyx_v_background = ((PyObject*)values[5]);
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("render_item_view_rgba", 1, 6, 6, __pyx_nargs); __PYX_ERR(0, 427, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("render_item_view_rgba", 1, 6, 6, __pyx_nargs); __PYX_ERR(0, 481, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -21967,9 +22639,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_source), (&PyBytes_Type), 1, "source", 1))) __PYX_ERR(0, 427, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_background), (&PyTuple_Type), 1, "background", 1))) __PYX_ERR(0, 427, __pyx_L1_error)
-  __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_12render_item_view_rgba(__pyx_self, __pyx_v_source, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_view_code, __pyx_v_size, __pyx_v_background);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_source), (&PyBytes_Type), 1, "source", 1))) __PYX_ERR(0, 481, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_background), (&PyTuple_Type), 1, "background", 1))) __PYX_ERR(0, 481, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_14render_item_view_rgba(__pyx_self, __pyx_v_source, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_view_code, __pyx_v_size, __pyx_v_background);
 
   /* function exit code */
   goto __pyx_L0;
@@ -21988,7 +22660,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_12render_item_view_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_source, int __pyx_v_src_w, int __pyx_v_src_h, int __pyx_v_view_code, int __pyx_v_size, PyObject *__pyx_v_background) {
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_14render_item_view_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_source, int __pyx_v_src_w, int __pyx_v_src_h, int __pyx_v_view_code, int __pyx_v_size, PyObject *__pyx_v_background) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -21997,7 +22669,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_12render_item_view_rgb
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("render_item_view_rgba", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(__pyx_v_source, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_view_code, __pyx_v_size, __pyx_v_background, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_render_item_view_rgba(__pyx_v_source, __pyx_v_src_w, __pyx_v_src_h, __pyx_v_view_code, __pyx_v_size, __pyx_v_background, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 481, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -22014,7 +22686,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_12render_item_view_rgb
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":484
+/* "mc_world_mcp/_preview_accel.pyx":538
  * 
  * 
  * cdef inline long _edge_value(int px, int py, int ax, int ay, int bx, int by):             # <<<<<<<<<<<<<<
@@ -22025,7 +22697,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_12render_item_view_rgb
 static CYTHON_INLINE long __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(int __pyx_v_px, int __pyx_v_py, int __pyx_v_ax, int __pyx_v_ay, int __pyx_v_bx, int __pyx_v_by) {
   long __pyx_r;
 
-  /* "mc_world_mcp/_preview_accel.pyx":485
+  /* "mc_world_mcp/_preview_accel.pyx":539
  * 
  * cdef inline long _edge_value(int px, int py, int ax, int ay, int bx, int by):
  *     return <long>(px - bx) * (ay - by) - <long>(ax - bx) * (py - by)             # <<<<<<<<<<<<<<
@@ -22035,7 +22707,7 @@ static CYTHON_INLINE long __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(in
   __pyx_r = ((((long)(__pyx_v_px - __pyx_v_bx)) * (__pyx_v_ay - __pyx_v_by)) - (((long)(__pyx_v_ax - __pyx_v_bx)) * (__pyx_v_py - __pyx_v_by)));
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":484
+  /* "mc_world_mcp/_preview_accel.pyx":538
  * 
  * 
  * cdef inline long _edge_value(int px, int py, int ax, int ay, int bx, int by):             # <<<<<<<<<<<<<<
@@ -22048,7 +22720,7 @@ static CYTHON_INLINE long __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(in
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":488
+/* "mc_world_mcp/_preview_accel.pyx":542
  * 
  * 
  * cdef inline bint _inside_triangle(             # <<<<<<<<<<<<<<
@@ -22070,37 +22742,37 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangl
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":498
+  /* "mc_world_mcp/_preview_accel.pyx":552
  *     int y2,
  * ):
  *     cdef long d1 = _edge_value(px, py, x0, y0, x1, y1)             # <<<<<<<<<<<<<<
  *     cdef long d2 = _edge_value(px, py, x1, y1, x2, y2)
  *     cdef long d3 = _edge_value(px, py, x2, y2, x0, y0)
 */
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(__pyx_v_px, __pyx_v_py, __pyx_v_x0, __pyx_v_y0, __pyx_v_x1, __pyx_v_y1); if (unlikely(__pyx_t_1 == ((long)-1L) && PyErr_Occurred())) __PYX_ERR(0, 498, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(__pyx_v_px, __pyx_v_py, __pyx_v_x0, __pyx_v_y0, __pyx_v_x1, __pyx_v_y1); if (unlikely(__pyx_t_1 == ((long)-1L) && PyErr_Occurred())) __PYX_ERR(0, 552, __pyx_L1_error)
   __pyx_v_d1 = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":499
+  /* "mc_world_mcp/_preview_accel.pyx":553
  * ):
  *     cdef long d1 = _edge_value(px, py, x0, y0, x1, y1)
  *     cdef long d2 = _edge_value(px, py, x1, y1, x2, y2)             # <<<<<<<<<<<<<<
  *     cdef long d3 = _edge_value(px, py, x2, y2, x0, y0)
  *     cdef bint has_neg = d1 < 0 or d2 < 0 or d3 < 0
 */
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(__pyx_v_px, __pyx_v_py, __pyx_v_x1, __pyx_v_y1, __pyx_v_x2, __pyx_v_y2); if (unlikely(__pyx_t_1 == ((long)-1L) && PyErr_Occurred())) __PYX_ERR(0, 499, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(__pyx_v_px, __pyx_v_py, __pyx_v_x1, __pyx_v_y1, __pyx_v_x2, __pyx_v_y2); if (unlikely(__pyx_t_1 == ((long)-1L) && PyErr_Occurred())) __PYX_ERR(0, 553, __pyx_L1_error)
   __pyx_v_d2 = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":500
+  /* "mc_world_mcp/_preview_accel.pyx":554
  *     cdef long d1 = _edge_value(px, py, x0, y0, x1, y1)
  *     cdef long d2 = _edge_value(px, py, x1, y1, x2, y2)
  *     cdef long d3 = _edge_value(px, py, x2, y2, x0, y0)             # <<<<<<<<<<<<<<
  *     cdef bint has_neg = d1 < 0 or d2 < 0 or d3 < 0
  *     cdef bint has_pos = d1 > 0 or d2 > 0 or d3 > 0
 */
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(__pyx_v_px, __pyx_v_py, __pyx_v_x2, __pyx_v_y2, __pyx_v_x0, __pyx_v_y0); if (unlikely(__pyx_t_1 == ((long)-1L) && PyErr_Occurred())) __PYX_ERR(0, 500, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__edge_value(__pyx_v_px, __pyx_v_py, __pyx_v_x2, __pyx_v_y2, __pyx_v_x0, __pyx_v_y0); if (unlikely(__pyx_t_1 == ((long)-1L) && PyErr_Occurred())) __PYX_ERR(0, 554, __pyx_L1_error)
   __pyx_v_d3 = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":501
+  /* "mc_world_mcp/_preview_accel.pyx":555
  *     cdef long d2 = _edge_value(px, py, x1, y1, x2, y2)
  *     cdef long d3 = _edge_value(px, py, x2, y2, x0, y0)
  *     cdef bint has_neg = d1 < 0 or d2 < 0 or d3 < 0             # <<<<<<<<<<<<<<
@@ -22124,7 +22796,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangl
   __pyx_L3_bool_binop_done:;
   __pyx_v_has_neg = __pyx_t_2;
 
-  /* "mc_world_mcp/_preview_accel.pyx":502
+  /* "mc_world_mcp/_preview_accel.pyx":556
  *     cdef long d3 = _edge_value(px, py, x2, y2, x0, y0)
  *     cdef bint has_neg = d1 < 0 or d2 < 0 or d3 < 0
  *     cdef bint has_pos = d1 > 0 or d2 > 0 or d3 > 0             # <<<<<<<<<<<<<<
@@ -22148,7 +22820,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangl
   __pyx_L6_bool_binop_done:;
   __pyx_v_has_pos = __pyx_t_2;
 
-  /* "mc_world_mcp/_preview_accel.pyx":503
+  /* "mc_world_mcp/_preview_accel.pyx":557
  *     cdef bint has_neg = d1 < 0 or d2 < 0 or d3 < 0
  *     cdef bint has_pos = d1 > 0 or d2 > 0 or d3 > 0
  *     return not (has_neg and has_pos)             # <<<<<<<<<<<<<<
@@ -22165,7 +22837,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangl
   __pyx_r = (!__pyx_t_2);
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":488
+  /* "mc_world_mcp/_preview_accel.pyx":542
  * 
  * 
  * cdef inline bint _inside_triangle(             # <<<<<<<<<<<<<<
@@ -22181,7 +22853,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangl
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":506
+/* "mc_world_mcp/_preview_accel.pyx":560
  * 
  * 
  * cdef void _draw_quad(             # <<<<<<<<<<<<<<
@@ -22213,59 +22885,59 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":521
+  /* "mc_world_mcp/_preview_accel.pyx":575
  *     int shade,
  * ):
  *     cdef int min_x = _clamp_int(_min_int(_min_int(x0, x1), _min_int(x2, x3)), 0, canvas_w - 1)             # <<<<<<<<<<<<<<
  *     cdef int max_x = _clamp_int(_max_int(_max_int(x0, x1), _max_int(x2, x3)), 0, canvas_w - 1)
  *     cdef int min_y = _clamp_int(_min_int(_min_int(y0, y1), _min_int(y2, y3)), 0, canvas_h - 1)
 */
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_x0, __pyx_v_x1); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 521, __pyx_L1_error)
-  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_x2, __pyx_v_x3); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 521, __pyx_L1_error)
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_t_1, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 521, __pyx_L1_error)
-  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_3, 0, (__pyx_v_canvas_w - 1)); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 521, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_x0, __pyx_v_x1); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 575, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_x2, __pyx_v_x3); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 575, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_t_1, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 575, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_3, 0, (__pyx_v_canvas_w - 1)); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 575, __pyx_L1_error)
   __pyx_v_min_x = __pyx_t_2;
 
-  /* "mc_world_mcp/_preview_accel.pyx":522
+  /* "mc_world_mcp/_preview_accel.pyx":576
  * ):
  *     cdef int min_x = _clamp_int(_min_int(_min_int(x0, x1), _min_int(x2, x3)), 0, canvas_w - 1)
  *     cdef int max_x = _clamp_int(_max_int(_max_int(x0, x1), _max_int(x2, x3)), 0, canvas_w - 1)             # <<<<<<<<<<<<<<
  *     cdef int min_y = _clamp_int(_min_int(_min_int(y0, y1), _min_int(y2, y3)), 0, canvas_h - 1)
  *     cdef int max_y = _clamp_int(_max_int(_max_int(y0, y1), _max_int(y2, y3)), 0, canvas_h - 1)
 */
-  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_x0, __pyx_v_x1); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 522, __pyx_L1_error)
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_x2, __pyx_v_x3); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 522, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_t_2, __pyx_t_3); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 522, __pyx_L1_error)
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_1, 0, (__pyx_v_canvas_w - 1)); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 522, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_x0, __pyx_v_x1); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 576, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_x2, __pyx_v_x3); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 576, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_t_2, __pyx_t_3); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 576, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_1, 0, (__pyx_v_canvas_w - 1)); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 576, __pyx_L1_error)
   __pyx_v_max_x = __pyx_t_3;
 
-  /* "mc_world_mcp/_preview_accel.pyx":523
+  /* "mc_world_mcp/_preview_accel.pyx":577
  *     cdef int min_x = _clamp_int(_min_int(_min_int(x0, x1), _min_int(x2, x3)), 0, canvas_w - 1)
  *     cdef int max_x = _clamp_int(_max_int(_max_int(x0, x1), _max_int(x2, x3)), 0, canvas_w - 1)
  *     cdef int min_y = _clamp_int(_min_int(_min_int(y0, y1), _min_int(y2, y3)), 0, canvas_h - 1)             # <<<<<<<<<<<<<<
  *     cdef int max_y = _clamp_int(_max_int(_max_int(y0, y1), _max_int(y2, y3)), 0, canvas_h - 1)
  *     cdef int r = (((color >> 16) & 255) * shade) // 255
 */
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_y0, __pyx_v_y1); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_y2, __pyx_v_y3); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L1_error)
-  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_t_3, __pyx_t_1); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_2, 0, (__pyx_v_canvas_h - 1)); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 523, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_y0, __pyx_v_y1); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 577, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_v_y2, __pyx_v_y3); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 577, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__min_int(__pyx_t_3, __pyx_t_1); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 577, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_2, 0, (__pyx_v_canvas_h - 1)); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 577, __pyx_L1_error)
   __pyx_v_min_y = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":524
+  /* "mc_world_mcp/_preview_accel.pyx":578
  *     cdef int max_x = _clamp_int(_max_int(_max_int(x0, x1), _max_int(x2, x3)), 0, canvas_w - 1)
  *     cdef int min_y = _clamp_int(_min_int(_min_int(y0, y1), _min_int(y2, y3)), 0, canvas_h - 1)
  *     cdef int max_y = _clamp_int(_max_int(_max_int(y0, y1), _max_int(y2, y3)), 0, canvas_h - 1)             # <<<<<<<<<<<<<<
  *     cdef int r = (((color >> 16) & 255) * shade) // 255
  *     cdef int g = (((color >> 8) & 255) * shade) // 255
 */
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_y0, __pyx_v_y1); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 524, __pyx_L1_error)
-  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_y2, __pyx_v_y3); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 524, __pyx_L1_error)
-  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_t_1, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 524, __pyx_L1_error)
-  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_3, 0, (__pyx_v_canvas_h - 1)); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 524, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_y0, __pyx_v_y1); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 578, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_v_y2, __pyx_v_y3); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 578, __pyx_L1_error)
+  __pyx_t_3 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(__pyx_t_1, __pyx_t_2); if (unlikely(__pyx_t_3 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 578, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__pyx_t_3, 0, (__pyx_v_canvas_h - 1)); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 578, __pyx_L1_error)
   __pyx_v_max_y = __pyx_t_2;
 
-  /* "mc_world_mcp/_preview_accel.pyx":525
+  /* "mc_world_mcp/_preview_accel.pyx":579
  *     cdef int min_y = _clamp_int(_min_int(_min_int(y0, y1), _min_int(y2, y3)), 0, canvas_h - 1)
  *     cdef int max_y = _clamp_int(_max_int(_max_int(y0, y1), _max_int(y2, y3)), 0, canvas_h - 1)
  *     cdef int r = (((color >> 16) & 255) * shade) // 255             # <<<<<<<<<<<<<<
@@ -22274,7 +22946,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
 */
   __pyx_v_r = __Pyx_div_long((((__pyx_v_color >> 16) & 0xFF) * __pyx_v_shade), 0xFF, 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":526
+  /* "mc_world_mcp/_preview_accel.pyx":580
  *     cdef int max_y = _clamp_int(_max_int(_max_int(y0, y1), _max_int(y2, y3)), 0, canvas_h - 1)
  *     cdef int r = (((color >> 16) & 255) * shade) // 255
  *     cdef int g = (((color >> 8) & 255) * shade) // 255             # <<<<<<<<<<<<<<
@@ -22283,7 +22955,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
 */
   __pyx_v_g = __Pyx_div_long((((__pyx_v_color >> 8) & 0xFF) * __pyx_v_shade), 0xFF, 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":527
+  /* "mc_world_mcp/_preview_accel.pyx":581
  *     cdef int r = (((color >> 16) & 255) * shade) // 255
  *     cdef int g = (((color >> 8) & 255) * shade) // 255
  *     cdef int b = ((color & 255) * shade) // 255             # <<<<<<<<<<<<<<
@@ -22292,7 +22964,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
 */
   __pyx_v_b = __Pyx_div_long(((__pyx_v_color & 0xFF) * __pyx_v_shade), 0xFF, 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":531
+  /* "mc_world_mcp/_preview_accel.pyx":585
  *     cdef int y
  *     cdef Py_ssize_t offset
  *     if max_x < min_x or max_y < min_y:             # <<<<<<<<<<<<<<
@@ -22310,7 +22982,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_4) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":532
+    /* "mc_world_mcp/_preview_accel.pyx":586
  *     cdef Py_ssize_t offset
  *     if max_x < min_x or max_y < min_y:
  *         return             # <<<<<<<<<<<<<<
@@ -22319,7 +22991,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
 */
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":531
+    /* "mc_world_mcp/_preview_accel.pyx":585
  *     cdef int y
  *     cdef Py_ssize_t offset
  *     if max_x < min_x or max_y < min_y:             # <<<<<<<<<<<<<<
@@ -22328,7 +23000,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":533
+  /* "mc_world_mcp/_preview_accel.pyx":587
  *     if max_x < min_x or max_y < min_y:
  *         return
  *     for y in range(min_y, max_y + 1):             # <<<<<<<<<<<<<<
@@ -22340,7 +23012,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
   for (__pyx_t_2 = __pyx_v_min_y; __pyx_t_2 < __pyx_t_7; __pyx_t_2+=1) {
     __pyx_v_y = __pyx_t_2;
 
-    /* "mc_world_mcp/_preview_accel.pyx":534
+    /* "mc_world_mcp/_preview_accel.pyx":588
  *         return
  *     for y in range(min_y, max_y + 1):
  *         for x in range(min_x, max_x + 1):             # <<<<<<<<<<<<<<
@@ -22352,25 +23024,25 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
     for (__pyx_t_3 = __pyx_v_min_x; __pyx_t_3 < __pyx_t_9; __pyx_t_3+=1) {
       __pyx_v_x = __pyx_t_3;
 
-      /* "mc_world_mcp/_preview_accel.pyx":535
+      /* "mc_world_mcp/_preview_accel.pyx":589
  *     for y in range(min_y, max_y + 1):
  *         for x in range(min_x, max_x + 1):
  *             if _inside_triangle(x, y, x0, y0, x1, y1, x2, y2) or _inside_triangle(x, y, x0, y0, x2, y2, x3, y3):             # <<<<<<<<<<<<<<
  *                 offset = (y * canvas_w + x) * 4
  *                 _blend_pixel(dst, offset, r, g, b, 255)
 */
-      __pyx_t_5 = __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangle(__pyx_v_x, __pyx_v_y, __pyx_v_x0, __pyx_v_y0, __pyx_v_x1, __pyx_v_y1, __pyx_v_x2, __pyx_v_y2); if (unlikely(__pyx_t_5 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L1_error)
+      __pyx_t_5 = __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangle(__pyx_v_x, __pyx_v_y, __pyx_v_x0, __pyx_v_y0, __pyx_v_x1, __pyx_v_y1, __pyx_v_x2, __pyx_v_y2); if (unlikely(__pyx_t_5 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 589, __pyx_L1_error)
       if (!__pyx_t_5) {
       } else {
         __pyx_t_4 = __pyx_t_5;
         goto __pyx_L11_bool_binop_done;
       }
-      __pyx_t_5 = __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangle(__pyx_v_x, __pyx_v_y, __pyx_v_x0, __pyx_v_y0, __pyx_v_x2, __pyx_v_y2, __pyx_v_x3, __pyx_v_y3); if (unlikely(__pyx_t_5 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 535, __pyx_L1_error)
+      __pyx_t_5 = __pyx_f_12mc_world_mcp_14_preview_accel__inside_triangle(__pyx_v_x, __pyx_v_y, __pyx_v_x0, __pyx_v_y0, __pyx_v_x2, __pyx_v_y2, __pyx_v_x3, __pyx_v_y3); if (unlikely(__pyx_t_5 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 589, __pyx_L1_error)
       __pyx_t_4 = __pyx_t_5;
       __pyx_L11_bool_binop_done:;
       if (__pyx_t_4) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":536
+        /* "mc_world_mcp/_preview_accel.pyx":590
  *         for x in range(min_x, max_x + 1):
  *             if _inside_triangle(x, y, x0, y0, x1, y1, x2, y2) or _inside_triangle(x, y, x0, y0, x2, y2, x3, y3):
  *                 offset = (y * canvas_w + x) * 4             # <<<<<<<<<<<<<<
@@ -22379,16 +23051,16 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
 */
         __pyx_v_offset = (((__pyx_v_y * __pyx_v_canvas_w) + __pyx_v_x) * 4);
 
-        /* "mc_world_mcp/_preview_accel.pyx":537
+        /* "mc_world_mcp/_preview_accel.pyx":591
  *             if _inside_triangle(x, y, x0, y0, x1, y1, x2, y2) or _inside_triangle(x, y, x0, y0, x2, y2, x3, y3):
  *                 offset = (y * canvas_w + x) * 4
  *                 _blend_pixel(dst, offset, r, g, b, 255)             # <<<<<<<<<<<<<<
  * 
  * 
 */
-        __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(__pyx_v_dst, __pyx_v_offset, __pyx_v_r, __pyx_v_g, __pyx_v_b, 0xFF); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 537, __pyx_L1_error)
+        __pyx_f_12mc_world_mcp_14_preview_accel__blend_pixel(__pyx_v_dst, __pyx_v_offset, __pyx_v_r, __pyx_v_g, __pyx_v_b, 0xFF); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 591, __pyx_L1_error)
 
-        /* "mc_world_mcp/_preview_accel.pyx":535
+        /* "mc_world_mcp/_preview_accel.pyx":589
  *     for y in range(min_y, max_y + 1):
  *         for x in range(min_x, max_x + 1):
  *             if _inside_triangle(x, y, x0, y0, x1, y1, x2, y2) or _inside_triangle(x, y, x0, y0, x2, y2, x3, y3):             # <<<<<<<<<<<<<<
@@ -22399,7 +23071,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
     }
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":506
+  /* "mc_world_mcp/_preview_accel.pyx":560
  * 
  * 
  * cdef void _draw_quad(             # <<<<<<<<<<<<<<
@@ -22414,7 +23086,7 @@ static void __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__Pyx_memviewslic
   __pyx_L0:;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":540
+/* "mc_world_mcp/_preview_accel.pyx":594
  * 
  * 
  * cdef inline int _closeup_index(int width, int depth, int view_code, int rx, int rz):             # <<<<<<<<<<<<<<
@@ -22429,7 +23101,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "mc_world_mcp/_preview_accel.pyx":543
+  /* "mc_world_mcp/_preview_accel.pyx":597
  *     cdef int ix
  *     cdef int iz
  *     if rx < 0 or rx >= width or rz < 0 or rz >= depth:             # <<<<<<<<<<<<<<
@@ -22459,7 +23131,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":544
+    /* "mc_world_mcp/_preview_accel.pyx":598
  *     cdef int iz
  *     if rx < 0 or rx >= width or rz < 0 or rz >= depth:
  *         return -1             # <<<<<<<<<<<<<<
@@ -22469,7 +23141,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":543
+    /* "mc_world_mcp/_preview_accel.pyx":597
  *     cdef int ix
  *     cdef int iz
  *     if rx < 0 or rx >= width or rz < 0 or rz >= depth:             # <<<<<<<<<<<<<<
@@ -22478,7 +23150,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":545
+  /* "mc_world_mcp/_preview_accel.pyx":599
  *     if rx < 0 or rx >= width or rz < 0 or rz >= depth:
  *         return -1
  *     if view_code == 1:             # <<<<<<<<<<<<<<
@@ -22488,7 +23160,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
   switch (__pyx_v_view_code) {
     case 1:
 
-    /* "mc_world_mcp/_preview_accel.pyx":546
+    /* "mc_world_mcp/_preview_accel.pyx":600
  *         return -1
  *     if view_code == 1:
  *         ix = width - rx - 1             # <<<<<<<<<<<<<<
@@ -22497,7 +23169,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
     __pyx_v_ix = ((__pyx_v_width - __pyx_v_rx) - 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":547
+    /* "mc_world_mcp/_preview_accel.pyx":601
  *     if view_code == 1:
  *         ix = width - rx - 1
  *         iz = rz             # <<<<<<<<<<<<<<
@@ -22506,7 +23178,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
     __pyx_v_iz = __pyx_v_rz;
 
-    /* "mc_world_mcp/_preview_accel.pyx":545
+    /* "mc_world_mcp/_preview_accel.pyx":599
  *     if rx < 0 or rx >= width or rz < 0 or rz >= depth:
  *         return -1
  *     if view_code == 1:             # <<<<<<<<<<<<<<
@@ -22516,7 +23188,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
     break;
     case 2:
 
-    /* "mc_world_mcp/_preview_accel.pyx":549
+    /* "mc_world_mcp/_preview_accel.pyx":603
  *         iz = rz
  *     elif view_code == 2:
  *         ix = width - rx - 1             # <<<<<<<<<<<<<<
@@ -22525,7 +23197,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
     __pyx_v_ix = ((__pyx_v_width - __pyx_v_rx) - 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":550
+    /* "mc_world_mcp/_preview_accel.pyx":604
  *     elif view_code == 2:
  *         ix = width - rx - 1
  *         iz = depth - rz - 1             # <<<<<<<<<<<<<<
@@ -22534,7 +23206,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
     __pyx_v_iz = ((__pyx_v_depth - __pyx_v_rz) - 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":548
+    /* "mc_world_mcp/_preview_accel.pyx":602
  *         ix = width - rx - 1
  *         iz = rz
  *     elif view_code == 2:             # <<<<<<<<<<<<<<
@@ -22544,7 +23216,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
     break;
     case 3:
 
-    /* "mc_world_mcp/_preview_accel.pyx":552
+    /* "mc_world_mcp/_preview_accel.pyx":606
  *         iz = depth - rz - 1
  *     elif view_code == 3:
  *         ix = rx             # <<<<<<<<<<<<<<
@@ -22553,7 +23225,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
     __pyx_v_ix = __pyx_v_rx;
 
-    /* "mc_world_mcp/_preview_accel.pyx":553
+    /* "mc_world_mcp/_preview_accel.pyx":607
  *     elif view_code == 3:
  *         ix = rx
  *         iz = depth - rz - 1             # <<<<<<<<<<<<<<
@@ -22562,7 +23234,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
     __pyx_v_iz = ((__pyx_v_depth - __pyx_v_rz) - 1);
 
-    /* "mc_world_mcp/_preview_accel.pyx":551
+    /* "mc_world_mcp/_preview_accel.pyx":605
  *         ix = width - rx - 1
  *         iz = depth - rz - 1
  *     elif view_code == 3:             # <<<<<<<<<<<<<<
@@ -22572,7 +23244,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
     break;
     default:
 
-    /* "mc_world_mcp/_preview_accel.pyx":555
+    /* "mc_world_mcp/_preview_accel.pyx":609
  *         iz = depth - rz - 1
  *     else:
  *         ix = rx             # <<<<<<<<<<<<<<
@@ -22581,7 +23253,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
 */
     __pyx_v_ix = __pyx_v_rx;
 
-    /* "mc_world_mcp/_preview_accel.pyx":556
+    /* "mc_world_mcp/_preview_accel.pyx":610
  *     else:
  *         ix = rx
  *         iz = rz             # <<<<<<<<<<<<<<
@@ -22592,7 +23264,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
     break;
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":557
+  /* "mc_world_mcp/_preview_accel.pyx":611
  *         ix = rx
  *         iz = rz
  *     return iz * width + ix             # <<<<<<<<<<<<<<
@@ -22602,7 +23274,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
   __pyx_r = ((__pyx_v_iz * __pyx_v_width) + __pyx_v_ix);
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":540
+  /* "mc_world_mcp/_preview_accel.pyx":594
  * 
  * 
  * cdef inline int _closeup_index(int width, int depth, int view_code, int rx, int rz):             # <<<<<<<<<<<<<<
@@ -22615,7 +23287,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":560
+/* "mc_world_mcp/_preview_accel.pyx":614
  * 
  * 
  * cdef inline int _closeup_height(list heights, int width, int depth, int view_code, int rx, int rz):             # <<<<<<<<<<<<<<
@@ -22632,17 +23304,17 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":561
+  /* "mc_world_mcp/_preview_accel.pyx":615
  * 
  * cdef inline int _closeup_height(list heights, int width, int depth, int view_code, int rx, int rz):
  *     cdef int index = _closeup_index(width, depth, view_code, rx, rz)             # <<<<<<<<<<<<<<
  *     if index < 0:
  *         return -2147483648
 */
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(__pyx_v_width, __pyx_v_depth, __pyx_v_view_code, __pyx_v_rx, __pyx_v_rz); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 561, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(__pyx_v_width, __pyx_v_depth, __pyx_v_view_code, __pyx_v_rx, __pyx_v_rz); if (unlikely(__pyx_t_1 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 615, __pyx_L1_error)
   __pyx_v_index = __pyx_t_1;
 
-  /* "mc_world_mcp/_preview_accel.pyx":562
+  /* "mc_world_mcp/_preview_accel.pyx":616
  * cdef inline int _closeup_height(list heights, int width, int depth, int view_code, int rx, int rz):
  *     cdef int index = _closeup_index(width, depth, view_code, rx, rz)
  *     if index < 0:             # <<<<<<<<<<<<<<
@@ -22652,7 +23324,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height
   __pyx_t_2 = (__pyx_v_index < 0);
   if (__pyx_t_2) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":563
+    /* "mc_world_mcp/_preview_accel.pyx":617
  *     cdef int index = _closeup_index(width, depth, view_code, rx, rz)
  *     if index < 0:
  *         return -2147483648             # <<<<<<<<<<<<<<
@@ -22662,7 +23334,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height
     __pyx_r = -2147483648;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":562
+    /* "mc_world_mcp/_preview_accel.pyx":616
  * cdef inline int _closeup_height(list heights, int width, int depth, int view_code, int rx, int rz):
  *     cdef int index = _closeup_index(width, depth, view_code, rx, rz)
  *     if index < 0:             # <<<<<<<<<<<<<<
@@ -22671,7 +23343,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":564
+  /* "mc_world_mcp/_preview_accel.pyx":618
  *     if index < 0:
  *         return -2147483648
  *     return <int>heights[index]             # <<<<<<<<<<<<<<
@@ -22680,13 +23352,13 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height
 */
   if (unlikely(__pyx_v_heights == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 564, __pyx_L1_error)
+    __PYX_ERR(0, 618, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_heights, __pyx_v_index)); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 564, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_heights, __pyx_v_index)); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 618, __pyx_L1_error)
   __pyx_r = ((int)__pyx_t_1);
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":560
+  /* "mc_world_mcp/_preview_accel.pyx":614
  * 
  * 
  * cdef inline int _closeup_height(list heights, int width, int depth, int view_code, int rx, int rz):             # <<<<<<<<<<<<<<
@@ -22702,7 +23374,7 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height
   return __pyx_r;
 }
 
-/* "mc_world_mcp/_preview_accel.pyx":567
+/* "mc_world_mcp/_preview_accel.pyx":621
  * 
  * 
  * cpdef bytes render_closeup_map_rgba(             # <<<<<<<<<<<<<<
@@ -22710,14 +23382,14 @@ static CYTHON_INLINE int __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height
  *     list colors,
 */
 
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_15render_closeup_map_rgba(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_17render_closeup_map_rgba(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba(PyObject *__pyx_v_heights, PyObject *__pyx_v_colors, int __pyx_v_width, int __pyx_v_depth, int __pyx_v_canvas_w, int __pyx_v_canvas_h, int __pyx_v_view_code, int __pyx_v_scale, int __pyx_v_vertical_scale, int __pyx_v_min_y, int __pyx_v_max_y, PyObject *__pyx_v_background, CYTHON_UNUSED int __pyx_skip_dispatch) {
+static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba(PyObject *__pyx_v_heights, PyObject *__pyx_v_colors, PyObject *__pyx_v_side_colors, int __pyx_v_width, int __pyx_v_depth, int __pyx_v_canvas_w, int __pyx_v_canvas_h, int __pyx_v_view_code, int __pyx_v_scale, int __pyx_v_vertical_scale, int __pyx_v_min_y, int __pyx_v_max_y, PyObject *__pyx_v_background, int __pyx_v_side_depth, CYTHON_UNUSED int __pyx_skip_dispatch) {
   PyObject *__pyx_v_out = 0;
   __Pyx_memviewslice __pyx_v_dst = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_v_bg_r;
@@ -22746,8 +23418,13 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
   int __pyx_v_x3;
   int __pyx_v_y3;
   int __pyx_v_neighbor;
-  int __pyx_v_drop;
   int __pyx_v_shade;
+  int __pyx_v_side_base;
+  int __pyx_v_drop_blocks;
+  int __pyx_v_segment;
+  int __pyx_v_segment_color;
+  int __pyx_v_segment_top;
+  int __pyx_v_segment_bottom;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -22764,22 +23441,25 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
   int __pyx_t_12;
   int __pyx_t_13;
   int __pyx_t_14;
-  long __pyx_t_15;
+  int __pyx_t_15;
   int __pyx_t_16;
+  int __pyx_t_17;
+  int __pyx_t_18;
+  long __pyx_t_19;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("render_closeup_map_rgba", 0);
 
-  /* "mc_world_mcp/_preview_accel.pyx":581
- *     tuple background,
+  /* "mc_world_mcp/_preview_accel.pyx":637
+ *     int side_depth,
  * ):
  *     cdef bytearray out = bytearray(canvas_w * canvas_h * 4)             # <<<<<<<<<<<<<<
  *     cdef unsigned char[::1] dst = out
  *     cdef int bg_r = <int>background[0]
 */
   __pyx_t_2 = NULL;
-  __pyx_t_3 = __Pyx_PyLong_From_long(((__pyx_v_canvas_w * __pyx_v_canvas_h) * 4)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 581, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyLong_From_long(((__pyx_v_canvas_w * __pyx_v_canvas_h) * 4)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = 1;
   {
@@ -22787,25 +23467,25 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
     __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyByteArray_Type), __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 581, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 637, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_v_out = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":582
+  /* "mc_world_mcp/_preview_accel.pyx":638
  * ):
  *     cdef bytearray out = bytearray(canvas_w * canvas_h * 4)
  *     cdef unsigned char[::1] dst = out             # <<<<<<<<<<<<<<
  *     cdef int bg_r = <int>background[0]
  *     cdef int bg_g = <int>background[1]
 */
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dc_unsigned_char(__pyx_v_out, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 582, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_dc_unsigned_char(__pyx_v_out, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 638, __pyx_L1_error)
   __pyx_v_dst = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "mc_world_mcp/_preview_accel.pyx":583
+  /* "mc_world_mcp/_preview_accel.pyx":639
  *     cdef bytearray out = bytearray(canvas_w * canvas_h * 4)
  *     cdef unsigned char[::1] dst = out
  *     cdef int bg_r = <int>background[0]             # <<<<<<<<<<<<<<
@@ -22814,12 +23494,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 583, __pyx_L1_error)
+    __PYX_ERR(0, 639, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 0)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 583, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 0)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 639, __pyx_L1_error)
   __pyx_v_bg_r = ((int)__pyx_t_6);
 
-  /* "mc_world_mcp/_preview_accel.pyx":584
+  /* "mc_world_mcp/_preview_accel.pyx":640
  *     cdef unsigned char[::1] dst = out
  *     cdef int bg_r = <int>background[0]
  *     cdef int bg_g = <int>background[1]             # <<<<<<<<<<<<<<
@@ -22828,12 +23508,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 584, __pyx_L1_error)
+    __PYX_ERR(0, 640, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 1)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 584, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 1)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 640, __pyx_L1_error)
   __pyx_v_bg_g = ((int)__pyx_t_6);
 
-  /* "mc_world_mcp/_preview_accel.pyx":585
+  /* "mc_world_mcp/_preview_accel.pyx":641
  *     cdef int bg_r = <int>background[0]
  *     cdef int bg_g = <int>background[1]
  *     cdef int bg_b = <int>background[2]             # <<<<<<<<<<<<<<
@@ -22842,12 +23522,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 585, __pyx_L1_error)
+    __PYX_ERR(0, 641, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 2)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 585, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 2)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 641, __pyx_L1_error)
   __pyx_v_bg_b = ((int)__pyx_t_6);
 
-  /* "mc_world_mcp/_preview_accel.pyx":586
+  /* "mc_world_mcp/_preview_accel.pyx":642
  *     cdef int bg_g = <int>background[1]
  *     cdef int bg_b = <int>background[2]
  *     cdef int bg_a = <int>background[3]             # <<<<<<<<<<<<<<
@@ -22856,32 +23536,32 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   if (unlikely(__pyx_v_background == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-    __PYX_ERR(0, 586, __pyx_L1_error)
+    __PYX_ERR(0, 642, __pyx_L1_error)
   }
-  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 3)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 586, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyLong_As_int(__Pyx_PyTuple_GET_ITEM(__pyx_v_background, 3)); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 642, __pyx_L1_error)
   __pyx_v_bg_a = ((int)__pyx_t_6);
 
-  /* "mc_world_mcp/_preview_accel.pyx":587
+  /* "mc_world_mcp/_preview_accel.pyx":643
  *     cdef int bg_b = <int>background[2]
  *     cdef int bg_a = <int>background[3]
  *     cdef int half = _max_int(2, scale)             # <<<<<<<<<<<<<<
  *     cdef int quarter = _max_int(1, scale // 2)
  *     cdef int margin = half * 2 + 2
 */
-  __pyx_t_6 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __pyx_v_scale); if (unlikely(__pyx_t_6 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 587, __pyx_L1_error)
+  __pyx_t_6 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(2, __pyx_v_scale); if (unlikely(__pyx_t_6 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 643, __pyx_L1_error)
   __pyx_v_half = __pyx_t_6;
 
-  /* "mc_world_mcp/_preview_accel.pyx":588
+  /* "mc_world_mcp/_preview_accel.pyx":644
  *     cdef int bg_a = <int>background[3]
  *     cdef int half = _max_int(2, scale)
  *     cdef int quarter = _max_int(1, scale // 2)             # <<<<<<<<<<<<<<
  *     cdef int margin = half * 2 + 2
  *     cdef int sentinel = -2147483648
 */
-  __pyx_t_6 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(1, __Pyx_div_long(__pyx_v_scale, 2, 1)); if (unlikely(__pyx_t_6 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 588, __pyx_L1_error)
+  __pyx_t_6 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(1, __Pyx_div_long(__pyx_v_scale, 2, 1)); if (unlikely(__pyx_t_6 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 644, __pyx_L1_error)
   __pyx_v_quarter = __pyx_t_6;
 
-  /* "mc_world_mcp/_preview_accel.pyx":589
+  /* "mc_world_mcp/_preview_accel.pyx":645
  *     cdef int half = _max_int(2, scale)
  *     cdef int quarter = _max_int(1, scale // 2)
  *     cdef int margin = half * 2 + 2             # <<<<<<<<<<<<<<
@@ -22890,7 +23570,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   __pyx_v_margin = ((__pyx_v_half * 2) + 2);
 
-  /* "mc_world_mcp/_preview_accel.pyx":590
+  /* "mc_world_mcp/_preview_accel.pyx":646
  *     cdef int quarter = _max_int(1, scale // 2)
  *     cdef int margin = half * 2 + 2
  *     cdef int sentinel = -2147483648             # <<<<<<<<<<<<<<
@@ -22899,7 +23579,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   __pyx_v_sentinel = -2147483648;
 
-  /* "mc_world_mcp/_preview_accel.pyx":591
+  /* "mc_world_mcp/_preview_accel.pyx":647
  *     cdef int margin = half * 2 + 2
  *     cdef int sentinel = -2147483648
  *     cdef int total = width + depth - 1             # <<<<<<<<<<<<<<
@@ -22908,8 +23588,8 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   __pyx_v_total = ((__pyx_v_width + __pyx_v_depth) - 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":612
- *     cdef int shade
+  /* "mc_world_mcp/_preview_accel.pyx":673
+ *     cdef int segment_bottom
  * 
  *     if width <= 0 or depth <= 0 or canvas_w <= 0 or canvas_h <= 0:             # <<<<<<<<<<<<<<
  *         return bytes(out)
@@ -22938,7 +23618,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_7) {
 
-    /* "mc_world_mcp/_preview_accel.pyx":613
+    /* "mc_world_mcp/_preview_accel.pyx":674
  * 
  *     if width <= 0 or depth <= 0 or canvas_w <= 0 or canvas_h <= 0:
  *         return bytes(out)             # <<<<<<<<<<<<<<
@@ -22952,15 +23632,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
       PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_out};
       __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 613, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 674, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     }
     __pyx_r = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "mc_world_mcp/_preview_accel.pyx":612
- *     cdef int shade
+    /* "mc_world_mcp/_preview_accel.pyx":673
+ *     cdef int segment_bottom
  * 
  *     if width <= 0 or depth <= 0 or canvas_w <= 0 or canvas_h <= 0:             # <<<<<<<<<<<<<<
  *         return bytes(out)
@@ -22968,16 +23648,16 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":614
+  /* "mc_world_mcp/_preview_accel.pyx":675
  *     if width <= 0 or depth <= 0 or canvas_w <= 0 or canvas_h <= 0:
  *         return bytes(out)
  *     _fill_rgba(dst, canvas_w * canvas_h, bg_r, bg_g, bg_b, bg_a)             # <<<<<<<<<<<<<<
  *     view_code = view_code % 4
  *     for layer in range(total):
 */
-  __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__pyx_v_dst, (__pyx_v_canvas_w * __pyx_v_canvas_h), __pyx_v_bg_r, __pyx_v_bg_g, __pyx_v_bg_b, __pyx_v_bg_a); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 614, __pyx_L1_error)
+  __pyx_f_12mc_world_mcp_14_preview_accel__fill_rgba(__pyx_v_dst, (__pyx_v_canvas_w * __pyx_v_canvas_h), __pyx_v_bg_r, __pyx_v_bg_g, __pyx_v_bg_b, __pyx_v_bg_a); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 675, __pyx_L1_error)
 
-  /* "mc_world_mcp/_preview_accel.pyx":615
+  /* "mc_world_mcp/_preview_accel.pyx":676
  *         return bytes(out)
  *     _fill_rgba(dst, canvas_w * canvas_h, bg_r, bg_g, bg_b, bg_a)
  *     view_code = view_code % 4             # <<<<<<<<<<<<<<
@@ -22986,7 +23666,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
   __pyx_v_view_code = __Pyx_mod_long(__pyx_v_view_code, 4, 1);
 
-  /* "mc_world_mcp/_preview_accel.pyx":616
+  /* "mc_world_mcp/_preview_accel.pyx":677
  *     _fill_rgba(dst, canvas_w * canvas_h, bg_r, bg_g, bg_b, bg_a)
  *     view_code = view_code % 4
  *     for layer in range(total):             # <<<<<<<<<<<<<<
@@ -22998,7 +23678,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
   for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
     __pyx_v_layer = __pyx_t_10;
 
-    /* "mc_world_mcp/_preview_accel.pyx":617
+    /* "mc_world_mcp/_preview_accel.pyx":678
  *     view_code = view_code % 4
  *     for layer in range(total):
  *         for rx in range(width):             # <<<<<<<<<<<<<<
@@ -23010,7 +23690,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
     for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
       __pyx_v_rx = __pyx_t_13;
 
-      /* "mc_world_mcp/_preview_accel.pyx":618
+      /* "mc_world_mcp/_preview_accel.pyx":679
  *     for layer in range(total):
  *         for rx in range(width):
  *             rz = layer - rx             # <<<<<<<<<<<<<<
@@ -23019,7 +23699,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_rz = (__pyx_v_layer - __pyx_v_rx);
 
-      /* "mc_world_mcp/_preview_accel.pyx":619
+      /* "mc_world_mcp/_preview_accel.pyx":680
  *         for rx in range(width):
  *             rz = layer - rx
  *             if rz < 0 or rz >= depth:             # <<<<<<<<<<<<<<
@@ -23037,7 +23717,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
       __pyx_L13_bool_binop_done:;
       if (__pyx_t_7) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":620
+        /* "mc_world_mcp/_preview_accel.pyx":681
  *             rz = layer - rx
  *             if rz < 0 or rz >= depth:
  *                 continue             # <<<<<<<<<<<<<<
@@ -23046,7 +23726,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
         goto __pyx_L10_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":619
+        /* "mc_world_mcp/_preview_accel.pyx":680
  *         for rx in range(width):
  *             rz = layer - rx
  *             if rz < 0 or rz >= depth:             # <<<<<<<<<<<<<<
@@ -23055,17 +23735,17 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":621
+      /* "mc_world_mcp/_preview_accel.pyx":682
  *             if rz < 0 or rz >= depth:
  *                 continue
  *             index = _closeup_index(width, depth, view_code, rx, rz)             # <<<<<<<<<<<<<<
  *             if index < 0:
  *                 continue
 */
-      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(__pyx_v_width, __pyx_v_depth, __pyx_v_view_code, __pyx_v_rx, __pyx_v_rz); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 621, __pyx_L1_error)
+      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_index(__pyx_v_width, __pyx_v_depth, __pyx_v_view_code, __pyx_v_rx, __pyx_v_rz); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 682, __pyx_L1_error)
       __pyx_v_index = __pyx_t_14;
 
-      /* "mc_world_mcp/_preview_accel.pyx":622
+      /* "mc_world_mcp/_preview_accel.pyx":683
  *                 continue
  *             index = _closeup_index(width, depth, view_code, rx, rz)
  *             if index < 0:             # <<<<<<<<<<<<<<
@@ -23075,7 +23755,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
       __pyx_t_7 = (__pyx_v_index < 0);
       if (__pyx_t_7) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":623
+        /* "mc_world_mcp/_preview_accel.pyx":684
  *             index = _closeup_index(width, depth, view_code, rx, rz)
  *             if index < 0:
  *                 continue             # <<<<<<<<<<<<<<
@@ -23084,7 +23764,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
         goto __pyx_L10_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":622
+        /* "mc_world_mcp/_preview_accel.pyx":683
  *                 continue
  *             index = _closeup_index(width, depth, view_code, rx, rz)
  *             if index < 0:             # <<<<<<<<<<<<<<
@@ -23093,7 +23773,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":624
+      /* "mc_world_mcp/_preview_accel.pyx":685
  *             if index < 0:
  *                 continue
  *             y = <int>heights[index]             # <<<<<<<<<<<<<<
@@ -23102,12 +23782,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       if (unlikely(__pyx_v_heights == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 624, __pyx_L1_error)
+        __PYX_ERR(0, 685, __pyx_L1_error)
       }
-      __pyx_t_14 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_heights, __pyx_v_index)); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 624, __pyx_L1_error)
+      __pyx_t_14 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_heights, __pyx_v_index)); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 685, __pyx_L1_error)
       __pyx_v_y = ((int)__pyx_t_14);
 
-      /* "mc_world_mcp/_preview_accel.pyx":625
+      /* "mc_world_mcp/_preview_accel.pyx":686
  *                 continue
  *             y = <int>heights[index]
  *             if y == sentinel:             # <<<<<<<<<<<<<<
@@ -23117,7 +23797,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
       __pyx_t_7 = (__pyx_v_y == __pyx_v_sentinel);
       if (__pyx_t_7) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":626
+        /* "mc_world_mcp/_preview_accel.pyx":687
  *             y = <int>heights[index]
  *             if y == sentinel:
  *                 continue             # <<<<<<<<<<<<<<
@@ -23126,7 +23806,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
         goto __pyx_L10_continue;
 
-        /* "mc_world_mcp/_preview_accel.pyx":625
+        /* "mc_world_mcp/_preview_accel.pyx":686
  *                 continue
  *             y = <int>heights[index]
  *             if y == sentinel:             # <<<<<<<<<<<<<<
@@ -23135,7 +23815,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":627
+      /* "mc_world_mcp/_preview_accel.pyx":688
  *             if y == sentinel:
  *                 continue
  *             color = <int>colors[index]             # <<<<<<<<<<<<<<
@@ -23144,12 +23824,12 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       if (unlikely(__pyx_v_colors == Py_None)) {
         PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
-        __PYX_ERR(0, 627, __pyx_L1_error)
+        __PYX_ERR(0, 688, __pyx_L1_error)
       }
-      __pyx_t_14 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_colors, __pyx_v_index)); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 627, __pyx_L1_error)
+      __pyx_t_14 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_colors, __pyx_v_index)); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 688, __pyx_L1_error)
       __pyx_v_color = ((int)__pyx_t_14);
 
-      /* "mc_world_mcp/_preview_accel.pyx":628
+      /* "mc_world_mcp/_preview_accel.pyx":689
  *                 continue
  *             color = <int>colors[index]
  *             cx = margin + (rx - rz + depth - 1) * half             # <<<<<<<<<<<<<<
@@ -23158,7 +23838,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_cx = (__pyx_v_margin + ((((__pyx_v_rx - __pyx_v_rz) + __pyx_v_depth) - 1) * __pyx_v_half));
 
-      /* "mc_world_mcp/_preview_accel.pyx":629
+      /* "mc_world_mcp/_preview_accel.pyx":690
  *             color = <int>colors[index]
  *             cx = margin + (rx - rz + depth - 1) * half
  *             sy = margin + (rx + rz) * quarter + (max_y - y) * vertical_scale             # <<<<<<<<<<<<<<
@@ -23167,7 +23847,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_sy = ((__pyx_v_margin + ((__pyx_v_rx + __pyx_v_rz) * __pyx_v_quarter)) + ((__pyx_v_max_y - __pyx_v_y) * __pyx_v_vertical_scale));
 
-      /* "mc_world_mcp/_preview_accel.pyx":630
+      /* "mc_world_mcp/_preview_accel.pyx":691
  *             cx = margin + (rx - rz + depth - 1) * half
  *             sy = margin + (rx + rz) * quarter + (max_y - y) * vertical_scale
  *             x0 = cx             # <<<<<<<<<<<<<<
@@ -23176,7 +23856,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_x0 = __pyx_v_cx;
 
-      /* "mc_world_mcp/_preview_accel.pyx":631
+      /* "mc_world_mcp/_preview_accel.pyx":692
  *             sy = margin + (rx + rz) * quarter + (max_y - y) * vertical_scale
  *             x0 = cx
  *             y0 = sy             # <<<<<<<<<<<<<<
@@ -23185,7 +23865,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_y0 = __pyx_v_sy;
 
-      /* "mc_world_mcp/_preview_accel.pyx":632
+      /* "mc_world_mcp/_preview_accel.pyx":693
  *             x0 = cx
  *             y0 = sy
  *             x1 = cx + half             # <<<<<<<<<<<<<<
@@ -23194,7 +23874,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_x1 = (__pyx_v_cx + __pyx_v_half);
 
-      /* "mc_world_mcp/_preview_accel.pyx":633
+      /* "mc_world_mcp/_preview_accel.pyx":694
  *             y0 = sy
  *             x1 = cx + half
  *             y1 = sy + quarter             # <<<<<<<<<<<<<<
@@ -23203,7 +23883,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_y1 = (__pyx_v_sy + __pyx_v_quarter);
 
-      /* "mc_world_mcp/_preview_accel.pyx":634
+      /* "mc_world_mcp/_preview_accel.pyx":695
  *             x1 = cx + half
  *             y1 = sy + quarter
  *             x2 = cx             # <<<<<<<<<<<<<<
@@ -23212,7 +23892,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_x2 = __pyx_v_cx;
 
-      /* "mc_world_mcp/_preview_accel.pyx":635
+      /* "mc_world_mcp/_preview_accel.pyx":696
  *             y1 = sy + quarter
  *             x2 = cx
  *             y2 = sy + quarter * 2             # <<<<<<<<<<<<<<
@@ -23221,7 +23901,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_y2 = (__pyx_v_sy + (__pyx_v_quarter * 2));
 
-      /* "mc_world_mcp/_preview_accel.pyx":636
+      /* "mc_world_mcp/_preview_accel.pyx":697
  *             x2 = cx
  *             y2 = sy + quarter * 2
  *             x3 = cx - half             # <<<<<<<<<<<<<<
@@ -23230,7 +23910,7 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_x3 = (__pyx_v_cx - __pyx_v_half);
 
-      /* "mc_world_mcp/_preview_accel.pyx":637
+      /* "mc_world_mcp/_preview_accel.pyx":698
  *             y2 = sy + quarter * 2
  *             x3 = cx - half
  *             y3 = sy + quarter             # <<<<<<<<<<<<<<
@@ -23239,226 +23919,412 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 */
       __pyx_v_y3 = (__pyx_v_sy + __pyx_v_quarter);
 
-      /* "mc_world_mcp/_preview_accel.pyx":639
+      /* "mc_world_mcp/_preview_accel.pyx":700
  *             y3 = sy + quarter
  * 
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx + 1, rz)             # <<<<<<<<<<<<<<
  *             if neighbor == sentinel:
- *                 neighbor = min_y
+ *                 neighbor = y
 */
-      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height(__pyx_v_heights, __pyx_v_width, __pyx_v_depth, __pyx_v_view_code, (__pyx_v_rx + 1), __pyx_v_rz); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 639, __pyx_L1_error)
+      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height(__pyx_v_heights, __pyx_v_width, __pyx_v_depth, __pyx_v_view_code, (__pyx_v_rx + 1), __pyx_v_rz); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 700, __pyx_L1_error)
       __pyx_v_neighbor = __pyx_t_14;
 
-      /* "mc_world_mcp/_preview_accel.pyx":640
+      /* "mc_world_mcp/_preview_accel.pyx":701
  * 
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx + 1, rz)
  *             if neighbor == sentinel:             # <<<<<<<<<<<<<<
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:
 */
       __pyx_t_7 = (__pyx_v_neighbor == __pyx_v_sentinel);
       if (__pyx_t_7) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":641
+        /* "mc_world_mcp/_preview_accel.pyx":702
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx + 1, rz)
  *             if neighbor == sentinel:
- *                 neighbor = min_y             # <<<<<<<<<<<<<<
+ *                 neighbor = y             # <<<<<<<<<<<<<<
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale
+ *                 drop_blocks = y - neighbor
 */
-        __pyx_v_neighbor = __pyx_v_min_y;
+        __pyx_v_neighbor = __pyx_v_y;
 
-        /* "mc_world_mcp/_preview_accel.pyx":640
+        /* "mc_world_mcp/_preview_accel.pyx":701
  * 
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx + 1, rz)
  *             if neighbor == sentinel:             # <<<<<<<<<<<<<<
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":642
+      /* "mc_world_mcp/_preview_accel.pyx":703
  *             if neighbor == sentinel:
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:             # <<<<<<<<<<<<<<
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:
 */
       __pyx_t_7 = (__pyx_v_y > __pyx_v_neighbor);
       if (__pyx_t_7) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":643
- *                 neighbor = min_y
+        /* "mc_world_mcp/_preview_accel.pyx":704
+ *                 neighbor = y
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale             # <<<<<<<<<<<<<<
- *                 if drop > 0:
- *                     _draw_quad(dst, canvas_w, canvas_h, x1, y1, x2, y2, x2, y2 + drop, x1, y1 + drop, color, 145)
+ *                 drop_blocks = y - neighbor             # <<<<<<<<<<<<<<
+ *                 if drop_blocks > side_depth:
+ *                     drop_blocks = side_depth
 */
-        __pyx_v_drop = ((__pyx_v_y - __pyx_v_neighbor) * __pyx_v_vertical_scale);
+        __pyx_v_drop_blocks = (__pyx_v_y - __pyx_v_neighbor);
 
-        /* "mc_world_mcp/_preview_accel.pyx":644
+        /* "mc_world_mcp/_preview_accel.pyx":705
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:             # <<<<<<<<<<<<<<
- *                     _draw_quad(dst, canvas_w, canvas_h, x1, y1, x2, y2, x2, y2 + drop, x1, y1 + drop, color, 145)
- * 
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:             # <<<<<<<<<<<<<<
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth
 */
-        __pyx_t_7 = (__pyx_v_drop > 0);
+        __pyx_t_7 = (__pyx_v_drop_blocks > __pyx_v_side_depth);
         if (__pyx_t_7) {
 
-          /* "mc_world_mcp/_preview_accel.pyx":645
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:
- *                     _draw_quad(dst, canvas_w, canvas_h, x1, y1, x2, y2, x2, y2 + drop, x1, y1 + drop, color, 145)             # <<<<<<<<<<<<<<
- * 
- *             neighbor = _closeup_height(heights, width, depth, view_code, rx, rz + 1)
+          /* "mc_world_mcp/_preview_accel.pyx":706
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:
+ *                     drop_blocks = side_depth             # <<<<<<<<<<<<<<
+ *                 side_base = index * side_depth
+ *                 for segment in range(drop_blocks):
 */
-          __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__pyx_v_dst, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_x1, __pyx_v_y1, __pyx_v_x2, __pyx_v_y2, __pyx_v_x2, (__pyx_v_y2 + __pyx_v_drop), __pyx_v_x1, (__pyx_v_y1 + __pyx_v_drop), __pyx_v_color, 0x91); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 645, __pyx_L1_error)
+          __pyx_v_drop_blocks = __pyx_v_side_depth;
 
-          /* "mc_world_mcp/_preview_accel.pyx":644
+          /* "mc_world_mcp/_preview_accel.pyx":705
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:             # <<<<<<<<<<<<<<
- *                     _draw_quad(dst, canvas_w, canvas_h, x1, y1, x2, y2, x2, y2 + drop, x1, y1 + drop, color, 145)
- * 
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:             # <<<<<<<<<<<<<<
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth
 */
         }
 
-        /* "mc_world_mcp/_preview_accel.pyx":642
+        /* "mc_world_mcp/_preview_accel.pyx":707
+ *                 if drop_blocks > side_depth:
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth             # <<<<<<<<<<<<<<
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]
+*/
+        __pyx_v_side_base = (__pyx_v_index * __pyx_v_side_depth);
+
+        /* "mc_world_mcp/_preview_accel.pyx":708
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth
+ *                 for segment in range(drop_blocks):             # <<<<<<<<<<<<<<
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:
+*/
+        __pyx_t_14 = __pyx_v_drop_blocks;
+        __pyx_t_15 = __pyx_t_14;
+        for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+          __pyx_v_segment = __pyx_t_16;
+
+          /* "mc_world_mcp/_preview_accel.pyx":709
+ *                 side_base = index * side_depth
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]             # <<<<<<<<<<<<<<
+ *                     if segment_color < 0:
+ *                         continue
+*/
+          if (unlikely(__pyx_v_side_colors == Py_None)) {
+            PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+            __PYX_ERR(0, 709, __pyx_L1_error)
+          }
+          __pyx_t_17 = (__pyx_v_side_base + __pyx_v_segment);
+          __pyx_t_18 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_side_colors, __pyx_t_17)); if (unlikely((__pyx_t_18 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 709, __pyx_L1_error)
+          __pyx_v_segment_color = ((int)__pyx_t_18);
+
+          /* "mc_world_mcp/_preview_accel.pyx":710
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:             # <<<<<<<<<<<<<<
+ *                         continue
+ *                     segment_top = segment * vertical_scale
+*/
+          __pyx_t_7 = (__pyx_v_segment_color < 0);
+          if (__pyx_t_7) {
+
+            /* "mc_world_mcp/_preview_accel.pyx":711
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:
+ *                         continue             # <<<<<<<<<<<<<<
+ *                     segment_top = segment * vertical_scale
+ *                     segment_bottom = (segment + 1) * vertical_scale
+*/
+            goto __pyx_L20_continue;
+
+            /* "mc_world_mcp/_preview_accel.pyx":710
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:             # <<<<<<<<<<<<<<
+ *                         continue
+ *                     segment_top = segment * vertical_scale
+*/
+          }
+
+          /* "mc_world_mcp/_preview_accel.pyx":712
+ *                     if segment_color < 0:
+ *                         continue
+ *                     segment_top = segment * vertical_scale             # <<<<<<<<<<<<<<
+ *                     segment_bottom = (segment + 1) * vertical_scale
+ *                     _draw_quad(
+*/
+          __pyx_v_segment_top = (__pyx_v_segment * __pyx_v_vertical_scale);
+
+          /* "mc_world_mcp/_preview_accel.pyx":713
+ *                         continue
+ *                     segment_top = segment * vertical_scale
+ *                     segment_bottom = (segment + 1) * vertical_scale             # <<<<<<<<<<<<<<
+ *                     _draw_quad(
+ *                         dst,
+*/
+          __pyx_v_segment_bottom = ((__pyx_v_segment + 1) * __pyx_v_vertical_scale);
+
+          /* "mc_world_mcp/_preview_accel.pyx":714
+ *                     segment_top = segment * vertical_scale
+ *                     segment_bottom = (segment + 1) * vertical_scale
+ *                     _draw_quad(             # <<<<<<<<<<<<<<
+ *                         dst,
+ *                         canvas_w,
+*/
+          __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__pyx_v_dst, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_x1, (__pyx_v_y1 + __pyx_v_segment_top), __pyx_v_x2, (__pyx_v_y2 + __pyx_v_segment_top), __pyx_v_x2, (__pyx_v_y2 + __pyx_v_segment_bottom), __pyx_v_x1, (__pyx_v_y1 + __pyx_v_segment_bottom), __pyx_v_segment_color, 0x91); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 714, __pyx_L1_error)
+          __pyx_L20_continue:;
+        }
+
+        /* "mc_world_mcp/_preview_accel.pyx":703
  *             if neighbor == sentinel:
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:             # <<<<<<<<<<<<<<
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":647
- *                     _draw_quad(dst, canvas_w, canvas_h, x1, y1, x2, y2, x2, y2 + drop, x1, y1 + drop, color, 145)
+      /* "mc_world_mcp/_preview_accel.pyx":730
+ *                     )
  * 
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx, rz + 1)             # <<<<<<<<<<<<<<
  *             if neighbor == sentinel:
- *                 neighbor = min_y
+ *                 neighbor = y
 */
-      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height(__pyx_v_heights, __pyx_v_width, __pyx_v_depth, __pyx_v_view_code, __pyx_v_rx, (__pyx_v_rz + 1)); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 647, __pyx_L1_error)
+      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__closeup_height(__pyx_v_heights, __pyx_v_width, __pyx_v_depth, __pyx_v_view_code, __pyx_v_rx, (__pyx_v_rz + 1)); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 730, __pyx_L1_error)
       __pyx_v_neighbor = __pyx_t_14;
 
-      /* "mc_world_mcp/_preview_accel.pyx":648
+      /* "mc_world_mcp/_preview_accel.pyx":731
  * 
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx, rz + 1)
  *             if neighbor == sentinel:             # <<<<<<<<<<<<<<
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:
 */
       __pyx_t_7 = (__pyx_v_neighbor == __pyx_v_sentinel);
       if (__pyx_t_7) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":649
+        /* "mc_world_mcp/_preview_accel.pyx":732
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx, rz + 1)
  *             if neighbor == sentinel:
- *                 neighbor = min_y             # <<<<<<<<<<<<<<
+ *                 neighbor = y             # <<<<<<<<<<<<<<
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale
+ *                 drop_blocks = y - neighbor
 */
-        __pyx_v_neighbor = __pyx_v_min_y;
+        __pyx_v_neighbor = __pyx_v_y;
 
-        /* "mc_world_mcp/_preview_accel.pyx":648
+        /* "mc_world_mcp/_preview_accel.pyx":731
  * 
  *             neighbor = _closeup_height(heights, width, depth, view_code, rx, rz + 1)
  *             if neighbor == sentinel:             # <<<<<<<<<<<<<<
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":650
+      /* "mc_world_mcp/_preview_accel.pyx":733
  *             if neighbor == sentinel:
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:             # <<<<<<<<<<<<<<
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:
 */
       __pyx_t_7 = (__pyx_v_y > __pyx_v_neighbor);
       if (__pyx_t_7) {
 
-        /* "mc_world_mcp/_preview_accel.pyx":651
- *                 neighbor = min_y
+        /* "mc_world_mcp/_preview_accel.pyx":734
+ *                 neighbor = y
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale             # <<<<<<<<<<<<<<
- *                 if drop > 0:
- *                     _draw_quad(dst, canvas_w, canvas_h, x2, y2, x3, y3, x3, y3 + drop, x2, y2 + drop, color, 115)
+ *                 drop_blocks = y - neighbor             # <<<<<<<<<<<<<<
+ *                 if drop_blocks > side_depth:
+ *                     drop_blocks = side_depth
 */
-        __pyx_v_drop = ((__pyx_v_y - __pyx_v_neighbor) * __pyx_v_vertical_scale);
+        __pyx_v_drop_blocks = (__pyx_v_y - __pyx_v_neighbor);
 
-        /* "mc_world_mcp/_preview_accel.pyx":652
+        /* "mc_world_mcp/_preview_accel.pyx":735
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:             # <<<<<<<<<<<<<<
- *                     _draw_quad(dst, canvas_w, canvas_h, x2, y2, x3, y3, x3, y3 + drop, x2, y2 + drop, color, 115)
- * 
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:             # <<<<<<<<<<<<<<
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth
 */
-        __pyx_t_7 = (__pyx_v_drop > 0);
+        __pyx_t_7 = (__pyx_v_drop_blocks > __pyx_v_side_depth);
         if (__pyx_t_7) {
 
-          /* "mc_world_mcp/_preview_accel.pyx":653
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:
- *                     _draw_quad(dst, canvas_w, canvas_h, x2, y2, x3, y3, x3, y3 + drop, x2, y2 + drop, color, 115)             # <<<<<<<<<<<<<<
- * 
- *             shade = 235 + _clamp_int((y - min_y) * 20 // _max_int(1, max_y - min_y + 1), 0, 20)
+          /* "mc_world_mcp/_preview_accel.pyx":736
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:
+ *                     drop_blocks = side_depth             # <<<<<<<<<<<<<<
+ *                 side_base = index * side_depth
+ *                 for segment in range(drop_blocks):
 */
-          __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__pyx_v_dst, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_x2, __pyx_v_y2, __pyx_v_x3, __pyx_v_y3, __pyx_v_x3, (__pyx_v_y3 + __pyx_v_drop), __pyx_v_x2, (__pyx_v_y2 + __pyx_v_drop), __pyx_v_color, 0x73); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 653, __pyx_L1_error)
+          __pyx_v_drop_blocks = __pyx_v_side_depth;
 
-          /* "mc_world_mcp/_preview_accel.pyx":652
+          /* "mc_world_mcp/_preview_accel.pyx":735
  *             if y > neighbor:
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:             # <<<<<<<<<<<<<<
- *                     _draw_quad(dst, canvas_w, canvas_h, x2, y2, x3, y3, x3, y3 + drop, x2, y2 + drop, color, 115)
- * 
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:             # <<<<<<<<<<<<<<
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth
 */
         }
 
-        /* "mc_world_mcp/_preview_accel.pyx":650
+        /* "mc_world_mcp/_preview_accel.pyx":737
+ *                 if drop_blocks > side_depth:
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth             # <<<<<<<<<<<<<<
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]
+*/
+        __pyx_v_side_base = (__pyx_v_index * __pyx_v_side_depth);
+
+        /* "mc_world_mcp/_preview_accel.pyx":738
+ *                     drop_blocks = side_depth
+ *                 side_base = index * side_depth
+ *                 for segment in range(drop_blocks):             # <<<<<<<<<<<<<<
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:
+*/
+        __pyx_t_14 = __pyx_v_drop_blocks;
+        __pyx_t_15 = __pyx_t_14;
+        for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+          __pyx_v_segment = __pyx_t_16;
+
+          /* "mc_world_mcp/_preview_accel.pyx":739
+ *                 side_base = index * side_depth
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]             # <<<<<<<<<<<<<<
+ *                     if segment_color < 0:
+ *                         continue
+*/
+          if (unlikely(__pyx_v_side_colors == Py_None)) {
+            PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+            __PYX_ERR(0, 739, __pyx_L1_error)
+          }
+          __pyx_t_18 = (__pyx_v_side_base + __pyx_v_segment);
+          __pyx_t_17 = __Pyx_PyLong_As_int(__Pyx_PyList_GET_ITEM(__pyx_v_side_colors, __pyx_t_18)); if (unlikely((__pyx_t_17 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 739, __pyx_L1_error)
+          __pyx_v_segment_color = ((int)__pyx_t_17);
+
+          /* "mc_world_mcp/_preview_accel.pyx":740
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:             # <<<<<<<<<<<<<<
+ *                         continue
+ *                     segment_top = segment * vertical_scale
+*/
+          __pyx_t_7 = (__pyx_v_segment_color < 0);
+          if (__pyx_t_7) {
+
+            /* "mc_world_mcp/_preview_accel.pyx":741
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:
+ *                         continue             # <<<<<<<<<<<<<<
+ *                     segment_top = segment * vertical_scale
+ *                     segment_bottom = (segment + 1) * vertical_scale
+*/
+            goto __pyx_L26_continue;
+
+            /* "mc_world_mcp/_preview_accel.pyx":740
+ *                 for segment in range(drop_blocks):
+ *                     segment_color = <int>side_colors[side_base + segment]
+ *                     if segment_color < 0:             # <<<<<<<<<<<<<<
+ *                         continue
+ *                     segment_top = segment * vertical_scale
+*/
+          }
+
+          /* "mc_world_mcp/_preview_accel.pyx":742
+ *                     if segment_color < 0:
+ *                         continue
+ *                     segment_top = segment * vertical_scale             # <<<<<<<<<<<<<<
+ *                     segment_bottom = (segment + 1) * vertical_scale
+ *                     _draw_quad(
+*/
+          __pyx_v_segment_top = (__pyx_v_segment * __pyx_v_vertical_scale);
+
+          /* "mc_world_mcp/_preview_accel.pyx":743
+ *                         continue
+ *                     segment_top = segment * vertical_scale
+ *                     segment_bottom = (segment + 1) * vertical_scale             # <<<<<<<<<<<<<<
+ *                     _draw_quad(
+ *                         dst,
+*/
+          __pyx_v_segment_bottom = ((__pyx_v_segment + 1) * __pyx_v_vertical_scale);
+
+          /* "mc_world_mcp/_preview_accel.pyx":744
+ *                     segment_top = segment * vertical_scale
+ *                     segment_bottom = (segment + 1) * vertical_scale
+ *                     _draw_quad(             # <<<<<<<<<<<<<<
+ *                         dst,
+ *                         canvas_w,
+*/
+          __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__pyx_v_dst, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_x2, (__pyx_v_y2 + __pyx_v_segment_top), __pyx_v_x3, (__pyx_v_y3 + __pyx_v_segment_top), __pyx_v_x3, (__pyx_v_y3 + __pyx_v_segment_bottom), __pyx_v_x2, (__pyx_v_y2 + __pyx_v_segment_bottom), __pyx_v_segment_color, 0x73); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 744, __pyx_L1_error)
+          __pyx_L26_continue:;
+        }
+
+        /* "mc_world_mcp/_preview_accel.pyx":733
  *             if neighbor == sentinel:
- *                 neighbor = min_y
+ *                 neighbor = y
  *             if y > neighbor:             # <<<<<<<<<<<<<<
- *                 drop = (y - neighbor) * vertical_scale
- *                 if drop > 0:
+ *                 drop_blocks = y - neighbor
+ *                 if drop_blocks > side_depth:
 */
       }
 
-      /* "mc_world_mcp/_preview_accel.pyx":655
- *                     _draw_quad(dst, canvas_w, canvas_h, x2, y2, x3, y3, x3, y3 + drop, x2, y2 + drop, color, 115)
+      /* "mc_world_mcp/_preview_accel.pyx":760
+ *                     )
  * 
  *             shade = 235 + _clamp_int((y - min_y) * 20 // _max_int(1, max_y - min_y + 1), 0, 20)             # <<<<<<<<<<<<<<
  *             _draw_quad(dst, canvas_w, canvas_h, x0, y0, x1, y1, x2, y2, x3, y3, color, shade)
  *     return bytes(out)
 */
-      __pyx_t_15 = ((__pyx_v_y - __pyx_v_min_y) * 20);
-      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(1, ((__pyx_v_max_y - __pyx_v_min_y) + 1)); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 655, __pyx_L1_error)
+      __pyx_t_19 = ((__pyx_v_y - __pyx_v_min_y) * 20);
+      __pyx_t_14 = __pyx_f_12mc_world_mcp_14_preview_accel__max_int(1, ((__pyx_v_max_y - __pyx_v_min_y) + 1)); if (unlikely(__pyx_t_14 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 760, __pyx_L1_error)
       if (unlikely(__pyx_t_14 == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-        __PYX_ERR(0, 655, __pyx_L1_error)
+        __PYX_ERR(0, 760, __pyx_L1_error)
       }
-      else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_t_14 == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_t_15))) {
+      else if (sizeof(long) == sizeof(long) && (!(((int)-1) > 0)) && unlikely(__pyx_t_14 == (int)-1)  && unlikely(__Pyx_UNARY_NEG_WOULD_OVERFLOW(__pyx_t_19))) {
         PyErr_SetString(PyExc_OverflowError, "value too large to perform division");
-        __PYX_ERR(0, 655, __pyx_L1_error)
+        __PYX_ERR(0, 760, __pyx_L1_error)
       }
-      __pyx_t_16 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__Pyx_div_long(__pyx_t_15, __pyx_t_14, 0), 0, 20); if (unlikely(__pyx_t_16 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 655, __pyx_L1_error)
-      __pyx_v_shade = (0xEB + __pyx_t_16);
+      __pyx_t_15 = __pyx_f_12mc_world_mcp_14_preview_accel__clamp_int(__Pyx_div_long(__pyx_t_19, __pyx_t_14, 0), 0, 20); if (unlikely(__pyx_t_15 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 760, __pyx_L1_error)
+      __pyx_v_shade = (0xEB + __pyx_t_15);
 
-      /* "mc_world_mcp/_preview_accel.pyx":656
+      /* "mc_world_mcp/_preview_accel.pyx":761
  * 
  *             shade = 235 + _clamp_int((y - min_y) * 20 // _max_int(1, max_y - min_y + 1), 0, 20)
  *             _draw_quad(dst, canvas_w, canvas_h, x0, y0, x1, y1, x2, y2, x3, y3, color, shade)             # <<<<<<<<<<<<<<
  *     return bytes(out)
 */
-      __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__pyx_v_dst, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_x0, __pyx_v_y0, __pyx_v_x1, __pyx_v_y1, __pyx_v_x2, __pyx_v_y2, __pyx_v_x3, __pyx_v_y3, __pyx_v_color, __pyx_v_shade); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 656, __pyx_L1_error)
+      __pyx_f_12mc_world_mcp_14_preview_accel__draw_quad(__pyx_v_dst, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_x0, __pyx_v_y0, __pyx_v_x1, __pyx_v_y1, __pyx_v_x2, __pyx_v_y2, __pyx_v_x3, __pyx_v_y3, __pyx_v_color, __pyx_v_shade); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 761, __pyx_L1_error)
       __pyx_L10_continue:;
     }
   }
 
-  /* "mc_world_mcp/_preview_accel.pyx":657
+  /* "mc_world_mcp/_preview_accel.pyx":762
  *             shade = 235 + _clamp_int((y - min_y) * 20 // _max_int(1, max_y - min_y + 1), 0, 20)
  *             _draw_quad(dst, canvas_w, canvas_h, x0, y0, x1, y1, x2, y2, x3, y3, color, shade)
  *     return bytes(out)             # <<<<<<<<<<<<<<
@@ -23470,14 +24336,14 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
     PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_out};
     __pyx_t_1 = __Pyx_PyObject_FastCall((PyObject*)(&PyBytes_Type), __pyx_callargs+__pyx_t_4, (2-__pyx_t_4) | (__pyx_t_4*__Pyx_PY_VECTORCALL_ARGUMENTS_OFFSET));
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 657, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 762, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   }
   __pyx_r = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":567
+  /* "mc_world_mcp/_preview_accel.pyx":621
  * 
  * 
  * cpdef bytes render_closeup_map_rgba(             # <<<<<<<<<<<<<<
@@ -23502,15 +24368,15 @@ static PyObject *__pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_15render_closeup_map_rgba(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_17render_closeup_map_rgba(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_12mc_world_mcp_14_preview_accel_15render_closeup_map_rgba = {"render_closeup_map_rgba", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12mc_world_mcp_14_preview_accel_15render_closeup_map_rgba, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_15render_closeup_map_rgba(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_12mc_world_mcp_14_preview_accel_17render_closeup_map_rgba = {"render_closeup_map_rgba", (PyCFunction)(void(*)(void))(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12mc_world_mcp_14_preview_accel_17render_closeup_map_rgba, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_12mc_world_mcp_14_preview_accel_17render_closeup_map_rgba(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -23519,6 +24385,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 ) {
   PyObject *__pyx_v_heights = 0;
   PyObject *__pyx_v_colors = 0;
+  PyObject *__pyx_v_side_colors = 0;
   int __pyx_v_width;
   int __pyx_v_depth;
   int __pyx_v_canvas_w;
@@ -23529,11 +24396,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   int __pyx_v_min_y;
   int __pyx_v_max_y;
   PyObject *__pyx_v_background = 0;
+  int __pyx_v_side_depth;
   #if !CYTHON_METH_FASTCALL
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   #endif
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+  PyObject* values[14] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -23549,111 +24417,125 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   #endif
   __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
   {
-    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_heights,&__pyx_mstate_global->__pyx_n_u_colors,&__pyx_mstate_global->__pyx_n_u_width,&__pyx_mstate_global->__pyx_n_u_depth,&__pyx_mstate_global->__pyx_n_u_canvas_w,&__pyx_mstate_global->__pyx_n_u_canvas_h,&__pyx_mstate_global->__pyx_n_u_view_code,&__pyx_mstate_global->__pyx_n_u_scale,&__pyx_mstate_global->__pyx_n_u_vertical_scale,&__pyx_mstate_global->__pyx_n_u_min_y,&__pyx_mstate_global->__pyx_n_u_max_y,&__pyx_mstate_global->__pyx_n_u_background,0};
+    PyObject ** const __pyx_pyargnames[] = {&__pyx_mstate_global->__pyx_n_u_heights,&__pyx_mstate_global->__pyx_n_u_colors,&__pyx_mstate_global->__pyx_n_u_side_colors,&__pyx_mstate_global->__pyx_n_u_width,&__pyx_mstate_global->__pyx_n_u_depth,&__pyx_mstate_global->__pyx_n_u_canvas_w,&__pyx_mstate_global->__pyx_n_u_canvas_h,&__pyx_mstate_global->__pyx_n_u_view_code,&__pyx_mstate_global->__pyx_n_u_scale,&__pyx_mstate_global->__pyx_n_u_vertical_scale,&__pyx_mstate_global->__pyx_n_u_min_y,&__pyx_mstate_global->__pyx_n_u_max_y,&__pyx_mstate_global->__pyx_n_u_background,&__pyx_mstate_global->__pyx_n_u_side_depth,0};
     const Py_ssize_t __pyx_kwds_len = (__pyx_kwds) ? __Pyx_NumKwargs_FASTCALL(__pyx_kwds) : 0;
-    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 567, __pyx_L3_error)
+    if (unlikely(__pyx_kwds_len) < 0) __PYX_ERR(0, 621, __pyx_L3_error)
     if (__pyx_kwds_len > 0) {
       switch (__pyx_nargs) {
+        case 14:
+        values[13] = __Pyx_ArgRef_FASTCALL(__pyx_args, 13);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[13])) __PYX_ERR(0, 621, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
+        case 13:
+        values[12] = __Pyx_ArgRef_FASTCALL(__pyx_args, 12);
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[12])) __PYX_ERR(0, 621, __pyx_L3_error)
+        CYTHON_FALLTHROUGH;
         case 12:
         values[11] = __Pyx_ArgRef_FASTCALL(__pyx_args, 11);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case 11:
         values[10] = __Pyx_ArgRef_FASTCALL(__pyx_args, 10);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case 10:
         values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  9:
         values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  8:
         values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  7:
         values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  6:
         values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  5:
         values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  4:
         values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  3:
         values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  2:
         values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  1:
         values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 567, __pyx_L3_error)
+        if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 621, __pyx_L3_error)
         CYTHON_FALLTHROUGH;
         case  0: break;
         default: goto __pyx_L5_argtuple_error;
       }
       const Py_ssize_t kwd_pos_args = __pyx_nargs;
-      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "render_closeup_map_rgba", 0) < (0)) __PYX_ERR(0, 567, __pyx_L3_error)
-      for (Py_ssize_t i = __pyx_nargs; i < 12; i++) {
-        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("render_closeup_map_rgba", 1, 12, 12, i); __PYX_ERR(0, 567, __pyx_L3_error) }
+      if (__Pyx_ParseKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values, kwd_pos_args, __pyx_kwds_len, "render_closeup_map_rgba", 0) < (0)) __PYX_ERR(0, 621, __pyx_L3_error)
+      for (Py_ssize_t i = __pyx_nargs; i < 14; i++) {
+        if (unlikely(!values[i])) { __Pyx_RaiseArgtupleInvalid("render_closeup_map_rgba", 1, 14, 14, i); __PYX_ERR(0, 621, __pyx_L3_error) }
       }
-    } else if (unlikely(__pyx_nargs != 12)) {
+    } else if (unlikely(__pyx_nargs != 14)) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = __Pyx_ArgRef_FASTCALL(__pyx_args, 0);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[0])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[1] = __Pyx_ArgRef_FASTCALL(__pyx_args, 1);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[1])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[2] = __Pyx_ArgRef_FASTCALL(__pyx_args, 2);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[2])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[3] = __Pyx_ArgRef_FASTCALL(__pyx_args, 3);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[3])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[4] = __Pyx_ArgRef_FASTCALL(__pyx_args, 4);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[4])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[5] = __Pyx_ArgRef_FASTCALL(__pyx_args, 5);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[5])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[6] = __Pyx_ArgRef_FASTCALL(__pyx_args, 6);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[6])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[7] = __Pyx_ArgRef_FASTCALL(__pyx_args, 7);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[7])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[8] = __Pyx_ArgRef_FASTCALL(__pyx_args, 8);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[8])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[9] = __Pyx_ArgRef_FASTCALL(__pyx_args, 9);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[9])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[10] = __Pyx_ArgRef_FASTCALL(__pyx_args, 10);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[10])) __PYX_ERR(0, 621, __pyx_L3_error)
       values[11] = __Pyx_ArgRef_FASTCALL(__pyx_args, 11);
-      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 567, __pyx_L3_error)
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[11])) __PYX_ERR(0, 621, __pyx_L3_error)
+      values[12] = __Pyx_ArgRef_FASTCALL(__pyx_args, 12);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[12])) __PYX_ERR(0, 621, __pyx_L3_error)
+      values[13] = __Pyx_ArgRef_FASTCALL(__pyx_args, 13);
+      if (!CYTHON_ASSUME_SAFE_MACROS && unlikely(!values[13])) __PYX_ERR(0, 621, __pyx_L3_error)
     }
     __pyx_v_heights = ((PyObject*)values[0]);
     __pyx_v_colors = ((PyObject*)values[1]);
-    __pyx_v_width = __Pyx_PyLong_As_int(values[2]); if (unlikely((__pyx_v_width == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 570, __pyx_L3_error)
-    __pyx_v_depth = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 571, __pyx_L3_error)
-    __pyx_v_canvas_w = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_canvas_w == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 572, __pyx_L3_error)
-    __pyx_v_canvas_h = __Pyx_PyLong_As_int(values[5]); if (unlikely((__pyx_v_canvas_h == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 573, __pyx_L3_error)
-    __pyx_v_view_code = __Pyx_PyLong_As_int(values[6]); if (unlikely((__pyx_v_view_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 574, __pyx_L3_error)
-    __pyx_v_scale = __Pyx_PyLong_As_int(values[7]); if (unlikely((__pyx_v_scale == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 575, __pyx_L3_error)
-    __pyx_v_vertical_scale = __Pyx_PyLong_As_int(values[8]); if (unlikely((__pyx_v_vertical_scale == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 576, __pyx_L3_error)
-    __pyx_v_min_y = __Pyx_PyLong_As_int(values[9]); if (unlikely((__pyx_v_min_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 577, __pyx_L3_error)
-    __pyx_v_max_y = __Pyx_PyLong_As_int(values[10]); if (unlikely((__pyx_v_max_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 578, __pyx_L3_error)
-    __pyx_v_background = ((PyObject*)values[11]);
+    __pyx_v_side_colors = ((PyObject*)values[2]);
+    __pyx_v_width = __Pyx_PyLong_As_int(values[3]); if (unlikely((__pyx_v_width == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 625, __pyx_L3_error)
+    __pyx_v_depth = __Pyx_PyLong_As_int(values[4]); if (unlikely((__pyx_v_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 626, __pyx_L3_error)
+    __pyx_v_canvas_w = __Pyx_PyLong_As_int(values[5]); if (unlikely((__pyx_v_canvas_w == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 627, __pyx_L3_error)
+    __pyx_v_canvas_h = __Pyx_PyLong_As_int(values[6]); if (unlikely((__pyx_v_canvas_h == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 628, __pyx_L3_error)
+    __pyx_v_view_code = __Pyx_PyLong_As_int(values[7]); if (unlikely((__pyx_v_view_code == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 629, __pyx_L3_error)
+    __pyx_v_scale = __Pyx_PyLong_As_int(values[8]); if (unlikely((__pyx_v_scale == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
+    __pyx_v_vertical_scale = __Pyx_PyLong_As_int(values[9]); if (unlikely((__pyx_v_vertical_scale == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 631, __pyx_L3_error)
+    __pyx_v_min_y = __Pyx_PyLong_As_int(values[10]); if (unlikely((__pyx_v_min_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 632, __pyx_L3_error)
+    __pyx_v_max_y = __Pyx_PyLong_As_int(values[11]); if (unlikely((__pyx_v_max_y == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 633, __pyx_L3_error)
+    __pyx_v_background = ((PyObject*)values[12]);
+    __pyx_v_side_depth = __Pyx_PyLong_As_int(values[13]); if (unlikely((__pyx_v_side_depth == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 635, __pyx_L3_error)
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("render_closeup_map_rgba", 1, 12, 12, __pyx_nargs); __PYX_ERR(0, 567, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("render_closeup_map_rgba", 1, 14, 14, __pyx_nargs); __PYX_ERR(0, 621, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -23664,10 +24546,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_heights), (&PyList_Type), 1, "heights", 1))) __PYX_ERR(0, 568, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_colors), (&PyList_Type), 1, "colors", 1))) __PYX_ERR(0, 569, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_background), (&PyTuple_Type), 1, "background", 1))) __PYX_ERR(0, 579, __pyx_L1_error)
-  __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_14render_closeup_map_rgba(__pyx_self, __pyx_v_heights, __pyx_v_colors, __pyx_v_width, __pyx_v_depth, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_view_code, __pyx_v_scale, __pyx_v_vertical_scale, __pyx_v_min_y, __pyx_v_max_y, __pyx_v_background);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_heights), (&PyList_Type), 1, "heights", 1))) __PYX_ERR(0, 622, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_colors), (&PyList_Type), 1, "colors", 1))) __PYX_ERR(0, 623, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_side_colors), (&PyList_Type), 1, "side_colors", 1))) __PYX_ERR(0, 624, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_background), (&PyTuple_Type), 1, "background", 1))) __PYX_ERR(0, 634, __pyx_L1_error)
+  __pyx_r = __pyx_pf_12mc_world_mcp_14_preview_accel_16render_closeup_map_rgba(__pyx_self, __pyx_v_heights, __pyx_v_colors, __pyx_v_side_colors, __pyx_v_width, __pyx_v_depth, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_view_code, __pyx_v_scale, __pyx_v_vertical_scale, __pyx_v_min_y, __pyx_v_max_y, __pyx_v_background, __pyx_v_side_depth);
 
   /* function exit code */
   goto __pyx_L0;
@@ -23686,7 +24569,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_14render_closeup_map_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_heights, PyObject *__pyx_v_colors, int __pyx_v_width, int __pyx_v_depth, int __pyx_v_canvas_w, int __pyx_v_canvas_h, int __pyx_v_view_code, int __pyx_v_scale, int __pyx_v_vertical_scale, int __pyx_v_min_y, int __pyx_v_max_y, PyObject *__pyx_v_background) {
+static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_16render_closeup_map_rgba(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_heights, PyObject *__pyx_v_colors, PyObject *__pyx_v_side_colors, int __pyx_v_width, int __pyx_v_depth, int __pyx_v_canvas_w, int __pyx_v_canvas_h, int __pyx_v_view_code, int __pyx_v_scale, int __pyx_v_vertical_scale, int __pyx_v_min_y, int __pyx_v_max_y, PyObject *__pyx_v_background, int __pyx_v_side_depth) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -23695,7 +24578,7 @@ static PyObject *__pyx_pf_12mc_world_mcp_14_preview_accel_14render_closeup_map_r
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("render_closeup_map_rgba", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba(__pyx_v_heights, __pyx_v_colors, __pyx_v_width, __pyx_v_depth, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_view_code, __pyx_v_scale, __pyx_v_vertical_scale, __pyx_v_min_y, __pyx_v_max_y, __pyx_v_background, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 567, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_12mc_world_mcp_14_preview_accel_render_closeup_map_rgba(__pyx_v_heights, __pyx_v_colors, __pyx_v_side_colors, __pyx_v_width, __pyx_v_depth, __pyx_v_canvas_w, __pyx_v_canvas_h, __pyx_v_view_code, __pyx_v_scale, __pyx_v_vertical_scale, __pyx_v_min_y, __pyx_v_max_y, __pyx_v_background, __pyx_v_side_depth, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 621, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -25544,124 +26427,148 @@ __Pyx_RefNannySetupContext("PyInit__preview_accel", 0);
   if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_pyx_unpickle_Enum, __pyx_t_4) < (0)) __PYX_ERR(1, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":21
+  /* "mc_world_mcp/_preview_accel.pyx":9
+ * from libc.stdint cimport int64_t, uint64_t
+ * 
+ * PREVIEW_ACCEL_API = 2             # <<<<<<<<<<<<<<
+ * 
+ * 
+*/
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_PREVIEW_ACCEL_API, __pyx_mstate_global->__pyx_int_2) < (0)) __PYX_ERR(0, 9, __pyx_L1_error)
+
+  /* "mc_world_mcp/_preview_accel.pyx":23
  * 
  * 
  * cpdef list decode_indices(object data, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
  *     cdef list values = [0] * 4096
  *     if data is None:
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_1decode_indices, 0, __pyx_mstate_global->__pyx_n_u_decode_indices, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_1decode_indices, 0, __pyx_mstate_global->__pyx_n_u_decode_indices, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[0])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_decode_indices, __pyx_t_4) < (0)) __PYX_ERR(0, 21, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_decode_indices, __pyx_t_4) < (0)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":46
+  /* "mc_world_mcp/_preview_accel.pyx":48
  * 
  * 
  * cpdef list count_palette_indices(object data, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
  *     cdef list counts = [0] * palette_size
  *     if palette_size <= 0:
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_3count_palette_indices, 0, __pyx_mstate_global->__pyx_n_u_count_palette_indices, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_3count_palette_indices, 0, __pyx_mstate_global->__pyx_n_u_count_palette_indices, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[1])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_count_palette_indices, __pyx_t_4) < (0)) __PYX_ERR(0, 46, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_count_palette_indices, __pyx_t_4) < (0)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":78
+  /* "mc_world_mcp/_preview_accel.pyx":80
  * 
  * 
  * cpdef list encode_indices(list indices, Py_ssize_t palette_size):             # <<<<<<<<<<<<<<
  *     if palette_size <= 1:
  *         return []
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_5encode_indices, 0, __pyx_mstate_global->__pyx_n_u_encode_indices, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_5encode_indices, 0, __pyx_mstate_global->__pyx_n_u_encode_indices, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[2])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_encode_indices, __pyx_t_4) < (0)) __PYX_ERR(0, 78, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_encode_indices, __pyx_t_4) < (0)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":112
+  /* "mc_world_mcp/_preview_accel.pyx":114
  * 
  * 
  * cpdef list fill_top_projection(             # <<<<<<<<<<<<<<
  *     list indices,
  *     list palette,
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_7fill_top_projection, 0, __pyx_mstate_global->__pyx_n_u_fill_top_projection, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_7fill_top_projection, 0, __pyx_mstate_global->__pyx_n_u_fill_top_projection, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[3])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_fill_top_projection, __pyx_t_4) < (0)) __PYX_ERR(0, 112, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_fill_top_projection, __pyx_t_4) < (0)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":155
+  /* "mc_world_mcp/_preview_accel.pyx":157
  * 
  * 
  * cpdef list fill_floor_projection(             # <<<<<<<<<<<<<<
  *     list indices,
  *     list palette,
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_9fill_floor_projection, 0, __pyx_mstate_global->__pyx_n_u_fill_floor_projection, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_9fill_floor_projection, 0, __pyx_mstate_global->__pyx_n_u_fill_floor_projection, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[4])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_fill_floor_projection, __pyx_t_4) < (0)) __PYX_ERR(0, 155, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_fill_floor_projection, __pyx_t_4) < (0)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":209
+  /* "mc_world_mcp/_preview_accel.pyx":211
+ * 
+ * 
+ * cpdef int fill_closeup_side_samples(             # <<<<<<<<<<<<<<
+ *     list indices,
+ *     list palette_base_names,
+*/
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_11fill_closeup_side_samples, 0, __pyx_mstate_global->__pyx_n_u_fill_closeup_side_samples, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
+  PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
+  #endif
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_fill_closeup_side_samples, __pyx_t_4) < (0)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+
+  /* "mc_world_mcp/_preview_accel.pyx":263
  * 
  * 
  * cpdef list project_template_states(object template_blocks, int width, int height, int size_y, int axis_code):             # <<<<<<<<<<<<<<
  *     cdef Py_ssize_t pixel_count = width * height
  *     cdef list depths = [-1] * pixel_count
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_11project_template_states, 0, __pyx_mstate_global->__pyx_n_u_project_template_states, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[5])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_13project_template_states, 0, __pyx_mstate_global->__pyx_n_u_project_template_states, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_project_template_states, __pyx_t_4) < (0)) __PYX_ERR(0, 209, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_project_template_states, __pyx_t_4) < (0)) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":427
+  /* "mc_world_mcp/_preview_accel.pyx":481
  * 
  * 
  * cpdef bytes render_item_view_rgba(bytes source, int src_w, int src_h, int view_code, int size, tuple background):             # <<<<<<<<<<<<<<
  *     cdef const unsigned char[::1] src = source
  *     cdef bytearray out = bytearray(size * size * 4)
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_13render_item_view_rgba, 0, __pyx_mstate_global->__pyx_n_u_render_item_view_rgba, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[6])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 427, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_15render_item_view_rgba, 0, __pyx_mstate_global->__pyx_n_u_render_item_view_rgba, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 481, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_render_item_view_rgba, __pyx_t_4) < (0)) __PYX_ERR(0, 427, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_render_item_view_rgba, __pyx_t_4) < (0)) __PYX_ERR(0, 481, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "mc_world_mcp/_preview_accel.pyx":567
+  /* "mc_world_mcp/_preview_accel.pyx":621
  * 
  * 
  * cpdef bytes render_closeup_map_rgba(             # <<<<<<<<<<<<<<
  *     list heights,
  *     list colors,
 */
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_15render_closeup_map_rgba, 0, __pyx_mstate_global->__pyx_n_u_render_closeup_map_rgba, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[7])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 567, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_12mc_world_mcp_14_preview_accel_17render_closeup_map_rgba, 0, __pyx_mstate_global->__pyx_n_u_render_closeup_map_rgba, NULL, __pyx_mstate_global->__pyx_n_u_mc_world_mcp__preview_accel, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[8])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 621, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030E0000
   PyUnstable_Object_EnableDeferredRefcount(__pyx_t_4);
   #endif
-  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_render_closeup_map_rgba, __pyx_t_4) < (0)) __PYX_ERR(0, 567, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_mstate_global->__pyx_d, __pyx_mstate_global->__pyx_n_u_render_closeup_map_rgba, __pyx_t_4) < (0)) __PYX_ERR(0, 621, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "mc_world_mcp/_preview_accel.pyx":1
@@ -25759,14 +26666,14 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_slice[0]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_slice[0]);
 
-  /* "mc_world_mcp/_preview_accel.pyx":229
+  /* "mc_world_mcp/_preview_accel.pyx":283
  *         py = <int>int(pos[1])
  *         pz = <int>int(pos[2])
  *         state = <int>int(block.get("state", 0))             # <<<<<<<<<<<<<<
  *         if axis_code == 0:
  *             image_x = px
 */
-  __pyx_mstate_global->__pyx_tuple[1] = PyTuple_Pack(2, __pyx_mstate_global->__pyx_n_u_state, __pyx_mstate_global->__pyx_int_0); if (unlikely(!__pyx_mstate_global->__pyx_tuple[1])) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_mstate_global->__pyx_tuple[1] = PyTuple_Pack(2, __pyx_mstate_global->__pyx_n_u_state, __pyx_mstate_global->__pyx_int_0); if (unlikely(!__pyx_mstate_global->__pyx_tuple[1])) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_mstate_global->__pyx_tuple[1]);
   __Pyx_GIVEREF(__pyx_mstate_global->__pyx_tuple[1]);
   #if CYTHON_IMMORTAL_CONSTANTS
@@ -25818,31 +26725,31 @@ static int __Pyx_InitCachedConstants(__pyx_mstatetype *__pyx_mstate) {
 static int __Pyx_InitConstants(__pyx_mstatetype *__pyx_mstate) {
   CYTHON_UNUSED_VAR(__pyx_mstate);
   {
-    const struct { const unsigned int length: 10; } index[] = {{2},{68},{35},{54},{37},{60},{24},{52},{26},{34},{29},{33},{45},{22},{15},{179},{37},{30},{32},{1},{1},{1},{1},{1},{8},{5},{6},{15},{23},{25},{7},{6},{2},{6},{35},{9},{30},{13},{50},{8},{35},{20},{32},{22},{30},{37},{5},{8},{20},{8},{15},{3},{15},{18},{9},{10},{4},{6},{1},{8},{8},{9},{17},{18},{6},{5},{21},{4},{14},{5},{8},{15},{6},{14},{9},{5},{21},{19},{5},{6},{7},{8},{3},{12},{6},{7},{2},{10},{5},{7},{13},{5},{8},{8},{5},{27},{7},{5},{4},{10},{4},{8},{4},{7},{3},{4},{7},{18},{12},{3},{3},{23},{14},{11},{10},{19},{14},{12},{10},{17},{13},{8},{23},{21},{5},{9},{12},{10},{12},{19},{5},{4},{6},{4},{6},{5},{5},{5},{5},{4},{4},{6},{15},{8},{6},{10},{6},{6},{14},{9},{5},{1},{797},{753},{236},{185},{231},{205},{159},{270},{1}};
-    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (2648 bytes) */
-const char* const cstring = "BZh91AY&SY*\244\n\251\000\002N\177\377\377\377\377\377\377\367\377\377\277\363\377\357\377\377\377\362\300@@@@@@@@@@@@\000@\000`\n]\367M\217-\332l\326\3539^\357Ot\014OZ\275ox)\000W\235\340\224BJh\306\247\244\375)\214\246M\240\336\251=L\32356I\032i\243CM\2414\323F\201\240\320h\032\006\2004\323i\006\201(\2010\232\004L\231\rS\310@\365=M4\006C@\014\200\000\000\000\000\032\000\r4\311\240\323I\246\204P\206\200mM\017S \365\001\240h\320\323\324\001\241\240\0004dh\003M\006\2324i\240\000Jh\201LL\211O\321=(\336R4\323&\232\000\323\324\320h\000\000\000\000\000\000\r\032h\006\200\203&\000L\000\004\300\000\000\000&\t\200\t\200\000&&\000\000&& \022$\"dM)\274\206\251\372\231'\351\245=F\3652j6\247\352\201\220\031\006\206\203F\217P\007\251\22043B\000\003j4a\253\254\321\271\302\226\376\311>>\270\337\241\372\376\347D\375\245\3748\244\344\334\350\241J\020\202\007q\220\346\250M\023]\271\022J\211\023\341\027\372w\032I\215!\246\2201\243\207%\217I$\323h\023\250\205\n$\222\001\325y\325\335B\001\004\n$\321\325.`!\260G\031H+\025\365y\024(\213\246\201Ub\310\014b\277Z@Z\304\233m1\212Hs\204j\205\"C\024\204\306)\023J\202B\006\312a:Xv\204\302\0312`\260\327\254\237#\025&\252\232\336\204Q\256\2108\036\322\023\337&H\261\002\304\221\232R\311 `^Z\205\n\241z\002\205\244Z\217p\364Q\261@\202E\325\005\001\352=\365\250V\005\212o\361\331\"DH\314\244\204\274\306\341\3115\026\342%\371\336=-\202\004\036L\251\205k\014\031\010\212\330\020\024\000T\231y\303@{\2044!\236s:\337i7V\017\314\\\332\337=\247\\\302\3349$t\240\037\213E\025\005\315Y\323\366\365\205\2036t\326\344\334\241\304\375m\361Zz>\233\306.\240\306~\367\320uX\254\350\301\253\200\363\245\213f9[}f8\226\r\351\330\365\351J\313YH\247\212\222\306\023\3041Y\326r\312+l/\246\245\267h\334~!\312b\021\310\220\316\216BD\332\240\246P\241DI\033[A\337\020k\205,S\\\352\354\344\224\363\247ue\315\277\212\2414P\303\213\254\335*vy\014\016q\246\037m\205\274\033\353\263dz\327@\343\366\035\217zCN\321\313\026\020\303\252\221\003\343kH\342\315Bj\204\344A\025\004)\224\230\262\252""\221@\240N\277\217z\252\026\020\253$T)\222\225n\305\340L\222\336\340\307p\240\313\346\216S\220\375\356\316\303\\\365\320\\\030\030\217\0043C\2116D\232D\204<\207g\034}\254DkQ\034c\237\241\273M\207\005s\226\226\226\226\320\337\244/\2708R\034o\257?kq K\213\242^\367\016K\340\022\371\254\303F\206\300\306\205\022\206\235\027\306>\343\276\207p\204\005Bib\261+FC 8\204\244\250,5)\212\240\253L4\373=[\026}\013U\241j\274\024\310MP\324\225:\010Z\\.\230\001ilCd\003W\022\301 \227\337~i\311,\246X\222\r\025\317\367\213\361\235\334\357\310!\244j~z\347\364\035\272\r\260\016\026\316L3Dq\340c\004\337\035m\253v\346\373\205\225\245V <\250\260\006\225\331i\316K0\310\367\tm\342b\030\\\016B\320\357\212\232M\n\261\313Y\t\257\233\221G\227\315\312\265\246\314\260\302\002\354\352Mu\317V\263\025\266\344{V;X\002\237\311\232\334.dQV\213\032\226a\375\230\225?\031\277,\271\375\034\344\201ze\2439\377\263\261Cs\272\251\024\006\0071\262+\000\312\315&4\034\227q\002\253]\303X\322\274;Ur\210\254\202\227\2439\035\202\327\216\271\2638r\200\316\267L\346s,\346\211\275\332\222!\260\236\003\3202\340\346\231\014\006\2778&\005W(\020\356\242\023B\201\nl\313w}\233B\335\240~\346\356(\352$\262\006G(\214\t\263\220f#aS\264\271\024\3674\010'\\7\233\207\3121\023\331\313\203H\266\241\244h\2156,2.\027\323\321'\005\355\367\036?\3216\331\005CjZ\260b\265\245\330\301\324L\t\220\277\203ix\202\332#)\274\253Bd\334\rSt\305\356;&G}\017\005' \225\037\215\177\027\374\300\205\222\353\226\351\211\265\004\260\354\367r\276\2217\252\342\247\214CMU\034\233\265q\031\300N\374\tRq\236-\r\375\240HY\225\021|\236\352\267S\246\371*\3244_\026\247\003\221L\345\036\323U\014\217\350L\354*\343\206\342\236b\203<\321\245]\334\365\320\210\0255='\233I\242f\324\310a\212\231,\341}\316,0\237d\242\252\254\201]`\335h\224T-U5\251<\375\253\301\345\0212\311\241\233t\227hB\026\364\313\211\204\306\222\310q\246\267\nV\r\330\362iB\370%FU\2239M\344\332\364\320T\342\351\3239\210f\005\032\2711\210\213\2742Q\324plz\354\r\377\361\232\\U\210r\342s\025TEXj!4\304\336}\025""\014u\2444\267\216\341\234*\214\014\035\002\3141\320\\\217\005\025l\327`\205\266\205\022\014\264{\264\357U\264\206VKh}\215CG\\q\225H\354n\267\227f\"\242v\207\026m\252+\027\\\003Ix\265\r+\256\306$D\225\254$\377\033\200\315\316\202E`\222.\204\237BLv\264\223\024s\306j0]|\336kI\203\220\272BI\333\221\326X\310\321\0028\261\036\270\027\023\203\025Ed\265\304H\023\272B\300\357\350cxJ0E\230!\316M\231\250\356\022\021\202%p\340\232\254i\236\342HHE*\324\014\303V\010h\311\\L\227N]\264.A\206\006\006,T\335aq&\031\232F\373\330\227`\367\2708G\2168T'n\362\355\331\266.\026\352\035\"R\032`\210\301\253\252\364U\025D\344\352\236\35136\264\275\347&z\354!\216\255\373\241\256\335\372\312\371\"\234\205d\231\234|\331\232qc\353;H)\250\223\326\317\032\210\237.\233H\344\211fZ\231\247\014`\3119\311L\256\246\232\036LMIcK\323\034H\031d!\206\010\257\216\215\026\025\201Q+\261\216J:\t\262{\220(\220\030\252$=\235\233q\215M\253S\034\302\r\356a\221\306\326\346\261\030;\343\272\250\363\244\232\022{[\274\321\2709\254V3C\3638\310\340\200\333\026&\334\223Tt9\035XTM\275\324\234\027e\236j\227v\321\325,\206\324\37310IF\233\360\355\331\016\215\325;\266t\254lc\246\341\235i\313\002CM`\352\312Y\004\006\275\324\006atV\311D\276:s\031UT,F\271n\225\321+yJ\020\220kL\205k\234\314\322\337v\236\034\023\276J\265MS\177Xp\326\3268\271\3646Y\311\3242Y\001[\226CZ'\n\316\025\212X\250\325\262\345\225X\315y\372\226\220\t\253fR?J:\340\340L0iq\255\222Y\200\301\351\r\254\373X\001\353\242\247\214x\217\272\022\340\265fMH\273,fER\301}\336W\216\377o\217ZU4\254\034\020\350\004\315\265B\321\264q}\351\020\206\033\030pM\217R5\316\204\340\320!\351h\326\211svB\265\263cF\221x\302b\013\257R\205\014r \353\372\353i\221\276|\211\246\272h}a\006\341\276\216\232\335\375\2063\250\211.\250o}#\207\301\254z\312\0222\203\027\360|\374\301\241\365\214:kc`\217\344\210\016\213\202\234\362B\017I\035\243j\027`\336\231\3319D?\321\020\276\260j\215\240l\224F8j\250\241\266\246\370\327@1\004`\273\211\252Q\366\241G\\kR\204\341}\350\350&\003\341;\235\262\202\314\240""\241:\224u?S\256\371\033c6\353\231\010d\233\006f\374\372]\"D\215\301\233\374\362\225\214\254\256\242+\230\243qv\201\214\305\304\2469\203J\214\203\360\300 aO\031\024)\233\206\343\007#*\215\224\224\345\025\021\233\014QjAVP\343\337\276\230\377C\362F;u\216#YDu\014\271\t\031\254zZ\213\003\273\266RCV@dn\"\316+-\207\000\330\323y \223!\024t\221\343\343\351\271\211\240#\230\252\277\265\224W\034\004\225\314C\245!\025}\235v<\223 `\250\245dM\262F[V\021\2525\235\315\362\010\005E\210\211\023\202*\177\005\330\256\026M\362A0\2222\3021I\n\321\350\n\305\377\031\351!\032\260)g\216A\312\314r,\371k]\240V,\037:\261(\242\333\304\325\211*g$QX\033\235~.2\377\251S\305G\230\230x\203Xf\274\344?Kd\302\314\332\001\2172\360\014!\353\206\270?\027\345\234\320\373\013A\234~a|\235L\232\032B6\376\201B\376\364K\333\302\257\212\352yU'\t8\324\252\223\236\263\351\322.\256i\t7N\3454n_s\206Q&\302\021\t\232\232\220\256\244$\264\311\014\2539\2060Z^Mpx\243\275t3\032\270\357\246tx\346\210=\036\357t\331\014^}\205\212\346\301\354\216\2456vH\343D.\342\206\320\336 \241\274\246RqA\266S{r\312{7B\264&\220t\t>F\265\214Q\265'\2501\026\n\314\272^\204Z\374E\023vf!\242V.\026\010@f\r\345\224\223X\357!YW4\210\213ERN\320\240q\252\241\210\n)\t\023J\244\262s\002\2142\333\312\312\322\245\205XN\224\257\003\307\271TW\261\214(\346X=\243\330E\217$jzAg*\304\322JL\364\250\342 \034\241\024\265ZD\357\347Z+\010\241\232v\025&\316G\376.\344\212p\241 UH\025R";
-    PyObject *data = __Pyx_DecompressString(cstring, 2648, 2);
+    const struct { const unsigned int length: 10; } index[] = {{2},{68},{35},{54},{37},{60},{24},{52},{26},{34},{29},{33},{45},{22},{15},{179},{37},{30},{32},{1},{1},{1},{1},{1},{8},{5},{6},{15},{23},{25},{7},{6},{2},{6},{35},{9},{30},{13},{50},{8},{35},{20},{32},{22},{30},{37},{5},{8},{17},{20},{8},{15},{3},{15},{18},{9},{10},{4},{6},{1},{8},{8},{9},{17},{18},{6},{5},{21},{4},{14},{5},{8},{15},{6},{14},{9},{5},{25},{21},{19},{5},{6},{7},{8},{3},{12},{6},{7},{2},{10},{5},{7},{13},{5},{8},{8},{5},{27},{7},{5},{4},{10},{4},{8},{4},{7},{3},{4},{7},{18},{14},{12},{3},{3},{23},{14},{11},{10},{19},{14},{12},{10},{17},{13},{8},{23},{21},{7},{5},{9},{12},{10},{12},{19},{5},{11},{10},{4},{6},{4},{6},{5},{5},{5},{5},{4},{4},{6},{15},{8},{6},{10},{6},{6},{14},{9},{5},{1},{299},{797},{925},{236},{185},{231},{205},{159},{270},{1}};
+    #if (CYTHON_COMPRESS_STRINGS) == 2 /* compression: bz2 (2876 bytes) */
+const char* const cstring = "BZh91AY&SYkP\2132\000\002\274\377\377\377\377\377\377\377\367\377\377\277\377\377\377\377\377\377\373\300@@@@@@@@@@@@\000@\000`\013=\360:\257\026BSl\222ch@\225)#\324\240\001\256p%4\210\225\030\233Q\352i\355H\323C\323\321\241\2456\031\220&\247\252<\243FO)\247\247\250\233jOA\017\325\036\232'\244\311\351\030\323D\332\207\243Q\240\224D\304\310\320M\024\360\247\221\242de\036\232\200=\020\032\000\320\000\000\000\000\0004\321\241\220\320\003S\t\2224B\010\000i\262\200hh\000\001\352\r\000\000\000\000\000\000\320\000\365=@\021S\312h&&FM4h\323CF\230\023\021\221\201\031\006#LL\232bbh\3012a4b4\030L\214\324\0102`\004\300&&L\230\000\023\002`&&\t\200\000\000\000\023#\0010!\204\000\221 A\032&F\247\246H\237\242)\371I\211\372\232\236Bhh\003OP\320\320\000\000\323\324\000d\320\0324\320\321\243A\314\315\261e\037DW?P\201\235\020\200\231`S\3440}\001!\204\217\262J\200\313\014\013\214\010\020\014`@\304\014\033\031'5Br&\036\324\311\2454\211\223_\360_\364\366\332M\240cHi\241\014j\325*\025\255\370K`\227\266\213\214U\352\301\377\225\th\346EBH/X)\3472b\004\332H\354\204\221ad\263\"\205\021\212\316V\311x\200\306\013+\000\226\r\264\332R\0254I\326h\336+D\206\004\222c\024\212 \260\3061-4E+y\nM\014M4\027\245\231\351\216.#K\242\271\325\354\222d\2542\227\227\214\252V\245\013\213c\300\274\300\212\004R%R\226\010\364\271-\002\261E\005*,\022\324\005I\21324%\273t,\231<\004Ya;\301\210\245`\255r\3102\261p\316|cy\206\005\351\032\322\320D\246u\005\306+\212\022j-\304\213\364\002\031^=-\202\004\034TX\r$\315x\224&\230\331[\334\265\023\014\000\265W\027\247\353\036\301\352\222\366%\353\277\337\311\373:\362\021\262\017&m\363YN@\352b\"\032d\r\244\240\305 \362NT_i\203E_\204\216\262\256\005\221\371\323\360\326V\270\315\030\254\301\237\312\314\302\326d\177vB\264\"/`%!I,\327HQE\244\276\361+\324=G9\021\243\205\260\204h\220\017\027\212\331G\225Sl2\304\304\020\321p:\321&uNLRgm\3002N\207phd\321TT\250\273\323\027\007\000A\006\033@\362IBs\241.\021\335\343\307:\264\333\337\366sL'\004`_\023\207^\242\322\221C\2772\273\352y^\326\265""\330\330\247v\207\234\215\355\373<2\031r\034\324L\001\371\021\006\013\331\337\022<M\322R\006\235FR\010\"V\t\023H\221E@8*\n\201@\231ww\356}^\315\3261\"\362E\311M\022\225\361\030\257&\212d\327\324\364\371\250Pg\021\253\240\361\236G\340\357\336-\031\273\244\360\261\2302\r%\304\246M)\3008\2052jD\3068\231$A\"D\272 \t\310\t\232\273\036\227\207\325\350\317\334:\264v\014\214\214\21392u\367\0337\335\312\373~s6[\222\240K\222\344\272\242\367\270\330Q\350\370\007\341U\226K\r\032\033I\216\302m>[4\350\302/\366\350\205\032\264m\205\"\245i\024\250\n\305\030\246F\202\2222&L\tB\325am\271Q*\205K\215\301w\356\317\202\3634b\261\014V!T\304\324\375)3R\025\226\013\231\340VWHk\311\0044p\254\022\tu\327c\2522\246\027P\027\302\177x\275\007K\241\370\205\266\016\310\275\0259\007I\217\351~\233 O\362\317\257\201\310\215n\363D-\2546\005\213\215v\355\r\216o\214f\244\003=\006\200\250\252\342\312Nr\013\006\252\027vN\314CT\034\340\223\344\210\311\321\265'i{\307\240k\032A*\304\377G]\327Q'\232\374\324\005\r\232\306\207X\345k/Z\354G5i\321p\246*\255\261\220EY,+!oL\270\254\373\244\353\357\347\3650\"\202\365J\306s\3724^\206#G2\302(\014\016\331\262,xa\014\246\254\304\326\215A\\\035\306\363\2230\360V\224E\210)\232<\302?a\203\342\264\331\345\207}\007O|\362\317 \357\177\212QU\267X\217*\022&J\032#Y\340:5\374s\201\254\347\363\302\200\037K\201\213R!$J\222d+\331\303V\3238\302\333\224v\235X\222\212\2228\003)\302\221\201&n\230\312`=dR\307x\263\030\224A\212\273\377\313\016q\230f\356\336,d\236*#@\323b\327\"\343\206\364\267\006\356\007k\315\366N<\310h\3652pC\224\215\244\023\351:4\353\352\276\356b\341\215\304(\256\307n;\025+\000J\220\321\214\020\232f\361\r\003E@V;\230ub\376\253\010V\217<vT\213J\220\3152\266\023\333r,\341\260\245\243\020\2623\001X\314\360\221\004dh%p\007X\245i$\205\362\000\210\025\004\304&\247K\302\336\014\324\235\300\2654\223m\014#V\030\345\022p,\213\300\240p\004\366*\301(\320<F9K\326Gw\302\325\032+\361\261\356\215\346Y\031$>\353\324\304\252\351[c\207@\323\207\216\306\333\232\031;\022\336\226-\031\2337""\263y\376\237J:WH\272\3160\346eL\310`\023\345\227\341y}\243xq\267u\333\231\212R%\216J\306V\310\235{xjrd+9=\275X\027\006 Q\253{\030\002\351\031\032S1\257S\227Pk\351\263-\004\301\210qRs\025TEW\347\037$\2754\272\245B\375\010\374\255\333\240f\372\243\002\352\036B\353\370\305\210\340QV\032 !]aR=\225\216\243.\251\266\247\342\204r\016\203P\343n\233J\245\335\251n\313Ys\026\377$\361\370\366b\310{\354\033M#\316\033^\373B\272\203\025\371\340\276\276\016u\257\317\252\271\325`eUyL\305\361=\352\370d\350F\343K\337\347y\3220\t\243+\305|\371\256\253\266\010([L\225^b\224\206\307\022\333)L\034Cc\300\370\3253`\023\226,\271\004\240\361nJ\261\0011\230\262x\020\rY\032)\245\26662\266U\013\305i\022R\311\340P\235\375\240\275\2068\230\231\321\316kC\341@\275L6\305\304\372\343\030\010\tz\004\005\203\014\333\337=\267\017NnRw\221H\215.D`\321s\332\212\242\250\234\274\362\322H\303BZ\343\227-\020\037~vk\261\365h]s\205\261E7U\221f1\312Ip\225,t\345X\3653\221r\221\342r\024s]\272\227\220%\324\272\273\036-!\214\0317H$\023.\263M\017\206\326\244\267-+V\241\346\030\010_z+\251\313\226\004\336LI\354\262\204\252\207\246\314\264\274\251\0361\025ER.\204\265\013\221r.NDy\247`\241=\007sl\033Ff\210\313\221\326)Y\2517IK\263\"Zg({\"S\2255\314\324s\330\225\316\343m\353\226\342\233(\251\236v\223\316-\274\310\347nl\306\207\255\324\327\332QJ\334\212\243\327\033uZMU[\212\271\363QF)\221]-Y\305\331F\356c\230\357\005\216Ng\271\256\003\t\354\330NfN84\272\037#\245\260\302[\351\215\272\342\251c[NLl6\261\266;\260\202\365>XT\315\345S\031\273Y\253\034\271\203J\354 \335\271\334\230\261\222\230bY\001;\026#Z&\372\311\366R\220Pj\302k\031\261\23272\177S \025+o\336:\212Q\210\205\346\346\366\232\322\323\220\303\224\230\312\270\36589O\346\263\322:\205\325\264\\F,\341\2621\226\343\202\252\325\223\314\263\035\\\335VJ\255+\307\004:\0013\340*\030\r\243w\330\221\010a\253\243T\330\366G\003\320\234\031\310|z,\211|N\340Yw/h\3433\255g`1{(P\345\222\200\361\277W\242'\370O\276\233bl\014#i\201\271g\3366\006\253\272!\030\030\203v\302\376\310\234_\257""\276j3\260\271\301\213\327<>\370b\177\244\327\310\272?\262\355\222\202 =\027\n\236\005!\007\311G\250\252;pw\315\273\362\266\331Tu\270\311\016\306\300\227t#\027)\033A\222<\010$ \362#\273\376\235\351h\024\030g\023y[\253\224*\224\030\215L\004b\321\"\355\341d\203{U@\017\331=\251\224\027\272PP\235B\017\t\353\037\265\235}\321\235\333L\2041\312\023\t\274y\213X\326 @\301\246FQ\022\222\312<\321\031\316\325f\360\202\021W>\261\027 N\362n\270\02294\311\220yJ\260e94\255.u\002\263 \037f\010Ue\232II\016\377\245\247\334?\302\301\037;\305\212\352\276q=r\273\260v\r\2502\222=}\356\"\256\205}\312\341\t\340U\323&[\021\002\023\354\210\376\232^\002\315\266\222\315\211\347\352E\332\006\250\311\322[\352R\324\252@,Y\021\261\232i\331i\355w\273O\232Z\2649\350\266j\020gd\026\331\274\345\307\302\271lnt\216H\377\207\001BA2\260[-\263q\031\010^\221m]\r^\252\340=z\002eQ\256\230`\350\272\027?\342\355\341Az\216\213]9\211\330\317\206\272b0\036\365\302\335\353G\253\016\0322\001p\274n\350\\M\305\320\333\213\313p\202\320\267\321ne\313\304\034\263\224a\032\020,+Y\377\312\257;f\223gLA\t\307\325\313\3143\234\277\3112\264\333\304\003\345c\024\314\225R/\221\214dnod\375\006H_\0257\247\312\371\312M\243\243K\030\326\033JJq\3261\212y\024\200\245\216R+\235\317\206\2213b\215\257\212\334\234\277\201\325l\303\336\343\224F\343Q\304\352bT\3672\313\326\216Yc\022\315\021\r\320m|J'\212\035n9G\215\244\034\335\376\2078\260\024\260\217i5\355\021aqC0\345b\373*z\274\005\340\267\353\336OIt\371QH\245<s\326\026\270&=\\G\236\031\370\260\201\325\035\343\357uT\346\321\010o\372?\263\237\374o\230\376\331|\3249\3703\376\322\242_q\244\360x\3020\303\372\345\2169#5e@%\203R`a @\032\250?#\270\"\021r<\331\274\202\314\321\311\330Ed\310\204\035\321(\022\220\313RL\001\205G\"R\242\2275bU8\030\366&>\005NOXfx1\305\327?=\nM\261\322\"\014g\026.+2\260J(^m\261U2\350.\025[nD\023v\333\005\344\312\014\202E\013\206s\220H\270\274\230L\006\n\263\234\341\\W=\361UB\373\312\\:\324\"\367?\376.\344\212p\241 \326\241\026d";
+    PyObject *data = __Pyx_DecompressString(cstring, 2876, 2);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (2474 bytes) */
-const char* const cstring = "x\332\275VKs\333F\022\266l*\242\0239\221,Y\362k\263\220\034Y\266+a\"\371\221\265\327\353-\352\221\254R\265\216%F\262]yL\206\300\220\204\r\002\024\006\220DWm\255\217<\342\210#\2168\362\310#\217<\342\310\243~\202\177\302~= )\312\216\275\361\326\356\0364\032\314\364L\177\375\365\327=\274\247\345-K3\314\252\260\245\351\330R\253\271B\027\206i\227\217\026\265\005C\253\372\322\323\212B3mC\034\010C\343\266\241\331\216\247I\313\204\371\212_*\tW\3333\305\276f8B\252-qPs\244\320\244\347\232\206\220\253\334\326\034\333\252k\272+\270'4\256\025\323C^\205{\232)5\335\261=\263\354;\276\204\023\255*\252\216[\317\341\024]\305\2454\313\266\3469\032\016\033_\250{R\013r\3313\352]\274\357\232\036/Z\242g\220\202*\271N\365]gUX\332\276\351U4\257^\023\332bo\335s\271-U\030GGR3\2340A\2257\304\335\3320afJBj\264^\255yuMV8\256\366\374\032\300\225\034W\323\353^\305\261s\334uy}C\001p|OsJZ\321\361mCj\327\370\001nY0\256o\274\351+%\337\257\325\034\327\023\306\206\275\307-\023Yr\014\3619\021\017c$iQ_\324\340g\021\316(\220\305\317\2652N\365\215S8\340Z\271\271\377w\025\340\016\005\010\010\017\035P\251R\263\252PR<\206\260\314\242pA2(\244\264\302\211\312\237\255=Z\177\364\305\255?\335R\262p\3053\270\227@W\324-d\016r\240\230|\323\362\340\214\350\2259m\243\244\325\035_\263\005`\"\2555\330\r\037\360*\302\326\244\360h\242-\252\\p\017q3\034\2076\027{\274\232{\202N\177\303-)r\337\037#\017\220{\002\343\272.d\237\315\202'jZ\225\327\025\177\320\363\013\341:GDo\333J9\270\022j\334\023.\204\341\211*};E\n*\367`\361\372_\271a0\233\350\241`50\364\325\201\356X\026\301Abr\274\250\337\037\3222\031\245`\037\274\276\334\227\320\003\303\224\344W(\357e]\273Fi*+\365P\004T\214\342\300\023\266\247J\343\250.M\231\0361\010\2454_\010\355\376_\264\257\336\320V\325\264\205\356\362\222w\217\233\256\355 \217%\356[\236\306\230+\014_\027\214i\206\257\242\266\035\373\013\344u\317\344\026vu\3236=l\246\261?\220\256\376eUg\373\216k\031\254\252\327\276d\350\025T\020\214\030\266r\265\372\301\375\264\330\215cQ\277\271F\242\034\004\177l\177\260\352""\0172\301-\313\321U\307\240X4\203{<\367\033\273\251\232\351\216^\303\311\345\013\253\033\033\353\226e\326\244)\031{T?\300\337\032D\313\036\202\315-Q*\210]_\330\272 \315\347\216\344\217\004\366oe\251\204\270\254\333\272\351\344t\307E\205\202MI\202a:\252\255\310\365\347e\227$W\344R\024q\354\271\324u\216\022\223\254\322\373\277\017*I\327\214\365'e\341Q\312\350\023\2671\023\272v\271\256.\203\224\034W\352\270\321S\003\253qKx\036\031\031h\265\222\3427\004\271\036\254\210\232Wa\314\240\310\230A\365\305\000.M\032\302\203e:\366\355\205\355WU\025\013\327u\334\222iY\254d9\216\213t:\317R\025\253E\317\251\r/Y\274,\241\254*\367z\355\204\261\222o\353\214\202Q\203\364\2101V\021f\271\342\245\2434\r\306\314*5)\306T\217\355a`\212\276\036\233\251z{\022f\254\312\301\007\306\003V\037\226[\356\270\334\320\217\351\003\332\206\031E\3070\372\026\376\333\274z4\242X0\342\020\021R\003\277=:\373\254R\326\224\255\354\257\020\210\232\203\306*{\3013 \253Y\024\233\212\020i\204\322\231^\021H\265_M\277z\261\323T%@\315|\273f\352\317\001i\335\356\333\355\251\247\211\204\260\353s+\305xT\206\203YZ\275C\013\342\200\246eS\242\343\272\002D\272\220\016\236%\277\006\242j\314-\027yoY\351J\321D\213\022RF\306U\006Y\2351\264\324\0363\230\365\372\200\232\367\002\030\232\3671\250\302\"RTv\352\3629\352\311\361]$\321\325Y\205\206}\034p\323S\300W\223\020\016j\320\327\275\001qi]0F\006\214xA\"|\333\025\322\261\366\020`\r\242\026x\224|!\251\351\232\000\315\024r\025\007iw\3374\274\312\301\313\221n\346Z\214\341Bx!\232\213n\307'\343\205\330mNv3\363\321\\73\035\254\207\027\243\245(\377o\247\257\246O\214f_\3565\n\301\311\340J\260\023\336\014\213\321)\334w*^\352f?i\370A>\330<\314|\334\340\230\256\207g\303;\321L\264\027\3574\227\0163c/_\004S\301J\240\343\246\233\021\357f'\203O\303\335h,\332\217Es\271Yh\235j\335n\217\266\267\332\262s\245\263\235l\025~\237\305\271\240\030f\201a\351\265\217\013\341d\270\020\372\321\267\361\327\315\253\255l;\333\031\353\354';\277&\277\352\211^JJ\345\356\351\251\340&\354O\205\367\242\002\270\031\362V""i\362\246l-\264d\373\263\266\350,w\n\311\243BRx\222<y\372\373\255\336\023\327\317\311\317\345\244\374,y\366\374\035\270\216X\310vF:S\235\365d\363\207\344\207\327q\275\333\352?\346\353\360\277\222\260\217\032\367\202B8\322\035\237\txo\230\016\376\026\346\303B4J\341\036\276m\243\233\035o|\027\210p)\3746\272\025\355v\307?\r9\340\256\307\263\315\261\346^\353I\373I\347i\262\303\022\006\032\235\304\251u\263\027\303\271\3606\016?\216\277m\336i\235o\237\357\\H\266~L~\374%\371\205'\274\330\315|\324\270\035\214\004\223/G^]>1zQU\306\335x%6\233n\353\375+\203\246)\\\224\331lp\000\036NEw\342\251\030;3\300\275\034n\205n4I%\210\341\034jg9\334\211\226\243\315W7~\253\244\356\306\253(\320\251\346F\253\320\036\031\224V\267WZ\033\270\354E<\023\3575wZK\335\314D\360a8\037\302Q\266q\0329\345\301.\261\365M\260\020\354\022\325\223\301L\340\302\353\370'\r\031\314\253\022\234\nW\303\335\356\304$\221\374\020q\177\035/6/\265\326\340\nF{\301V\220nN\004\243\301c\004\265I\313.\3127\337;\263\036\316 @u\367,\224\232b^\216v\342\345\270\320<\331\234\033\336\310D+Q%\326\2333\340u\252\265\322\342\26499\030\250'\360c\223\301r\005\247G\336\2649\034\237\r\376\031\361\250\216\314\357\267\236C\342+\035=\331\334\"\220u8]\352N\\\302\240 \237\r\360u><\t~\276\213\212\220\321\304Tp\033\237s\335\351T@\337\305\317Z\031D\236i\257u2\235\325\216\233l>N\036\2472\201\370\241\374jR\265_w9M\325\276E\212\376_\372\234\016\326p\354\006\370+\242c/6\3176o6u(y\262}\245\275\203\216\263\223\024\266\223\355\247\311\323\237\222\237~VE\023\370p\371\254\231i\256\r9XK\036\341\372'C\202\357\242\033\377#X%\235|\322\330=\314L'\323\013\321&\232r\346\217\241\214\256D\020\332X26\033H`\246:\242jX\210\334\344\372\335\326\331\326\315\226\336\206\204/*`:T\210\207\344\325\007'F\377@\232\212F^\215\247z\336j\340\366\211`\204T9\332\330\016\346\300J\366Lc\263!0\031^\233\014.\242N\307\242\3358\203\352\303\303p\016\372S\236'A\345rr\356\252\"Q\235uP3x<\0163\364\241+\246\207\257\352W\3076$\275D\361.\241\270'N\214^\n\347\016\021\302\025\212\221\236\260""\323\215\017\010\006d<\rm\003\345)|\344\251;\335Q\"\037?\243\032b7K\255X\247\311xc\275WY\343\347\202\355\360\272*\371\361\313\341z4\033\217\304\027\232\363\315|\257F\222\351\317\260\205\374\217\251\n\231\270\234\\\316\305<\336=\304\022}\206\312\360\005J\020V\237\206e\302t8A\271{\201\366\220\235\206\373\036\360\363\257\001\237y\017\340\324,\351\rY&\263\217\032\313*\035\264;<\377\277G71\213\216\364!\032\353P\230\324-w\303\321p\363\270(\351\313o\254\222\210\322\254\346\337\256\325cR\354f\346\242\251(\217\306:A|\r\2641P\025\001\005\r\177\006?#\024\357V\340&\027n\304\363\350\324\343\227\302\273\321\252Rb>F\323;\033\334\010\025\021\364\346HU\201K)\205\205dB\243\336t6\230K\246\026\010\304\233\301\364\340\277'\352\217\177\033\365{\001\006*t\234\261\320C\261\224\343\255xw\000o>\272\212V2G8\335\360\\\310\007\023R\333i<\037\223\304\267\010n!\2141\365\206\251\337jg\200\347J\260Ij!0\357\376\244W\003o<n5\324\223\232\177\313\263\237\357\236I[L\177\265\214gMF\363\244=\354\036\276e9\345\037O\336U\365\264\350\361E$E\375XX\tKX\340\351\033V@\032v\224\220\225\374\352\244\326\376\204\330\370\376_\350\240\311\266";
-    PyObject *data = __Pyx_DecompressString(cstring, 2474, 1);
+    #elif (CYTHON_COMPRESS_STRINGS) != 0 /* compression: zlib (2733 bytes) */
+const char* const cstring = "x\332\325VKs\333\326\025\266,*\242\0239\241\336\222\355\270\220\034Yv&aB\371\221\330u\335\241$:U\232&\222\030\311v\036F@\340\222\204\r\002$\036\222\350N\033/\271\304\022K,\261\304\222K.\271\304\222K\375\004\375\204~\347\002\224(;v\343N\2473\235\221./\356\363\234\357|\3379\367\256\220\3274AQkL\267TC\267\204\272\311d\246\250z\345dPXR\204\232c\331B\211\t\252\256\260\003\246\010\222\256\010\272a\013\226\246b\371\252S.3S\330S\331\276\240\030\314\342S\354\240nXL\260lSU\230\265&\351\202\241kMA6\231d3A\022J\361&\273*\331\202j\t\262\241\333j\3051\034\013\227\0105V3\314f\026\273\350(\311\262\324\212.\330\206\200\315\312\247\374\234x\005]\231,J\016\3367U[*i,Y\020\033U6\215\332\233\366r\267\204}\325\256\nv\263\316\204\345d\3346%\335\342n\234l\211\227a\207\n\250\354\001\354\326\007\001Sc\020\342E\205Z\335n\nVU\302\321\266S\207qe\303\024\344\246]5\364\254d\232Rs\203\033`8\266`\224\205\222\341\350\212%\\\223\016p\312\222r}\343\325\273b\360\235z\3350m\246l\350{\222\246\"J\206\302>!\340\261\030AZ\226\227\005\334\263\214\313\310\221\345O\204\nv\365\027\307\346\000k~\315\275\277q\007w\311A\230\360\255\001(yh\326\270\225\344\217\3024\265\304L\200\014\010)\254\270\204\307O\0276\013\233\237\336\374\362&\247\205\311\236\342z\013\326\225d\r\221\003\035\310'G\325l\\F\360ZYa\243,4\rG\320\031\314DX\353X7\270\301\2562]\260\230M\035a\231\307B\262\341\267\210\355\340\346r\202\253\272\307h\367\003I\263X\366\273S\340\301\344\204`\222,3\253\217f\321fu\241&59~\340\363sf\032'@\357\350\23498\022l\334c&\210a\263\032}\033%r*{\177\371\372\237%E\021u\202\207\234\025\200\320\347\007\262\241id\016\002\223\225J\362\275\001.\323\242\330\330\373/\017\367)t_Q-\272\227\361\333+\262p\215\302T\341\354!\017H\214\354\300f\272\315\245q\242K\325\212\267(d\245\245>g\302\275?\t\237\277\302\255\232\2523\331\224\312\366]I5u\003q,K\216f\013\242h2\305\221\231(\n\212\303\275\326\r\375S\304uO\2254\314\312\252\256\332\230\214}\277o\231\362g5Y\3347LM\021kr\3753\021\271\202\004!\022\302Z\266\336<\270\027\213]9\345\365\253cD\312c""\347O\315\037\217:\307\221\2204\315\220y\306 _\004E\262\245\354o\314\306l\2463\222\204\223\315\027\32766\n\232\246\326-\325\332\334.\354n\024\036\212\371\265\265\3027b~sC\0247\233\007\370_\007\213\305o\001\3576+\027Y\303a\272\314H\004\331\023= \242\375k\304\230S\222\325\324e\325\310\312\206\t\311\002^\213\030$\312\220_I\222\237UL\342`I\262X\t\333\236Y\262,As\226XM~\367\201-\021]\024\373\235\n\263)\206\364\211\323D\025D7%\231\037\006n\031\246%\343D\2337b]\322\230m\323\"\005\271\327\"@\024FW\037\217\260\272]\025E\205<\023\025\022\234\010\343\342(\302=\254\214\333\376z\246;5.kf\232\206YV5\rf \3479u\321\002\222\242%\325\220\262,>Q\326\014\303D\340\215\2471\337\371\240m\324\007\2074\251b\201\2035\311N\022\217(\226\035]\026\311K\336X6A)V\231Z\251\332q\213\213DQ\255Q:\023E\236\215\023\343D\216k\002s\314\363\204\354\242X\223\000\024\332\003\2619H\314\354ib\"s\323\007T\200e\344\266\210\326\321\360\253K\265\223\026\262B\213M\204T\035\300'8\367\341\246p\362\265V\177$\216L\377\213L\252\033H\310V\002\205\010;\353\032y\312\375E\264\241\020Q\25620\302\251\305_\t\022\324\345q\342=G\257\253\3623\030X\320\373\353\366xI#\2764\034I\213->\221\357q/V\375\300\000;\240nE\265\220\251M\006X\315\343\320\326\244\272hVJR2\314\351\307A\243\301$\344\026\210\017~\360\260\212MQDFN\340B/I#\274\237\3701\320\357\233\302u\311i\024\303\305\273\234\241\004\030\217c\323z\006\215\032\216\211p\233\262X\245f\037\247\230\361Q\260\275n\201b\320\265#\333\307\240\306\322\022EZ \022f\010\231\243\233\3142\264=8_\207.\030\n\235\303,J\344*<\021\271;\334G\242\377\276\252\330\325\203\350\314\025?w4wf\344\262\367\203o\006\343\275\324\207\336\223`%\330\352\245\026\375+\376\226/\035M\235\031I\277\370\273{\305\335v-/\033\234\r\256\206\303\341\375\316D'\327K\177\320j\034\246\322\255w\335%\267\341\r\365\322\023\356\2627\356-\364\322\357\265\276to\270Ro\354|/\375~\213\2719\232K\306W\334\255\336\330\014&_\372\312\270)w\325}\346O\3709\232\272\355N`\333\330\224\233\177\355\027\016\237q\231\367\205\277\350cx\254Up\247]\311m\372""\357\370\245 \025\344{c\227\274\202?\033\014\303\241\355\300\016o\204r{\242}\2533\324\033\373\240e\272\223\321\324G\3767a*\272\371\240#u~\215v\177\216~~\322\313\314\302\2251\177\325W\202\305\240\020^n7\260>\365^+\367\002?\327\0024\363\336\274\277\340\337\002\022K\201\031\216\023R\013\275\324\224[\360.\3709\030\362\357\2721\242{\255\242{\026\250\356z7\274\222?\214\363\206\003\216\250\343\346\335\255\303\324\373-\t\335\2027\341\335\366g\374\275`7\314\035\246F_<w'\001\222\214\223n\370\300l\334\275\3545\374Q\177?`\341JXl\017\303\275\221\316v\307\352^\351\356D\333\305\337\267b\332-yi\330\220{\351c\036\301\\\362\034\377\253\340\213\360j;\335IwG\273\373\321\356/\321/r$\227\243r\245wn\022a.y\303\336]\277\010l\006n\253\206Rh\265\227\332V\347\243\016\353\256t\213\321f1*>\212\036=\376\375\253\336\322.\304\257\022U\236FO\237\275\301\256\023\024\322\335\241\356d\267\020m}\037}\377\262]o^\365\037\343u\370_\t\330{\255\273n\021r\343\262\211\233)\367/^\336+\372#\344\356\341\353&H#_C09\357+\377\246\337\350\215]\366$\230[\010f\303\321p\257\375\250\363\250\3738\332\025#\0210\032\221Q\357\245/x\013\336-l~\030|\025\336n\317u\346\272\363\321\366\217\321\217O\242'R$\225H\030\267\334!w\374\305\320\221pf\344\002W\306\235`5PC\263\375\366\312\240nl.d6\353\036\000\207a\377v0\t)\247H\350+\336\266g\372\343$A4\323\320\316\212\267\353\257\370[G7\177KRw\2025\010t2\334h\027\241\341\276\264z\211\2646p\330\363`&\330\013w\333\271^*\343\276\353-z\270(\335:\307\323H\203\320z\220d\266\261qw\3065q+2\207\345.r\tNzk^\243\227\031'\220\277\205\337_\004\313\341\305\366z\234^\366\220.\343\311\214;\342>\204S[I\326A\006\213\367\024\274\0318\310\317\236\005Sc\233W\374]d\253bx6\\\030\234H!!U\0039\234\001\256\223\355\325\266D\223\343\307\r\345\004\351T\347x\270\212\335C\257\2569\034\233u\177\365%\277\211\310\357\267\237\201\342\253]9\332\332&#\233\2704\327\313\\D\303M\246\\\233\271\214s\316\"\234\231I\367\036\017\302\024\0057s\311{\300\263of\312\375+\250\224\367\267z\310\252\205\340b\230\017\177h\233\035\254\233u\377""\351o\203ms\363\264\347\032\322j\2767u\025\356\224PHVBl\000\ri\366\344\357\"\002\273\365;z\363G\357\2349?w\312\221)\312!\333\244\223\377?O\246\335u\357\254\3671b]BuY\016'x\311\232\353\214w\256tv\221\035w\243\342N\264\3638z\374S\364\323\317\\\340\256\343}\355?\rS\341z;\005\352\245:\353\335Tw=\332|\030=|4 \316\036*\307?\3345\3424/\331S\321\324\022\025\367^\352\017\236Eu\036\013\242\321Y\024\370\005\256yR\356\222oF\327\357\240`\336h\313p>u\201\033&C1(z\260v\344C\342\277?t4\026ko\273\325\240\032>D\n\032i\355\270\013T\364\317\267\266x\365\037\034\033w/ \247\214\372\r\324\350\325\000El\232?-\026hf\302]\211\246\257\302\375\241x\257\001}\243\320\035\246\350C\346\361\033<\252\257\344\035\310/\227T\351\243\314\231\221\213\336\302\341\340\003\346\\\353\0352\003\222\233\002\336\260r\030\037\311K\202\004I/\t\312)i*\0332u\372\217\t$\311iw\307\273\316\323S\362\236\030\n\346\303\3050?\360\212\000k\346\274Q\256\346\314\245\350R6\220\202\306!\206\350\323\343\013\237#]\344\211{\025\262\3510C\261{\016\356\245\351E\223\030>\367\222\3413oa8%v\252w\304'\314\256\360p\320\354`\377\177\356\035\177L\275\013u\r\270I\231\275\341\215x[\247II_Nk\215H\024G5\377z\256\236\242b/\265\340O\222\\)\360\347N\270q\314*2\0240\374\021\370\014\221\277\333\256\031\315\177\314\305;v\321\273\343\257q&\346\361\346\035\233p?\3668\020T\037-\256\300\\\014a1\312\010\224G\361\212\215&\227\310\210W\235I\314\177K\253\337\377m\253\337\312`X\345\336B\210l\210\245\202\267n\343\330\274E\377*R\311\002\331iz\323\310N\375\016\261\355\034J\335x\374@\277\t7Fy\275\345\357\312\363\260\347\212\273El!c\336\374I\025\016\357\021\234\252\360\362\237\177\315\023%\337;\037\247\230\376h\005%\330\342I\227f\017_3\034\343\217\362|\225\227A9\270\020\346\342\207\315\252W\306\200\024\327\333\"\302\260\313\211\314\351\327$\266\366;\204\306w\377\002\001\266\2313";
+    PyObject *data = __Pyx_DecompressString(cstring, 2733, 1);
     if (unlikely(!data)) __PYX_ERR(0, 1, __pyx_L1_error)
     const char* const bytes = __Pyx_PyBytes_AsString(data);
     #if !CYTHON_ASSUME_SAFE_MACROS
     if (likely(bytes)); else { Py_DECREF(data); __PYX_ERR(0, 1, __pyx_L1_error) }
     #endif
-    #else /* compression: none (5058 bytes) */
-const char* const bytes = ": All dimensions preceding dimension %d must be indexed and not slicedBuffer view does not expose stridesCan only create a buffer that is contiguous in memory.Cannot assign to read-only memoryviewCannot create writable memory view from read-only memoryviewCannot index with type 'Cannot transpose memoryview with indirect dimensionsDimension %d is not directEmpty shape tuple for cython.arrayIndex out of bounds (axis %d)Indirect dimensions not supportedInvalid mode, expected 'c' or 'fortran', got Invalid shape in axis <MemoryView of Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.Out of bounds on buffer access (axis Step may not be zero (axis %d)Unable to convert item to object.>')?add_note and  at 0xcollections.abc<contiguous and direct><contiguous and indirect>disableenablegc (got got differing extents in dimension isenableditemsize <= 0 for cython.arrayminecraft:airno default __reduce__ due to non-trivial __cinit__ object>src/mc_world_mcp/_preview_accel.pyx<strided and direct><strided and direct or indirect><strided and indirect>unable to allocate array data.unable to allocate shape and strides.ASCIIEllipsis__Pyx_PyDict_NextRefSequenceView.MemoryViewabcallocate_bufferasyncio.coroutinesaxis_codebackgroundbaseblocksccanvas_hcanvas_w__class____class_getitem__cline_in_tracebackcolorscountcount_palette_indicesdatadecode_indicesdepth__dict__dtype_is_objectencodeencode_indicesenumerateerrorfill_floor_projectionfill_top_projectionflagsformatfortran__func__get__getstate__heightheightsid__import__indexindices_is_coroutineitemsitemsize__main__max_ymc_world_mcp._preview_accelmemviewmin_ymode__module__name__name__ndim__new__objpackpalettepalette_base_namespalette_sizepopposproject_template_states__pyx_checksum__pyx_state__pyx_type__pyx_unpickle_Enum__pyx_vtable____qualname____reduce____reduce_cython____reduce_ex__registerrender_closeup_map_rgbarender""_item_view_rgbascalesection_y__set_name__setdefault__setstate____setstate_cython__shapesizesize_yskipsourcesrc_hsrc_wstartstatestepstopstructtemplate_blocks__test__unpackunresolvedupdatevaluesvertical_scaleview_codewidthx\200\001\330\004(\250\001\330\004\031\230\031\240!\2405\250\002\250%\250r\260\021\330\004\"\240!\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\360\024\000\005\010\200v\210S\220\002\220#\220V\2303\230b\240\003\2405\250\003\2501\330\010\017\210u\220A\220Q\340\004\016\210a\210u\220E\230\022\2306\240\026\240v\250V\2601\340\004\007\200z\220\023\220B\220c\230\032\2403\240a\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\021\220\025\220b\230\010\240\003\2401\330\010\021\220\025\220b\230\010\240\003\2401\330\010\031\230\021\230%\230u\240G\2507\260&\270\010\300\010\310\007\310w\320V`\320`c\320cf\320fg\330\t\023\2203\220b\230\003\230:\240S\250\001\330\010\021\220\036\230q\240\007\240w\250h\260a\260s\270%\270s\300$\300e\3102\310S\320PS\320SX\320XY\330\010\021\220\036\230q\240\007\240w\250h\260a\260s\270%\270s\300$\300e\3102\310S\320PS\320SX\320XY\330\010\021\220\025\220b\230\010\240\003\2401\330\010\021\220\025\220b\230\010\240\003\2401\330\010\031\230\021\230%\230u\240G\2507\260&\270\010\300\010\310\007\310w\320V]\320]g\320gj\320jk\330\t\023\2203\220b\230\003\230:\240S\250\001\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\010\310\001\310\023\310E\320QT\320TX\320XY\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\010\310\001\310\023\310E\320QT\320TX\320XY\330\010\021\220\025\220b\230\010\240\003\2401\330\010\021\220\025\220b\230\010\240\003\2401\330\010\031\230\021\230%\230u\240G\2507\260&\270\010\300\010\310\007\310w\320V`\320`c\320cf\320fg\340\010\021\220\036\230q""\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\013\210:\220S\230\001\330\014\026\220a\330\014\026\220a\330\014\024\220H\230A\230S\240\005\240S\250\001\340\014\026\220a\330\014\026\220a\330\014\024\220H\230A\230S\240\005\240S\250\001\330\010\014\210J\220e\2301\230G\2404\240q\330\014\036\230a\230u\240E\250\027\260\007\260v\270X\300X\310Y\320V_\320_g\320go\320op\330\010\032\230!\2305\240\005\240W\250G\2606\270\030\300\030\310\031\320R[\320[^\320^a\320ab\330\004\013\2105\220\001\220\021\200\001\360\034\000\005\032\230\031\240!\2409\250B\250i\260r\270\021\330\004\"\240!\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220H\230A\230S\240\001\330\004\027\220x\230q\240\003\2406\250\023\250A\330\004\026\220e\2302\230R\230r\240\021\330\004\031\230\021\330\004\025\220V\2302\230V\2402\240Q\360*\000\005\010\200v\210S\220\002\220#\220V\2303\230b\240\003\2409\250C\250r\260\023\260I\270S\300\001\330\010\017\210u\220A\220Q\330\004\016\210a\210u\220I\230R\230z\250\026\250v\260V\2701\330\004\020\220\n\230\"\230A\330\004\010\210\t\220\025\220a\220q\330\010\014\210F\220%\220q\230\001\330\014\021\220\026\220r\230\021\330\014\017\210s\220\"\220B\220c\230\023\230C\230q\330\020\021\330\014\024\220N\240!\2407\250'\260\033\270D\300\001\330\014\017\210v\220R\220q\330\020\021\330\014\020\220\005\220W\230A\230Q\330\014\017\210r\220\023\220A\330\020\021\330\014\024\220E\230\026\230q\240\001\330\014\021\220\027\230\003\2303\230b\240\003\2402\240V\2502\250S\260\002\260!\330\014\021\220\027\230\003\2303\230b\240\004\240B\240h\250c\260\026\260r\270\023\270B\270a\330\014\021\220\021\330\014\021\220\021\330\014\021\220\023\220B\220a\330\014\021\220\023\220B\220a\330\014\021\220\021\330\014\021\220\023\220B\220h\230b\240\001\330\014\021\220\023\220B\220a\330\014\021""\220\023\220B\220a\340\014\027\220\177\240a\240y\260\007\260w\270k\310\023\310B\310c\320QR\330\014\017\210y\230\003\2301\330\020\033\2301\330\014\017\210r\220\022\2201\330\020\030\230\002\230\"\230J\240b\250\001\330\020\023\2205\230\002\230!\330\024\036\230a\230u\240J\250j\270\004\270D\300\004\300D\310\004\310C\310r\320QW\320W[\320[^\320^`\320`f\320fm\320mn\340\014\027\220\177\240a\240y\260\007\260w\270k\310\024\310S\320PR\320RS\330\014\017\210y\230\003\2301\330\020\033\2301\330\014\017\210r\220\022\2201\330\020\030\230\002\230\"\230J\240b\250\001\330\020\023\2205\230\002\230!\330\024\036\230a\230u\240J\250j\270\004\270D\300\004\300D\310\004\310C\310r\320QW\320W[\320[^\320^`\320`f\320fm\320mn\340\014\024\220D\230\002\230*\240B\240b\250\002\250'\260\022\2603\260c\270\030\300\021\300#\300V\3102\310V\320SU\320UY\320Y\\\320\\]\330\014\026\220a\220u\230J\240j\260\004\260D\270\004\270D\300\004\300D\310\004\310D\320PW\320WX\330\004\013\2105\220\001\220\021\200\001\330\004\007\200}\220C\220q\330\010\017\210q\340\004\024\320\024%\240Q\240a\330\004\037\230s\240#\240Q\330\004\007\320\007\027\220s\230!\330\010\032\230!\330\004\"\240%\240r\320)9\270\022\2703\270c\300\021\330\004\032\230*\240B\240c\250\026\250r\260\021\360\006\000\005\035\230C\230q\240\001\360\014\000\005\010\200v\210R\210q\330\010\020\220\001\330\004\010\210\005\210U\220!\2201\330\010\r\210Q\210e\2201\330\004\010\210\005\210U\220!\2201\330\010\021\220\032\2305\240\007\240q\250\004\250B\250a\330\010\025\220R\220s\230!\330\010\021\220\022\2202\320\025&\240b\250\001\330\010\r\210Q\210o\230V\2403\240a\340\004\r\210Q\210c\220\022\2201\330\004\010\210\005\210U\220!\2201\330\010\016\210a\210u\220I\230U\240!\2401\330\004\013\2101\200\001\360\020\000\005\033\230!\340\004\"\240#\240Q\240a\360\024\000\005\t\210\006\210e\2201\220E\230\024\230Q\330\010\020\220\003\2201\220A\330\010\013\2106\220\023\220A\330\014\r\330\010\031\230\021\330\010\023\2203\220c\230\021\330\010\014\210E\220\025\220a\220q\330\014\025\220U\230)\2401""\240A\330\014\034\230E\240\027\250\001\250\031\260\"\260A\330\014\017\210r\220\023\320\024$\240A\330\020\030\230\007\230q\240\001\330\020\034\320\034.\250a\250q\340\020\030\230\001\330\020\034\230A\330\014\017\210z\230\023\230A\330\020\036\230g\240Q\240a\340\020\026\220a\220z\240\021\330\010\024\220A\330\004\013\2101\200\001\360\030\000\005\033\230!\340\004\"\240#\240Q\240a\360\026\000\005\t\210\006\210e\2201\220E\230\024\230Q\330\010\020\220\003\2201\220A\330\010\013\2106\220\023\220A\330\014\r\330\010\031\230\021\330\010\014\210J\220b\230\003\2302\230Q\330\010\013\2102\210R\210q\330\014\r\330\010\013\2102\210R\210q\330\014\r\330\010\023\2203\220c\230\021\330\010\014\210E\220\025\220a\220q\330\014\025\220U\230)\2401\240A\330\014\034\230E\240\027\250\001\250\031\260\"\260A\330\014\017\210r\220\023\320\024$\240A\330\020\030\230\007\230q\240\001\330\020\034\320\034.\250a\250q\340\020\030\230\001\330\020\034\230A\330\014\017\210z\230\023\230A\330\020\036\230g\240Q\240a\340\020\026\220a\220z\240\021\330\020\027\220q\230\n\240!\330\010\024\220A\330\004\013\2101\200\001\330\004\027\220q\230\005\230Q\330\004\007\200}\220C\220q\330\010\017\210q\330\004\007\200u\210C\210q\330\010\016\210a\210u\220A\330\010\017\210q\340\004\024\320\024%\240Q\240a\330\004\037\230s\240#\240Q\330\004\032\230*\240B\240c\250\026\250r\260\021\330\004!\240\023\240A\240Q\360\020\000\005\t\210\005\210U\220!\2201\330\010\025\220R\220s\230!\330\010\030\230\001\330\010\013\210;\220b\230\001\330\014\025\220R\220r\320\031*\250\"\250A\330\014\033\2309\240C\240q\250\004\250A\250Q\330\014\022\220*\230A\330\014\034\230G\2404\240s\250'\260\022\2601\330\010\013\2102\210S\320\020 \240\001\330\014\022\220!\320\023%\240Q\330\004\013\2101\200\001\330\004\027\220q\230\005\230Q\330\004\007\200u\210C\210q\330\010\017\210q\340\004\024\320\024%\240Q\240a\330\004\037\230s\240#\240Q\330\004\032\230*\240B\240c\250\026\250r\260\021\330\004!\240\023\240A\240Q\360\016\000\005\t\210\005\210U\220!\2201\330\010\025\220R\220s\230!""\330\010\013\210;\220b\230\001\330\014\025\220R\220r\320\031*\250\"\250A\330\014\033\2309\240C\240q\250\004\250A\250Q\330\014\022\220*\230A\330\014\022\220!\2205\230\007\230t\2403\240g\250R\250q\330\004\013\2101\200\001\330\004\"\240&\250\002\250!\330\004\027\220r\230\025\230a\330\004\027\220r\230\025\230a\360\030\000\005\t\210\t\220\021\330\010\016\210e\2204\220q\230\007\230q\240\003\2403\240a\330\010\r\210U\220#\220Q\220c\230\021\230!\330\010\r\210U\220#\220Q\220c\230\021\230!\330\010\r\210U\220#\220Q\220c\230\021\230!\330\010\020\220\005\220S\230\001\230\025\230d\240!\2409\250A\330\010\013\210:\220S\230\001\330\014\026\220a\330\014\026\220a\330\014\024\220A\330\r\027\220s\230!\330\014\026\220a\330\014\026\220g\230R\230s\240\"\240A\330\014\024\220A\340\014\026\220a\330\014\026\220g\230R\230s\240\"\240A\330\014\024\220A\340\010\013\2102\210S\220\n\230&\240\004\240B\240c\250\032\2601\330\014\024\220H\230B\230f\240B\240a\330\014\017\210v\220S\230\005\230V\2401\240A\330\020\026\220a\220y\240\001\330\020\026\220a\220y\240\001\330\004\013\2101O";
+    #else /* compression: none (5613 bytes) */
+const char* const bytes = ": All dimensions preceding dimension %d must be indexed and not slicedBuffer view does not expose stridesCan only create a buffer that is contiguous in memory.Cannot assign to read-only memoryviewCannot create writable memory view from read-only memoryviewCannot index with type 'Cannot transpose memoryview with indirect dimensionsDimension %d is not directEmpty shape tuple for cython.arrayIndex out of bounds (axis %d)Indirect dimensions not supportedInvalid mode, expected 'c' or 'fortran', got Invalid shape in axis <MemoryView of Note that Cython is deliberately stricter than PEP-484 and rejects subclasses of builtin types. If you need to pass subclasses then set the 'annotation_typing' directive to False.Out of bounds on buffer access (axis Step may not be zero (axis %d)Unable to convert item to object.>')?add_note and  at 0xcollections.abc<contiguous and direct><contiguous and indirect>disableenablegc (got got differing extents in dimension isenableditemsize <= 0 for cython.arrayminecraft:airno default __reduce__ due to non-trivial __cinit__ object>src/mc_world_mcp/_preview_accel.pyx<strided and direct><strided and direct or indirect><strided and indirect>unable to allocate array data.unable to allocate shape and strides.ASCIIEllipsisPREVIEW_ACCEL_API__Pyx_PyDict_NextRefSequenceView.MemoryViewabcallocate_bufferasyncio.coroutinesaxis_codebackgroundbaseblocksccanvas_hcanvas_w__class____class_getitem__cline_in_tracebackcolorscountcount_palette_indicesdatadecode_indicesdepth__dict__dtype_is_objectencodeencode_indicesenumerateerrorfill_closeup_side_samplesfill_floor_projectionfill_top_projectionflagsformatfortran__func__get__getstate__heightheightsid__import__indexindices_is_coroutineitemsitemsize__main__max_ymc_world_mcp._preview_accelmemviewmin_ymode__module__name__name__ndim__new__objpackpalettepalette_base_namespalette_colorspalette_sizepopposproject_template_states__pyx_checksum__pyx_state__pyx_type__pyx_unpickle_Enum__pyx_vtable____qualname____reduce____reduce_cy""thon____reduce_ex__registerrender_closeup_map_rgbarender_item_view_rgbasamplesscalesection_y__set_name__setdefault__setstate____setstate_cython__shapeside_colorsside_depthsizesize_yskipsourcesrc_hsrc_wstartstatestepstopstructtemplate_blocks__test__unpackunresolvedupdatevaluesvertical_scaleview_codewidthx\320\000#\2401\360\030\000\005\036\230Z\240r\250\021\330\004\035\230^\2502\250Q\330\004\"\240#\240Q\240a\360\024\000\005\010\200{\220#\220R\220s\230.\250\002\250&\260\003\260>\300\022\3001\330\010\017\210q\340\004\010\210\n\220%\220q\230\001\330\010\022\220'\230\021\230!\330\010\013\2108\2203\220a\330\014\r\330\010\016\210e\2201\330\010\022\220!\330\010\013\2108\2202\220Q\330\014\026\220a\330\010\013\2108\2202\220Q\330\014\026\220a\330\010\020\220\004\220B\220k\240\022\2401\330\010\013\2106\220\022\2201\330\014\024\220A\330\010\013\2106\220\022\2201\330\014\024\220A\330\010\013\2106\220\022\2201\330\014\r\330\010\026\220e\2307\240\"\240A\330\010\014\210E\220\025\220a\220y\240\006\240b\250\004\250A\330\014\034\230E\240\027\250\003\2502\250R\250t\2603\260c\270\022\2705\300\001\330\014\017\210r\220\023\320\024$\240L\260\004\3204F\300a\300\177\320V]\320]^\330\020\027\220q\230\014\240B\240d\250\"\250E\260\036\270q\300\001\330\004\013\2101\200\001\330\004(\250\001\330\004\031\230\031\240!\2405\250\002\250%\250r\260\021\330\004\"\240!\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\360\024\000\005\010\200v\210S\220\002\220#\220V\2303\230b\240\003\2405\250\003\2501\330\010\017\210u\220A\220Q\340\004\016\210a\210u\220E\230\022\2306\240\026\240v\250V\2601\340\004\007\200z\220\023\220B\220c\230\032\2403\240a\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\021\220\025\220b\230\010\240\003\2401\330\010\021\220\025\220b\230\010\240""\003\2401\330\010\031\230\021\230%\230u\240G\2507\260&\270\010\300\010\310\007\310w\320V`\320`c\320cf\320fg\330\t\023\2203\220b\230\003\230:\240S\250\001\330\010\021\220\036\230q\240\007\240w\250h\260a\260s\270%\270s\300$\300e\3102\310S\320PS\320SX\320XY\330\010\021\220\036\230q\240\007\240w\250h\260a\260s\270%\270s\300$\300e\3102\310S\320PS\320SX\320XY\330\010\021\220\025\220b\230\010\240\003\2401\330\010\021\220\025\220b\230\010\240\003\2401\330\010\031\230\021\230%\230u\240G\2507\260&\270\010\300\010\310\007\310w\320V]\320]g\320gj\320jk\330\t\023\2203\220b\230\003\230:\240S\250\001\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\010\310\001\310\023\310E\320QT\320TX\320XY\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\010\310\001\310\023\310E\320QT\320TX\320XY\330\010\021\220\025\220b\230\010\240\003\2401\330\010\021\220\025\220b\230\010\240\003\2401\330\010\031\230\021\230%\230u\240G\2507\260&\270\010\300\010\310\007\310w\320V`\320`c\320cf\320fg\340\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\021\220\036\230q\240\007\240w\250e\2602\260S\270\003\2705\300\005\300R\300s\310#\310U\320RS\330\010\013\210:\220S\230\001\330\014\026\220a\330\014\026\220a\330\014\024\220H\230A\230S\240\005\240S\250\001\340\014\026\220a\330\014\026\220a\330\014\024\220H\230A\230S\240\005\240S\250\001\330\010\014\210J\220e\2301\230G\2404\240q\330\014\036\230a\230u\240E\250\027\260\007\260v\270X\300X\310Y\320V_\320_g\320go\320op\330\010\032\230!\2305\240\005\240W\250G\2606\270\030\300\030\310\031\320R[\320[^\320^a\320ab\330\004\013\2105\220\001\220\021\200\001\360 \000\005\032\230\031\240!\2409\250B\250i\260r\270\021\330\004\"\240!\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220E\230\032\2401\240A\330\004\024\220H\230A\230S\240\001\330\004\027\220x\230q\240\003\2406\250\023\250A\330\004\026\220e\2302\230R\230r\240""\021\330\004\031\230\021\330\004\025\220V\2302\230V\2402\240Q\3604\000\005\010\200v\210S\220\002\220#\220V\2303\230b\240\003\2409\250C\250r\260\023\260I\270S\300\001\330\010\017\210u\220A\220Q\330\004\016\210a\210u\220I\230R\230z\250\026\250v\260V\2701\330\004\020\220\n\230\"\230A\330\004\010\210\t\220\025\220a\220q\330\010\014\210F\220%\220q\230\001\330\014\021\220\026\220r\230\021\330\014\017\210s\220\"\220B\220c\230\023\230C\230q\330\020\021\330\014\024\220N\240!\2407\250'\260\033\270D\300\001\330\014\017\210v\220R\220q\330\020\021\330\014\020\220\005\220W\230A\230Q\330\014\017\210r\220\023\220A\330\020\021\330\014\024\220E\230\026\230q\240\001\330\014\021\220\027\230\003\2303\230b\240\003\2402\240V\2502\250S\260\002\260!\330\014\021\220\027\230\003\2303\230b\240\004\240B\240h\250c\260\026\260r\270\023\270B\270a\330\014\021\220\021\330\014\021\220\021\330\014\021\220\023\220B\220a\330\014\021\220\023\220B\220a\330\014\021\220\021\330\014\021\220\023\220B\220h\230b\240\001\330\014\021\220\023\220B\220a\330\014\021\220\023\220B\220a\340\014\027\220\177\240a\240y\260\007\260w\270k\310\023\310B\310c\320QR\330\014\017\210y\230\003\2301\330\020\033\2301\330\014\017\210r\220\022\2201\330\020\036\230b\240\002\240!\330\020\023\220<\230r\240\021\330\024\"\240!\330\020\034\230F\240\"\240A\330\020\024\220K\230u\240A\240Q\330\024$\240E\250\033\260A\260Z\270r\300\021\330\024\027\220~\240R\240q\330\030\031\330\024\"\240(\250\"\250A\330\024&\240h\250b\260\003\2602\260Q\330\024\036\230a\330\030\031\330\030\031\330\030\031\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\031\360\006\000\r\030\220\177\240a\240y\260\007\260w\270k\310\024\310S\320PR\320RS\330\014\017\210y\230\003\2301\330\020\033\2301\330\014\017\210r\220\022\2201\330\020\036\230b\240\002\240!\330\020\023\220<\230r\240\021\330\024\"\240!\330\020\034\230F\240\"\240A\330\020\024\220K\230u\240A\240Q\330\024$\240E""\250\033\260A\260Z\270r\300\021\330\024\027\220~\240R\240q\330\030\031\330\024\"\240(\250\"\250A\330\024&\240h\250b\260\003\2602\260Q\330\024\036\230a\330\030\031\330\030\031\330\030\031\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\033\2302\230Q\330\030\031\330\030\031\360\006\000\r\025\220D\230\002\230*\240B\240b\250\002\250'\260\022\2603\260c\270\030\300\021\300#\300V\3102\310V\320SU\320UY\320Y\\\320\\]\330\014\026\220a\220u\230J\240j\260\004\260D\270\004\270D\300\004\300D\310\004\310D\320PW\320WX\330\004\013\2105\220\001\220\021\200\001\330\004\007\200}\220C\220q\330\010\017\210q\340\004\024\320\024%\240Q\240a\330\004\037\230s\240#\240Q\330\004\007\320\007\027\220s\230!\330\010\032\230!\330\004\"\240%\240r\320)9\270\022\2703\270c\300\021\330\004\032\230*\240B\240c\250\026\250r\260\021\360\006\000\005\035\230C\230q\240\001\360\014\000\005\010\200v\210R\210q\330\010\020\220\001\330\004\010\210\005\210U\220!\2201\330\010\r\210Q\210e\2201\330\004\010\210\005\210U\220!\2201\330\010\021\220\032\2305\240\007\240q\250\004\250B\250a\330\010\025\220R\220s\230!\330\010\021\220\022\2202\320\025&\240b\250\001\330\010\r\210Q\210o\230V\2403\240a\340\004\r\210Q\210c\220\022\2201\330\004\010\210\005\210U\220!\2201\330\010\016\210a\210u\220I\230U\240!\2401\330\004\013\2101\200\001\360\020\000\005\033\230!\340\004\"\240#\240Q\240a\360\024\000\005\t\210\006\210e\2201\220E\230\024\230Q\330\010\020\220\003\2201\220A\330\010\013\2106\220\023\220A\330\014\r\330\010\031\230\021\330\010\023\2203\220c\230\021\330\010\014\210E\220\025\220a\220q\330\014\025\220U\230)\2401\240A\330\014\034\230E\240\027\250\001\250\031\260\"\260A\330\014\017\210r\220\023\320\024$\240A\330\020\030\230\007\230q\240\001\330\020\034\320\034.\250a\250q\340\020\030\230\001\330\020\034\230A\330\014\017\210z\230\023\230A\330\020\036\230g\240Q\240a\340\020\026\220a\220z\240\021\330\010\024\220A\330\004\013\2101\200\001\360\030\000\005\033\230!""\340\004\"\240#\240Q\240a\360\026\000\005\t\210\006\210e\2201\220E\230\024\230Q\330\010\020\220\003\2201\220A\330\010\013\2106\220\023\220A\330\014\r\330\010\031\230\021\330\010\014\210J\220b\230\003\2302\230Q\330\010\013\2102\210R\210q\330\014\r\330\010\013\2102\210R\210q\330\014\r\330\010\023\2203\220c\230\021\330\010\014\210E\220\025\220a\220q\330\014\025\220U\230)\2401\240A\330\014\034\230E\240\027\250\001\250\031\260\"\260A\330\014\017\210r\220\023\320\024$\240A\330\020\030\230\007\230q\240\001\330\020\034\320\034.\250a\250q\340\020\030\230\001\330\020\034\230A\330\014\017\210z\230\023\230A\330\020\036\230g\240Q\240a\340\020\026\220a\220z\240\021\330\020\027\220q\230\n\240!\330\010\024\220A\330\004\013\2101\200\001\330\004\027\220q\230\005\230Q\330\004\007\200}\220C\220q\330\010\017\210q\330\004\007\200u\210C\210q\330\010\016\210a\210u\220A\330\010\017\210q\340\004\024\320\024%\240Q\240a\330\004\037\230s\240#\240Q\330\004\032\230*\240B\240c\250\026\250r\260\021\330\004!\240\023\240A\240Q\360\020\000\005\t\210\005\210U\220!\2201\330\010\025\220R\220s\230!\330\010\030\230\001\330\010\013\210;\220b\230\001\330\014\025\220R\220r\320\031*\250\"\250A\330\014\033\2309\240C\240q\250\004\250A\250Q\330\014\022\220*\230A\330\014\034\230G\2404\240s\250'\260\022\2601\330\010\013\2102\210S\320\020 \240\001\330\014\022\220!\320\023%\240Q\330\004\013\2101\200\001\330\004\027\220q\230\005\230Q\330\004\007\200u\210C\210q\330\010\017\210q\340\004\024\320\024%\240Q\240a\330\004\037\230s\240#\240Q\330\004\032\230*\240B\240c\250\026\250r\260\021\330\004!\240\023\240A\240Q\360\016\000\005\t\210\005\210U\220!\2201\330\010\025\220R\220s\230!\330\010\013\210;\220b\230\001\330\014\025\220R\220r\320\031*\250\"\250A\330\014\033\2309\240C\240q\250\004\250A\250Q\330\014\022\220*\230A\330\014\022\220!\2205\230\007\230t\2403\240g\250R\250q\330\004\013\2101\200\001\330\004\"\240&\250\002\250!\330\004\027\220r\230\025\230a\330\004\027\220r\230\025\230a\360\030\000\005\t\210\t\220\021\330\010""\016\210e\2204\220q\230\007\230q\240\003\2403\240a\330\010\r\210U\220#\220Q\220c\230\021\230!\330\010\r\210U\220#\220Q\220c\230\021\230!\330\010\r\210U\220#\220Q\220c\230\021\230!\330\010\020\220\005\220S\230\001\230\025\230d\240!\2409\250A\330\010\013\210:\220S\230\001\330\014\026\220a\330\014\026\220a\330\014\024\220A\330\r\027\220s\230!\330\014\026\220a\330\014\026\220g\230R\230s\240\"\240A\330\014\024\220A\340\014\026\220a\330\014\026\220g\230R\230s\240\"\240A\330\014\024\220A\340\010\013\2102\210S\220\n\230&\240\004\240B\240c\250\032\2601\330\014\024\220H\230B\230f\240B\240a\330\014\017\210v\220S\230\005\230V\2401\240A\330\020\026\220a\220y\240\001\330\020\026\220a\220y\240\001\330\004\013\2101O";
     PyObject *data = NULL;
     CYTHON_UNUSED_VAR(__Pyx_DecompressString);
     #endif
     PyObject **stringtab = __pyx_mstate->__pyx_string_tab;
     Py_ssize_t pos = 0;
-    for (int i = 0; i < 152; i++) {
+    for (int i = 0; i < 158; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyUnicode_DecodeUTF8(bytes + pos, bytes_length, NULL);
       if (likely(string) && i >= 46) PyUnicode_InternInPlace(&string);
@@ -25853,7 +26760,7 @@ const char* const bytes = ": All dimensions preceding dimension %d must be index
       stringtab[i] = string;
       pos += bytes_length;
     }
-    for (int i = 152; i < 161; i++) {
+    for (int i = 158; i < 168; i++) {
       Py_ssize_t bytes_length = index[i].length;
       PyObject *string = PyBytes_FromStringAndSize(bytes + pos, bytes_length);
       stringtab[i] = string;
@@ -25864,15 +26771,15 @@ const char* const bytes = ": All dimensions preceding dimension %d must be index
       }
     }
     Py_XDECREF(data);
-    for (Py_ssize_t i = 0; i < 161; i++) {
+    for (Py_ssize_t i = 0; i < 168; i++) {
       if (unlikely(PyObject_Hash(stringtab[i]) == -1)) {
         __PYX_ERR(0, 1, __pyx_L1_error)
       }
     }
     #if CYTHON_IMMORTAL_CONSTANTS
     {
-      PyObject **table = stringtab + 152;
-      for (Py_ssize_t i=0; i<9; ++i) {
+      PyObject **table = stringtab + 158;
+      for (Py_ssize_t i=0; i<10; ++i) {
         #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
         #if PY_VERSION_HEX < 0x030E0000
         if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -25891,18 +26798,18 @@ const char* const bytes = ": All dimensions preceding dimension %d must be index
   }
   {
     PyObject **numbertab = __pyx_mstate->__pyx_number_tab + 0;
-    int8_t const cint_constants_1[] = {0,-1,1};
+    int8_t const cint_constants_1[] = {0,-1,1,2};
     int16_t const cint_constants_2[] = {4096};
     int32_t const cint_constants_4[] = {136983863L};
-    for (int i = 0; i < 5; i++) {
-      numbertab[i] = PyLong_FromLong((i < 3 ? cint_constants_1[i - 0] : (i < 4 ? cint_constants_2[i - 3] : cint_constants_4[i - 4])));
+    for (int i = 0; i < 6; i++) {
+      numbertab[i] = PyLong_FromLong((i < 4 ? cint_constants_1[i - 0] : (i < 5 ? cint_constants_2[i - 4] : cint_constants_4[i - 5])));
       if (unlikely(!numbertab[i])) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #if CYTHON_IMMORTAL_CONSTANTS
   {
     PyObject **table = __pyx_mstate->__pyx_number_tab;
-    for (Py_ssize_t i=0; i<5; ++i) {
+    for (Py_ssize_t i=0; i<6; ++i) {
       #if CYTHON_COMPILING_IN_CPYTHON_FREETHREADING
       #if PY_VERSION_HEX < 0x030E0000
       if (_Py_IsOwnedByCurrentThread(table[i]) && Py_REFCNT(table[i]) == 1)
@@ -25946,44 +26853,49 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
   PyObject* tuple_dedup_map = PyDict_New();
   if (unlikely(!tuple_dedup_map)) return -1;
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 21};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 23};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_palette_size};
     __pyx_mstate_global->__pyx_codeobj_tab[0] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_decode_indices, __pyx_mstate->__pyx_kp_b_iso88591_q_Q_uCq_q_Qa_s_Q_Bc_r_AQ_U_1_Rs, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[0])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 46};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 48};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_data, __pyx_mstate->__pyx_n_u_palette_size};
     __pyx_mstate_global->__pyx_codeobj_tab[1] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_count_palette_indices, __pyx_mstate->__pyx_kp_b_iso88591_q_Q_Cq_q_uCq_auA_q_Qa_s_Q_Bc_r, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[1])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 78};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 2, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 80};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_indices, __pyx_mstate->__pyx_n_u_palette_size};
     __pyx_mstate_global->__pyx_codeobj_tab[2] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_encode_indices, __pyx_mstate->__pyx_kp_b_iso88591_Cq_q_Qa_s_Q_s_r_9_3c_Bc_r_Cq_vR, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[2])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {6, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 112};
+    const __Pyx_PyCode_New_function_description descr = {6, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 114};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_indices, __pyx_mstate->__pyx_n_u_palette, __pyx_mstate->__pyx_n_u_palette_base_names, __pyx_mstate->__pyx_n_u_skip, __pyx_mstate->__pyx_n_u_unresolved, __pyx_mstate->__pyx_n_u_blocks};
     __pyx_mstate_global->__pyx_codeobj_tab[3] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_fill_top_projection, __pyx_mstate->__pyx_kp_b_iso88591_Qa_e1E_Q_1A_6_A_3c_E_aq_U_1A_E, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[3])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {10, 0, 0, 10, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 155};
+    const __Pyx_PyCode_New_function_description descr = {10, 0, 0, 10, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 157};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_indices, __pyx_mstate->__pyx_n_u_palette, __pyx_mstate->__pyx_n_u_palette_base_names, __pyx_mstate->__pyx_n_u_skip, __pyx_mstate->__pyx_n_u_unresolved, __pyx_mstate->__pyx_n_u_blocks, __pyx_mstate->__pyx_n_u_heights, __pyx_mstate->__pyx_n_u_section_y, __pyx_mstate->__pyx_n_u_min_y, __pyx_mstate->__pyx_n_u_max_y};
     __pyx_mstate_global->__pyx_codeobj_tab[4] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_fill_floor_projection, __pyx_mstate->__pyx_kp_b_iso88591_Qa_e1E_Q_1A_6_A_Jb_2Q_2Rq_2Rq_3, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[4])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {5, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 209};
+    const __Pyx_PyCode_New_function_description descr = {10, 0, 0, 10, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 211};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_indices, __pyx_mstate->__pyx_n_u_palette_base_names, __pyx_mstate->__pyx_n_u_palette_colors, __pyx_mstate->__pyx_n_u_skip, __pyx_mstate->__pyx_n_u_heights, __pyx_mstate->__pyx_n_u_samples, __pyx_mstate->__pyx_n_u_section_y, __pyx_mstate->__pyx_n_u_side_depth, __pyx_mstate->__pyx_n_u_min_y, __pyx_mstate->__pyx_n_u_max_y};
+    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_fill_closeup_side_samples, __pyx_mstate->__pyx_kp_b_iso88591_1_Zr_2Q_Qa_Rs_1_q_q_83a_e1_82Q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
+  }
+  {
+    const __Pyx_PyCode_New_function_description descr = {5, 0, 0, 5, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 263};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_template_blocks, __pyx_mstate->__pyx_n_u_width, __pyx_mstate->__pyx_n_u_height, __pyx_mstate->__pyx_n_u_size_y, __pyx_mstate->__pyx_n_u_axis_code};
-    __pyx_mstate_global->__pyx_codeobj_tab[5] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_project_template_states, __pyx_mstate->__pyx_kp_b_iso88591_r_a_r_a_e4q_q_3a_U_Qc_U_Qc_U_Qc, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[5])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_project_template_states, __pyx_mstate->__pyx_kp_b_iso88591_r_a_r_a_e4q_q_3a_U_Qc_U_Qc_U_Qc, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {6, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 427};
+    const __Pyx_PyCode_New_function_description descr = {6, 0, 0, 6, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 481};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_source, __pyx_mstate->__pyx_n_u_src_w, __pyx_mstate->__pyx_n_u_src_h, __pyx_mstate->__pyx_n_u_view_code, __pyx_mstate->__pyx_n_u_size, __pyx_mstate->__pyx_n_u_background};
-    __pyx_mstate_global->__pyx_codeobj_tab[6] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_render_item_view_rgba, __pyx_mstate->__pyx_kp_b_iso88591_5_r_E_1A_E_1A_E_1A_E_1A_vS_V3b, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[6])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_render_item_view_rgba, __pyx_mstate->__pyx_kp_b_iso88591_5_r_E_1A_E_1A_E_1A_E_1A_vS_V3b, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {12, 0, 0, 12, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 567};
-    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_heights, __pyx_mstate->__pyx_n_u_colors, __pyx_mstate->__pyx_n_u_width, __pyx_mstate->__pyx_n_u_depth, __pyx_mstate->__pyx_n_u_canvas_w, __pyx_mstate->__pyx_n_u_canvas_h, __pyx_mstate->__pyx_n_u_view_code, __pyx_mstate->__pyx_n_u_scale, __pyx_mstate->__pyx_n_u_vertical_scale, __pyx_mstate->__pyx_n_u_min_y, __pyx_mstate->__pyx_n_u_max_y, __pyx_mstate->__pyx_n_u_background};
-    __pyx_mstate_global->__pyx_codeobj_tab[7] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_render_closeup_map_rgba, __pyx_mstate->__pyx_kp_b_iso88591_9Bir_E_1A_E_1A_E_1A_E_1A_HAS_xq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[7])) goto bad;
+    const __Pyx_PyCode_New_function_description descr = {14, 0, 0, 14, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 621};
+    PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_heights, __pyx_mstate->__pyx_n_u_colors, __pyx_mstate->__pyx_n_u_side_colors, __pyx_mstate->__pyx_n_u_width, __pyx_mstate->__pyx_n_u_depth, __pyx_mstate->__pyx_n_u_canvas_w, __pyx_mstate->__pyx_n_u_canvas_h, __pyx_mstate->__pyx_n_u_view_code, __pyx_mstate->__pyx_n_u_scale, __pyx_mstate->__pyx_n_u_vertical_scale, __pyx_mstate->__pyx_n_u_min_y, __pyx_mstate->__pyx_n_u_max_y, __pyx_mstate->__pyx_n_u_background, __pyx_mstate->__pyx_n_u_side_depth};
+    __pyx_mstate_global->__pyx_codeobj_tab[8] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_src_mc_world_mcp__preview_accel, __pyx_mstate->__pyx_n_u_render_closeup_map_rgba, __pyx_mstate->__pyx_kp_b_iso88591_9Bir_E_1A_E_1A_E_1A_E_1A_HAS_xq, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[8])) goto bad;
   }
   Py_DECREF(tuple_dedup_map);
   return 0;

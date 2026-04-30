@@ -703,6 +703,24 @@ class CoreTests(unittest.TestCase):
                 image = Image.open(path)
                 self.assertIsNotNone(image.getbbox())
 
+    def test_closeup_preview_samples_real_side_blocks(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config, _, _ = self._basic_world(tmp)
+            with mock.patch("mc_world_mcp.safety.java_processes", return_value=[]):
+                set_block(config, 0, 0, 0, "minecraft:stone")
+                set_block(config, 0, 1, 0, "minecraft:dirt")
+                set_block(config, 0, 2, 0, "minecraft:grass_block")
+                set_block(config, 1, 0, 0, "minecraft:stone")
+
+            result = render_closeup_map_preview(config, 0, 0, 1, 0, "surface", view="oblique", scale=8, vertical_scale=4, side_depth=4)
+            rgba = Image.open(result["path"]).convert("RGBA").tobytes()
+            pixels = {tuple(rgba[index:index + 4]) for index in range(0, len(rgba), 4)}
+            shaded_dirt = (116 * 145 // 255, 80 * 145 // 255, 48 * 145 // 255, 255)
+
+            self.assertIn(shaded_dirt, pixels)
+            self.assertEqual(result["size"]["side_depth"], 4)
+            self.assertEqual(result["rendering"]["side_mode"], "sampled_blocks")
+
     def test_template_preview_uses_nearest_projected_block(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             config, world, _ = self._basic_world(tmp)
